@@ -1,0 +1,42 @@
+env:
+  NODE_VERSION: '14'
+
+steps:
+  - label: ':hammer: Test - Node 14 Alpine'
+    command: 'yarn test'
+    plugins:
+      - docker-login#v2.0.1:
+          username: localzservice
+          password-env: DOCKER_LOGIN_PASSWORD
+      - docker-compose#v3.7.0:
+          run: react-hook-form-generator
+          config:
+            - docker-compose.yml
+            - docker-compose.node-v14-alpine.yml
+          shell: false
+
+  - wait
+
+  - label: ':cloud: Publish'
+    if: build.tag != null
+    commands:
+      - npm config set "//registry.npmjs.org/:_authToken" $${NPM_TOKEN}
+      - npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+      - npm config set "//npm.fontawesome.com/:_authToken" $${FONTAWESOME_NPM_AUTH_TOKEN}
+      - yarn --frozen-lockfile
+      - yarn build
+      - npm publish
+      - yarn release-it --no-npm --no-increment --no-git --github.release --github.update --no-github.draft --ci
+    plugins:
+      - docker-login#v2.0.1:
+          username: localzservice
+          password-env: DOCKER_LOGIN_PASSWORD
+      - docker#v3.8.0:
+          image: localz/buildkite-node:${NODE_VERSION}
+          volumes:
+            - ${HOME}/.ssh/known_hosts:/home/buildkite-agent/.ssh/known_hosts
+          mount-ssh-agent: true
+          environment:
+            - NPM_TOKEN
+            - FONTAWESOME_NPM_AUTH_TOKEN
+            - GITHUB_TOKEN

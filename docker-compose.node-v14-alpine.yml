@@ -1,0 +1,7 @@
+version: '3.7'
+services:
+  react-hook-form-generator:
+    build:
+      dockerfile: alpine.Dockerfile
+      args:
+        - IMAGE_TAG=node-14-alpine

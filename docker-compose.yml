@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  react-hook-form-generator:
+    image: react-hook-form-generator
+    build:
+      context: .
+      args:
+        - NPM_TOKEN=$NPM_TOKEN
