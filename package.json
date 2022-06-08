@@ -1,0 +1,81 @@
+{
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "prepare": "tsdx build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "react-hook-form": "^6.14.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm run lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "@localz/react-hook-form-generator",
+  "module": "dist/react-hook-form-generator.esm.js",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@chakra-ui/storybook-addon": "^4.0.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^11",
+    "@storybook/addon-actions": "^6.5.7",
+    "@storybook/addon-essentials": "^6.5.7",
+    "@storybook/addon-interactions": "^6.5.7",
+    "@storybook/addon-links": "^6.5.7",
+    "@storybook/builder-webpack4": "^6.5.7",
+    "@storybook/manager-webpack4": "^6.5.7",
+    "@storybook/react": "^6.5.7",
+    "@storybook/testing-library": "^0.0.11",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.4",
+    "@types/lodash.merge": "^4.6.6",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "@types/react-select": "^3.0.12",
+    "babel-loader": "^8.1.0",
+    "emotion-theming": "^10.0.27",
+    "husky": "^4.2.5",
+    "react": "^18.1.0",
+    "react-docgen-typescript-loader": "^3.7.2",
+    "react-dom": "^18.1.0",
+    "react-is": "^16.13.1",
+    "react-select": "^3.1.0",
+    "ts-loader": "^7.0.0",
+    "tsdx": "^0.14.1",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.0",
+    "@emotion/react": "^11",
+    "@hookform/resolvers": "^2.9.0",
+    "framer-motion": "^6",
+    "lodash.merge": "^4.6.2",
+    "react-hook-form": "^7.31.3",
+    "zod": "^3.17.3"
+  }
+}
