@@ -18,7 +18,8 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "release": "git pull && yarn lint && yarn test && yarn build && yarn release-it --no-github"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -42,6 +43,7 @@
     "@chakra-ui/storybook-addon": "^4.0.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^11",
+    "@release-it/conventional-changelog": "release-it/conventional-changelog",
     "@storybook/addon-actions": "^6.5.7",
     "@storybook/addon-essentials": "^6.5.7",
     "@storybook/addon-interactions": "^6.5.7",
@@ -64,6 +66,7 @@
     "react-dom": "^18.1.0",
     "react-is": "^16.13.1",
     "react-select": "^3.1.0",
+    "release-it": "^15.0.0",
     "ts-loader": "^7.0.0",
     "tsdx": "^0.14.1",
     "tslib": "^1.11.1",
