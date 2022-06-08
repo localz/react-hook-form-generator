@@ -8,7 +8,7 @@ RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc \
     && echo "scope=localz" >> ~/.npmrc \
     && echo "@localz=https://registry.npmjs.org/" >> ~/.npmrc
 
-RUN apk --no-cache add ca-certificates wget yarn
+RUN apk --no-cache add ca-certificates wget yarn git
 
 ADD ./ /src
 
