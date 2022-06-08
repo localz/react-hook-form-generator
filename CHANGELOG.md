@@ -1,5 +1,7 @@
 
 
+### [0.2.4](https://github.com/localz/react-hook-form-generator/compare/0.2.3...0.2.4) (2022-06-08)
+
 ### [0.2.3](https://github.com/localz/react-hook-form-generator/compare/0.2.2...0.2.3) (2022-06-08)
 
 ### [0.2.2](https://github.com/localz/react-hook-form-generator/compare/0.2.1...0.2.2) (2022-06-08)
