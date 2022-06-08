@@ -1,5 +1,12 @@
 
 
+## [0.2.0](https://github.com/localz/react-hook-form-generator/compare/0.1.0...0.2.0) (2022-06-08)
+
+
+### Features
+
+* add git ([eec8096](https://github.com/localz/react-hook-form-generator/commit/eec80961682d9036fc0ad0c0b782e16caeb4cfb7))
+
 ## 0.1.0 (2022-06-08)
 
 
