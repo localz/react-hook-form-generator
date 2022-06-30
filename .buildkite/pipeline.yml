@@ -3,7 +3,9 @@ env:
 
 steps:
   - label: ':hammer: Test - Node 14 Alpine'
-    command: 'yarn test'
+    command: 
+      - yarn 
+      - test
     plugins:
       - docker-login#v2.0.1:
           username: localzservice
