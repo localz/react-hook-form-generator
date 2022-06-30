@@ -1,5 +1,5 @@
 {
-  "version": "0.2.4",
+  "version": "0.2.5",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -72,8 +72,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.2.0",
-    "@emotion/react": "^11",
+    "@chakra-ui/react": "1.8.8",
+    "@emotion/react": "^11.9.3",
     "@hookform/resolvers": "^2.9.0",
     "framer-motion": "4.1.17",
     "lodash.merge": "^4.6.2",
