@@ -42,7 +42,6 @@
     "@babel/core": "^7.9.0",
     "@chakra-ui/storybook-addon": "^4.0.0",
     "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^11",
     "@release-it/conventional-changelog": "release-it/conventional-changelog",
     "@storybook/addon-actions": "^6.5.7",
     "@storybook/addon-essentials": "^6.5.7",
@@ -76,7 +75,7 @@
     "@chakra-ui/react": "^2.2.0",
     "@emotion/react": "^11",
     "@hookform/resolvers": "^2.9.0",
-    "framer-motion": "^6",
+    "framer-motion": "4.1.17",
     "lodash.merge": "^4.6.2",
     "react-hook-form": "^7.31.3",
     "zod": "^3.17.3"

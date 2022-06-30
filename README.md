@@ -7,9 +7,7 @@ A [React](https://reactjs.org/) component to quickly and easily generate forms f
 This package requires chakra-ui and react-hook-form as peer dependencies
 
 ```shell
-npm install react-hook-form-generator
-npm install @chakra-ui/core @emotion/core @emotion/styled emotion-theming
-npm install react-hook-form
+yarn add @localz/react-hook-form-generator
 ```
 
 ---
