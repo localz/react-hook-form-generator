@@ -1,5 +1,12 @@
 
 
+### [0.2.5](https://github.com/localz/react-hook-form-generator/compare/0.2.4...0.2.5) (2022-06-30)
+
+
+### Chores
+
+* downgrade framer-motion ([9e1836b](https://github.com/localz/react-hook-form-generator/commit/9e1836bef766fda65a2b43633eb654bbb185b5c0))
+
 ### [0.2.4](https://github.com/localz/react-hook-form-generator/compare/0.2.3...0.2.4) (2022-06-08)
 
 ### [0.2.3](https://github.com/localz/react-hook-form-generator/compare/0.2.2...0.2.3) (2022-06-08)
