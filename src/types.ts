@@ -69,6 +69,8 @@ interface FormController {
   placeholder?: string;
   helperText?: string;
   isRequired?: boolean;
+  defaultValue?: any;
+  tooltip?: string;
 }
 
 export interface TextFieldSchema extends FieldSchema, FormController {
@@ -104,7 +106,10 @@ export interface ObjectFieldSchema
 
 export interface SwitchFieldSchema
   extends FieldSchema,
-    Pick<FormController, 'label' | 'helperText' | 'isRequired'> {
+    Pick<
+      FormController,
+      'label' | 'helperText' | 'isRequired' | 'defaultValue' | 'tooltip'
+    > {
   type: 'switch';
 }
 

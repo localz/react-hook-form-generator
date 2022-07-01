@@ -39,7 +39,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
       isInvalid={Boolean(errorMessage)}
       {...fieldStyles.control}
     >
-      {!!label && (
+      {Boolean(label) && (
         <FormLabel htmlFor={name} {...fieldStyles.label}>
           {label}
         </FormLabel>
@@ -50,13 +50,13 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
         defaultValue={defaultValue || field.options[0].value}
         {...fieldStyles.select}
       >
-        {field.options.map(option => (
+        {field.options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label || option.value}
           </option>
         ))}
       </Select>
-      {!!helperText && (
+      {Boolean(helperText) && (
         <FormHelperText {...fieldStyles.helperText}>
           {helperText}
         </FormHelperText>

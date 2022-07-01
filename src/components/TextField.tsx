@@ -2,7 +2,6 @@ import React, { FC, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
-  FormLabel,
   InputGroup,
   InputLeftAddon,
   Input,
@@ -14,12 +13,12 @@ import {
 import { FieldProps, FieldStyles, TextFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
+import LabelElement from './elements/Label';
 
 export const TextField: FC<FieldProps<TextFieldSchema>> = ({
   id,
   name,
   field,
-  defaultValue,
 }) => {
   const {
     label,
@@ -31,6 +30,8 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     rightInputAddon,
     shouldDisplay,
     styles = {},
+    defaultValue,
+    tooltip,
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('textField', styles);
@@ -45,20 +46,25 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     return shouldDisplay ? shouldDisplay(values) : true;
   }, [values, shouldDisplay]);
 
-  return isVisible ? (
+  if (!isVisible) {
+    return <p>hidden</p>;
+  }
+
+  return (
     <FormControl
       isRequired={isRequired}
       isInvalid={!!errorMessage}
       {...fieldStyles.control}
     >
-      {label && (
-        <FormLabel htmlFor={name} {...fieldStyles.label}>
-          {label}
-        </FormLabel>
-      )}
+      <LabelElement
+        label={label}
+        name={name}
+        fieldStyles={fieldStyles}
+        tooltip={tooltip}
+      />
       {leftInputAddon || rightInputAddon ? (
         <InputGroup {...fieldStyles.inputGroup}>
-          {!!leftInputAddon && <InputLeftAddon {...leftInputAddon} />}
+          {Boolean(leftInputAddon) && <InputLeftAddon {...leftInputAddon} />}
           <Input
             data-testid={id}
             type={htmlInputType || 'text'}
@@ -81,7 +87,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
           {...fieldStyles.input}
         />
       )}
-      {!!helperText && (
+      {Boolean(helperText) && (
         <FormHelperText {...fieldStyles.helperText}>
           {helperText}
         </FormHelperText>
@@ -90,5 +96,5 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
         {errorMessage}
       </FormErrorMessage>
     </FormControl>
-  ) : null;
+  );
 };
