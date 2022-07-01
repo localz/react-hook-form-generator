@@ -1,23 +1,30 @@
 import React, { FC, useMemo } from 'react';
 import {
   FormControl,
-  FormLabel,
   FormHelperText,
   FormErrorMessage,
   Switch,
 } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
-
 import { FieldProps, SwitchFieldStyles, SwitchFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
+import LabelElement from './elements/Label';
 
 export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
   id,
   name,
   field,
 }) => {
-  const { label, helperText, isRequired, shouldDisplay, styles = {} } = field;
+  const {
+    label,
+    helperText,
+    isRequired,
+    shouldDisplay,
+    styles = {},
+    defaultValue,
+    tooltip,
+  } = field;
 
   const { register, watch } = useFormContext();
 
@@ -31,25 +38,31 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
     return shouldDisplay ? shouldDisplay(values) : true;
   }, [values, shouldDisplay]);
 
-  return isVisible ? (
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
     <FormControl
       key={`${name}-control`}
       isRequired={isRequired}
+      required
       isInvalid={!!errorMessage}
       {...fieldStyles.control}
     >
-      {!!label && (
-        <FormLabel htmlFor={name} {...fieldStyles.label}>
-          {label}
-        </FormLabel>
-      )}
-      <Switch
+      <LabelElement
+        label={label}
         name={name}
-        data-testid={id}
-        ref={register}
-        {...fieldStyles.switch}
+        fieldStyles={fieldStyles}
+        tooltip={tooltip}
       />
-      {!!helperText && (
+      <Switch
+        {...register(name)}
+        data-testid={id}
+        {...fieldStyles.switch}
+        defaultChecked={defaultValue}
+      />
+      {Boolean(helperText) && (
         <FormHelperText {...fieldStyles.helperText}>
           {helperText}
         </FormHelperText>
@@ -58,5 +71,5 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
         {errorMessage}
       </FormErrorMessage>
     </FormControl>
-  ) : null;
+  );
 };

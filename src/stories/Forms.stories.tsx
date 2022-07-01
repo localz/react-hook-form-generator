@@ -13,7 +13,7 @@ export default {
 };
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Form> = args => (
+const Template: ComponentStory<typeof Form> = (args) => (
   <ChakraProvider>
     <Form {...args} />
   </ChakraProvider>
@@ -32,7 +32,7 @@ export const Login = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Login.args = {
   title: 'Login',
-  handleSubmit: values => {
+  handleSubmit: (values) => {
     alert(JSON.stringify(values));
   },
   formOptions: {

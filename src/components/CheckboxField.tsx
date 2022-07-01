@@ -52,7 +52,7 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
         </FormLabel>
       )}
       <Stack {...fieldStyles.checkboxGroup}>
-        {field.checkboxes.map(checkbox => (
+        {field.checkboxes.map((checkbox) => (
           <Checkbox
             key={checkbox.name}
             {...register(checkbox.name)}
