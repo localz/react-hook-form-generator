@@ -29,6 +29,7 @@ export type Field =
   | SwitchFieldSchema
   | CheckboxFieldSchema
   | SelectFieldSchema
+  | SelectFieldOptionsFromContextSchema
   | CustomFieldSchema;
 
 export interface FieldProps<T extends FieldSchema> {
@@ -48,6 +49,7 @@ interface FieldSchema {
     | 'object'
     | 'checkbox'
     | 'select'
+    | 'select-options-from-context'
     | 'custom';
   styles?:
     | FieldStyles
@@ -131,6 +133,15 @@ export interface SelectFieldSchema
     label?: string;
     value: string;
   }[];
+}
+
+export interface SelectFieldOptionsFromContextSchema<
+  T = { options: Array<{ value: string; label: string }> }
+>
+  extends FieldSchema,
+    Pick<FormController, 'label' | 'helperText' | 'isRequired'> {
+  type: 'select-options-from-context';
+  optionsKey: keyof T;
 }
 
 export interface FormStyles {

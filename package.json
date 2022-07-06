@@ -25,11 +25,6 @@
     "react": ">=16",
     "react-hook-form": "^6.14.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format && npm run lint"
-    }
-  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
@@ -54,7 +49,9 @@
     "@storybook/testing-library": "^0.0.11",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.4",
+    "@types/lodash.get": "^4.4.7",
     "@types/lodash.merge": "^4.6.6",
+    "@types/lodash.set": "^4.3.7",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "@types/react-select": "^3.0.12",
@@ -79,7 +76,10 @@
     "@emotion/styled": "^11.9.3",
     "@hookform/resolvers": "^2.9.0",
     "framer-motion": "4.1.17",
+    "lodash-es": "^4.17.21",
+    "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.2",
+    "lodash.set": "^4.3.2",
     "react-hook-form": "^7.12.2",
     "zod": "^3.17.3"
   }
