@@ -2,6 +2,7 @@ import React, { FC, BaseSyntheticEvent, useMemo } from 'react';
 import { Box, Heading, Stack, ButtonGroup, Button } from '@chakra-ui/react';
 import { useForm, FormProvider, UseFormProps } from 'react-hook-form';
 import merge from 'lodash.merge';
+import set from 'lodash.set';
 
 import { FormStyles, Field, Schema } from '../types';
 import { StyleCtx } from '../hooks/useStyles';
@@ -17,10 +18,14 @@ import {
 import { SwitchField } from './SwitchField';
 import { CheckboxField, checkboxFieldStyles } from './CheckboxField';
 import { SelectField } from './SelectField';
+import { SelectFieldContextOptions } from './SelectFieldContextOptions';
 
-export interface FormProps {
+export interface FormProps<
+  T = { options: Array<{ value: string; label: string }> }
+> {
   title?: string;
   schema: Schema;
+  reactContext?: React.Context<T>;
   handleSubmit: (values: any, e?: BaseSyntheticEvent) => void;
   styles?: FormStyles;
   overwriteDefaultStyles?: boolean;
@@ -97,6 +102,10 @@ const renderField = ([name, field]: [string, Field]) => {
       Component = SelectField;
       break;
 
+    case 'select-options-from-context':
+      Component = SelectFieldContextOptions;
+      break;
+
     case 'custom':
       Component = field.component;
       return (
@@ -124,8 +133,16 @@ export const Form: FC<FormProps> = ({
   overwriteDefaultStyles,
   buttons,
   styles = {},
+  reactContext,
 }) => {
   const form = useForm(formOptions);
+
+  if (reactContext) {
+    /*
+     * This is yucky but putting context inside another provider would be even more yucky
+     */
+    set(form, 'reactContext', reactContext);
+  }
 
   const baseStyles = useMemo(() => {
     return overwriteDefaultStyles ? styles : merge(defaultStyles, styles);

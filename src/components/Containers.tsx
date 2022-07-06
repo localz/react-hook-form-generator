@@ -29,6 +29,7 @@ import { NumberField } from './NumberField';
 import { SwitchField } from './SwitchField';
 import { CheckboxField } from './CheckboxField';
 import { SelectField } from './SelectField';
+import { SelectFieldContextOptions } from './SelectFieldContextOptions';
 import { TextAreaField } from './TextAreaField';
 
 const renderField = (
@@ -69,6 +70,10 @@ const renderField = (
 
     case 'select':
       Component = SelectField;
+      break;
+
+    case 'select-options-from-context':
+      Component = SelectFieldContextOptions;
       break;
 
     case 'custom':
@@ -314,14 +319,18 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
     return shouldDisplay ? shouldDisplay(values) : true;
   }, [values, shouldDisplay]);
 
-  return isVisible ? (
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
     <FormControl
-      isRequired={!!isRequired}
-      isInvalid={!!errorMessage}
+      isRequired={isRequired}
+      isInvalid={Boolean(errorMessage)}
       {...objectStyles.control}
     >
       <Flex {...objectStyles.toolbar}>
-        {!!label && (
+        {Boolean(label) && (
           <FormLabel htmlFor={name} {...objectStyles.label}>
             {label}
           </FormLabel>
@@ -338,19 +347,21 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
       <Collapse in={isOpen}>
         <Stack {...objectStyles.objectContainer}>
           {Object.entries(field.properties).map(
-            ([fieldName, objectField], i) => (
-              <Box key={i} {...objectStyles.propertyContainer}>
-                {renderField(
-                  [`${name}.${fieldName}`, objectField],
-                  id,
-                  defaultValue?.[fieldName]
-                )}
-              </Box>
-            )
+            ([fieldName, objectField], i) => {
+              return (
+                <Box key={i} {...objectStyles.propertyContainer}>
+                  {renderField(
+                    [`${name}.${fieldName}`, objectField],
+                    id,
+                    defaultValue?.[fieldName]
+                  )}
+                </Box>
+              );
+            }
           )}
         </Stack>
       </Collapse>
-      {!!helperText && (
+      {Boolean(helperText) && (
         <FormHelperText {...objectStyles.helperText}>
           {helperText}
         </FormHelperText>
@@ -359,5 +370,5 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
         {errorMessage}
       </FormErrorMessage>
     </FormControl>
-  ) : null;
+  );
 };
