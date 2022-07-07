@@ -65,7 +65,7 @@ export const SelectFieldContextOptions: FC<FieldProps<
       <Select
         data-testid={id}
         {...register(name)}
-        defaultValue={defaultValue || options[0].value}
+        defaultValue={defaultValue || null}
         {...fieldStyles.select}
       >
         {options.map((option) => (
