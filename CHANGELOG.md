@@ -1,5 +1,12 @@
 
 
+## [0.5.0](https://github.com/localz/react-hook-form-generator/compare/v0.4.0...v0.5.0) (2022-07-07)
+
+
+### Bug Fixes
+
+* default to unselected ([6e13b40](https://github.com/localz/react-hook-form-generator/commit/6e13b40e94fee3f198d786db7aff11a39bddbdee))
+
 ## [0.4.0](https://github.com/localz/react-hook-form-generator/compare/v0.3.0...v0.4.0) (2022-07-07)
 
 
