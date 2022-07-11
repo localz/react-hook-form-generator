@@ -1,5 +1,13 @@
 
 
+### [0.5.1](https://github.com/localz/react-hook-form-generator/compare/v0.5.0...v0.5.1) (2022-07-11)
+
+
+### Bug Fixes
+
+* array icons ([f4430cd](https://github.com/localz/react-hook-form-generator/commit/f4430cd71084f7e4f2ce4702c645ed9b0c4eee68))
+* unused import ([2632765](https://github.com/localz/react-hook-form-generator/commit/26327659e10882e9d13664a59d34324cfa307323))
+
 ## [0.5.0](https://github.com/localz/react-hook-form-generator/compare/v0.4.0...v0.5.0) (2022-07-07)
 
 
