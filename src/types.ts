@@ -140,7 +140,7 @@ export interface SelectFieldSchema
 }
 
 export interface SelectFieldOptionsFromContextSchema<
-  T extends FormPropsGeneric
+  T extends FormPropsGeneric = any
 >
   extends FieldSchema,
     Pick<FormController, 'label' | 'helperText' | 'isRequired'> {
