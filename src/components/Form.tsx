@@ -20,12 +20,16 @@ import { CheckboxField, checkboxFieldStyles } from './CheckboxField';
 import { SelectField } from './SelectField';
 import { SelectFieldContextOptions } from './SelectFieldContextOptions';
 
-export interface FormProps<
-  T = { options: Array<{ value: string; label: string }> }
-> {
+export interface FormPropsGeneric {
+  ctx?: {
+    actionOptions: Array<{ value: string; label: string }>;
+  };
+}
+
+export interface FormProps<T extends FormPropsGeneric = any> {
   title?: string;
   schema: Schema;
-  reactContext?: React.Context<T>;
+  reactContext?: React.Context<T['ctx']>;
   handleSubmit: (values: any, e?: BaseSyntheticEvent) => void;
   styles?: FormStyles;
   overwriteDefaultStyles?: boolean;
@@ -125,7 +129,7 @@ const renderField = ([name, field]: [string, Field]) => {
   );
 };
 
-export const Form: FC<FormProps> = ({
+export function Form<T extends FormPropsGeneric = any>({
   title,
   schema,
   handleSubmit,
@@ -134,7 +138,7 @@ export const Form: FC<FormProps> = ({
   buttons,
   styles = {},
   reactContext,
-}) => {
+}: FormProps<T>) {
   const form = useForm(formOptions);
 
   if (reactContext) {
@@ -185,4 +189,4 @@ export const Form: FC<FormProps> = ({
       </FormProvider>
     </StyleCtx.Provider>
   );
-};
+}

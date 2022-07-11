@@ -17,9 +17,11 @@ export default {
   component: Form,
 };
 
-const ActionOptionsContext = React.createContext<{
-  options: Array<{ value: string; label: string }>;
-}>({ options: [] });
+type Ctx = {
+  actionOptions: Array<{ value: string; label: string }>;
+};
+
+const ActionOptionsContext = React.createContext<Ctx>({ actionOptions: [] });
 
 const validationSchema = Z.object({
   username: Z.string({
@@ -65,7 +67,14 @@ const args: FormProps = {
       properties: {
         conditionType: {
           label: 'Condition',
-          type: 'text',
+          type: 'select',
+          defaultValue: { label: 'is_equal', value: 'is_equal' },
+          options: [
+            { label: 'is_equal', value: 'is_equal' },
+            { label: 'is_not_equal', value: 'is_not_equal' },
+            { label: 'is_less_than', value: 'is_less_than' },
+            { label: 'is_greater_than', value: 'is_greater_than' },
+          ],
           isRequired: true,
         },
         argument: {
@@ -76,7 +85,7 @@ const args: FormProps = {
         nextAction: {
           label: 'Next action',
           type: 'select-options-from-context',
-          optionsKey: 'options',
+          optionsKey: 'actionOptions',
         },
         headers: {
           label: 'Headers',
@@ -117,7 +126,7 @@ const args: FormProps = {
 const Template: ComponentStory<typeof Form> = () => (
   <ActionOptionsContext.Provider
     value={{
-      options: [
+      actionOptions: [
         { value: 'action-1', label: 'Action one' },
         { value: 'action-2', label: 'Action two' },
       ],

@@ -17,6 +17,7 @@ import {
   InputGroupProps,
   FormLabelProps,
 } from '@chakra-ui/react';
+import { FormPropsGeneric } from 'components/Form';
 
 export type Schema = Record<string, Field>;
 
@@ -127,7 +128,10 @@ export interface CheckboxFieldSchema
 
 export interface SelectFieldSchema
   extends FieldSchema,
-    Pick<FormController, 'label' | 'helperText' | 'isRequired'> {
+    Pick<
+      FormController,
+      'label' | 'helperText' | 'isRequired' | 'defaultValue'
+    > {
   type: 'select';
   options: {
     label?: string;
@@ -136,7 +140,7 @@ export interface SelectFieldSchema
 }
 
 export interface SelectFieldOptionsFromContextSchema<
-  T = { options: Array<{ value: string; label: string }> }
+  T extends FormPropsGeneric
 >
   extends FieldSchema,
     Pick<FormController, 'label' | 'helperText' | 'isRequired'> {
