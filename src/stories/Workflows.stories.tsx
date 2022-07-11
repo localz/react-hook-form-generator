@@ -56,7 +56,6 @@ const args: FormProps = {
     important: {
       type: 'switch',
       label: 'Important',
-      isRequired: true,
       tooltip:
         'If enabled, this workflow will be marked as having failed if this action takes the onFailure route',
       helperText: 'help',
@@ -78,6 +77,36 @@ const args: FormProps = {
           label: 'Next action',
           type: 'select-options-from-context',
           optionsKey: 'options',
+        },
+        headers: {
+          label: 'Headers',
+          type: 'array',
+          isCollapsable: true,
+          itemField: {
+            type: 'object',
+            styles: {
+              objectContainer: {
+                direction: 'row',
+                align: 'stretch',
+              },
+              propertyContainer: {
+                flex: 1,
+              },
+            },
+            properties: {
+              key: {
+                isRequired: true,
+                type: 'text',
+                label: 'Key',
+              },
+              value: {
+                isRequired: true,
+                type: 'text',
+                label: 'Value',
+                htmlInputType: 'text',
+              },
+            },
+          },
         },
       },
     },

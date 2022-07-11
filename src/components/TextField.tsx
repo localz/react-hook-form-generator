@@ -47,13 +47,13 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
   }, [values, shouldDisplay]);
 
   if (!isVisible) {
-    return <p>hidden</p>;
+    return null;
   }
 
   return (
     <FormControl
       isRequired={isRequired}
-      isInvalid={!!errorMessage}
+      isInvalid={Boolean(errorMessage)}
       {...fieldStyles.control}
     >
       <LabelElement

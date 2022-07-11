@@ -11,7 +11,9 @@ import {
   Stack,
   FormHelperText,
   FormErrorMessage,
+  HStack,
 } from '@chakra-ui/react';
+import { AddIcon, DeleteIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useFormContext, useFieldArray } from 'react-hook-form';
 
 import {
@@ -172,9 +174,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
 
   const { fields, append, remove } = useFieldArray({ name, control });
 
-  const { isOpen, onOpen, onToggle } = useDisclosure({
-    isOpen: true,
-  });
+  const { isOpen, onOpen, onToggle } = useDisclosure();
 
   const arrayStyles = useStyles<ArrayFieldStyles>('arrayField', styles);
 
@@ -189,39 +189,39 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     return shouldDisplay ? shouldDisplay(values) : true;
   }, [values, shouldDisplay]);
 
-  return isVisible ? (
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
     <FormControl
       isRequired={isRequired}
-      isInvalid={!!errorMessage}
+      isInvalid={Boolean(errorMessage)}
       {...arrayStyles.control}
     >
       <Flex {...arrayStyles.toolbar}>
-        {!!label && (
+        {Boolean(label) && (
           <FormLabel htmlFor={name} {...arrayStyles.label}>
-            {label}{' '}
-            <Box
-            //{...arrayStyles.countText}
-            >
-              ({fields.length})
-            </Box>
+            {label}
+            <Box>({fields.length})</Box>
           </FormLabel>
         )}
         <ButtonGroup {...arrayStyles.buttonGroup}>
           <IconButton
-            // icon="add"
+            icon={<AddIcon />}
             aria-label="Add item"
             onClick={addItem}
             {...arrayStyles.addButton}
           />
           <IconButton
-            // icon="delete"
+            icon={<DeleteIcon />}
             aria-label="Clear items"
             onClick={() => remove()}
             {...arrayStyles.clearButton}
           />
           {isCollapsable && (
             <IconButton
-              // icon={isOpen ? 'view-off' : 'view'}
+              icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
               aria-label={isOpen ? 'Hide items' : 'Show items'}
               onClick={onToggle}
               {...arrayStyles.collapseButton}
@@ -229,6 +229,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
           )}
         </ButtonGroup>
       </Flex>
+
       <Collapse in={isOpen}>
         <Stack {...arrayStyles.arrayContainer}>
           {fields.map((item, i) => (
@@ -244,7 +245,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
               )}
               <Box {...arrayStyles.deleteItemContainer}>
                 <IconButton
-                  //   icon="delete"
+                  icon={<DeleteIcon />}
                   aria-label="Delete item"
                   onClick={() => remove(i)}
                   {...arrayStyles.deleteButton}
@@ -254,7 +255,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
           ))}
         </Stack>
       </Collapse>
-      {!!helperText && (
+      {Boolean(helperText) && (
         <FormHelperText {...arrayStyles.helperText}>
           {helperText}
         </FormHelperText>
@@ -263,7 +264,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
         {errorMessage}
       </FormErrorMessage>
     </FormControl>
-  ) : null;
+  );
 };
 
 export const objectFieldStyles: ObjectFieldStyles = {
@@ -337,7 +338,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
         )}
         {isCollapsable && (
           <IconButton
-            //  icon={isOpen ? 'view-off' : 'view'}
+            icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
             aria-label={isOpen ? 'Hide items' : 'Show items'}
             onClick={onToggle}
             {...objectStyles.collapseButton}
