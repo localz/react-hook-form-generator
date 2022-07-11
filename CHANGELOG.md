@@ -1,5 +1,14 @@
 
 
+### [0.5.2](https://github.com/localz/react-hook-form-generator/compare/v0.5.1...v0.5.2) (2022-07-11)
+
+
+### Bug Fixes
+
+* react context types ([be4e92a](https://github.com/localz/react-hook-form-generator/commit/be4e92ae5629de8928acc856f06c242c74bde997))
+* type ([984a90a](https://github.com/localz/react-hook-form-generator/commit/984a90a8cb33a3ab9848cdb630dfda566f8542b4))
+* type ([d40323c](https://github.com/localz/react-hook-form-generator/commit/d40323c6d4c8a9261fb6c9ccda5f1fe6df4ad44d))
+
 ### [0.5.1](https://github.com/localz/react-hook-form-generator/compare/v0.5.0...v0.5.1) (2022-07-11)
 
 
