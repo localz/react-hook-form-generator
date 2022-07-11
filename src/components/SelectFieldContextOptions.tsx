@@ -34,8 +34,10 @@ export const SelectFieldContextOptions: FC<FieldProps<
 
   const {
     // @ts-ignore
-    [optionsKey]: options = [] as Array<{ label: string; value: any }>,
+    [optionsKey]: optns = [],
   } = useContext(reactContext);
+
+  const options = optns as Array<{ label: string; value: any }>;
 
   const values = watch(name);
 
