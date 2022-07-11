@@ -33,6 +33,7 @@ export const SelectFieldContextOptions: FC<FieldProps<
   const reactContext = get(restOfForm, 'reactContext');
 
   const {
+    // @ts-ignore
     [optionsKey]: options = [] as Array<{ label: string; value: any }>,
   } = useContext(reactContext);
 
