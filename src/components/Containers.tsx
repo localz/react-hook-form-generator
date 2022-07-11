@@ -11,7 +11,6 @@ import {
   Stack,
   FormHelperText,
   FormErrorMessage,
-  HStack,
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useFormContext, useFieldArray } from 'react-hook-form';
