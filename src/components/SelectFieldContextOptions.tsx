@@ -55,10 +55,6 @@ export const SelectFieldContextOptions: FC<FieldProps<
     return null;
   }
 
-  console.log('defaultValue', defaultValue);
-
-  console.log({ placeholder });
-
   return (
     <FormControl
       key={`${name}-control`}
