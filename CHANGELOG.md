@@ -1,5 +1,12 @@
 
 
+### [0.5.4](https://github.com/localz/react-hook-form-generator/compare/v0.5.3...v0.5.4) (2022-07-12)
+
+
+### Bug Fixes
+
+* select ctx placeholder ([6372611](https://github.com/localz/react-hook-form-generator/commit/63726116c0f3750170d915ed49596d1391613724))
+
 ### [0.5.3](https://github.com/localz/react-hook-form-generator/compare/v0.5.2...v0.5.3) (2022-07-11)
 
 
