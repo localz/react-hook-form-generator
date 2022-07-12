@@ -9,8 +9,6 @@ import {
   FormHelperText,
   FormErrorMessage,
   Divider,
-  Spacer,
-  Box,
 } from '@chakra-ui/react';
 
 import { FieldProps, FieldStyles, TextFieldSchema } from '../types';
