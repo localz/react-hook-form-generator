@@ -83,7 +83,15 @@ const args: FormProps = {
           type: 'text',
         },
         nextAction: {
+          placeholder: 'Select next action',
           label: 'Next action',
+          type: 'select-options-from-context',
+          optionsKey: 'actionOptions',
+          defaultValue: 'action-1',
+        },
+        onSuccess: {
+          placeholder: 'Select success action',
+          label: 'On success',
           type: 'select-options-from-context',
           optionsKey: 'actionOptions',
         },

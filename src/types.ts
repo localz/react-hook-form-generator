@@ -143,7 +143,10 @@ export interface SelectFieldOptionsFromContextSchema<
   T extends FormPropsGeneric = any
 >
   extends FieldSchema,
-    Pick<FormController, 'label' | 'helperText' | 'isRequired'> {
+    Pick<
+      FormController,
+      'label' | 'helperText' | 'isRequired' | 'placeholder' | 'defaultValue'
+    > {
   type: 'select-options-from-context';
   optionsKey: keyof T;
 }

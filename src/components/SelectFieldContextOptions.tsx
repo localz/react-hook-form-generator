@@ -18,7 +18,7 @@ import { useStyles } from '../hooks/useStyles';
 
 export const SelectFieldContextOptions: FC<FieldProps<
   SelectFieldOptionsFromContextSchema
->> = ({ id, name, field, defaultValue }) => {
+>> = ({ id, name, field }) => {
   const {
     label,
     helperText,
@@ -26,6 +26,8 @@ export const SelectFieldContextOptions: FC<FieldProps<
     shouldDisplay,
     styles = {},
     optionsKey,
+    placeholder,
+    defaultValue,
   } = field;
 
   const { register, watch, ...restOfForm } = useFormContext();
@@ -53,6 +55,10 @@ export const SelectFieldContextOptions: FC<FieldProps<
     return null;
   }
 
+  console.log('defaultValue', defaultValue);
+
+  console.log({ placeholder });
+
   return (
     <FormControl
       key={`${name}-control`}
@@ -69,6 +75,7 @@ export const SelectFieldContextOptions: FC<FieldProps<
         data-testid={id}
         {...register(name)}
         defaultValue={defaultValue || null}
+        {...(placeholder && { placeholder })}
         {...fieldStyles.select}
       >
         {options.map((option) => (
