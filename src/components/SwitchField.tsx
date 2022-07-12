@@ -4,6 +4,7 @@ import {
   FormHelperText,
   FormErrorMessage,
   Switch,
+  Divider,
 } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
 import { FieldProps, SwitchFieldStyles, SwitchFieldSchema } from '../types';
@@ -24,6 +25,7 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
     styles = {},
     defaultValue,
     tooltip,
+    divideAfter,
   } = field;
 
   const { register, watch } = useFormContext();
@@ -43,33 +45,36 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
   }
 
   return (
-    <FormControl
-      key={`${name}-control`}
-      isRequired={isRequired}
-      required
-      isInvalid={!!errorMessage}
-      {...fieldStyles.control}
-    >
-      <LabelElement
-        label={label}
-        name={name}
-        fieldStyles={fieldStyles}
-        tooltip={tooltip}
-      />
-      <Switch
-        {...register(name)}
-        data-testid={id}
-        {...fieldStyles.switch}
-        defaultChecked={defaultValue}
-      />
-      {Boolean(helperText) && (
-        <FormHelperText {...fieldStyles.helperText}>
-          {helperText}
-        </FormHelperText>
-      )}
-      <FormErrorMessage {...fieldStyles.errorMessage}>
-        {errorMessage}
-      </FormErrorMessage>
-    </FormControl>
+    <>
+      <FormControl
+        key={`${name}-control`}
+        isRequired={isRequired}
+        required
+        isInvalid={!!errorMessage}
+        {...fieldStyles.control}
+      >
+        <LabelElement
+          label={label}
+          name={name}
+          fieldStyles={fieldStyles}
+          tooltip={tooltip}
+        />
+        <Switch
+          {...register(name)}
+          data-testid={id}
+          {...fieldStyles.switch}
+          defaultChecked={defaultValue}
+        />
+        {Boolean(helperText) && (
+          <FormHelperText {...fieldStyles.helperText}>
+            {helperText}
+          </FormHelperText>
+        )}
+        <FormErrorMessage {...fieldStyles.errorMessage}>
+          {errorMessage}
+        </FormErrorMessage>
+      </FormControl>
+      {divideAfter && <Divider mt="8" />}
+    </>
   );
 };

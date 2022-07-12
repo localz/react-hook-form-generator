@@ -74,6 +74,7 @@ interface FormController {
   isRequired?: boolean;
   defaultValue?: any;
   tooltip?: string;
+  divideAfter?: boolean;
 }
 
 export interface TextFieldSchema extends FieldSchema, FormController {
@@ -93,7 +94,10 @@ export interface NumberFieldSchema extends FieldSchema, FormController {
 
 export interface ArrayFieldSchema
   extends FieldSchema,
-    Pick<FormController, 'label' | 'helperText' | 'isRequired'> {
+    Pick<
+      FormController,
+      'label' | 'helperText' | 'isRequired' | 'divideAfter'
+    > {
   type: 'array';
   isCollapsable?: boolean;
   itemField: Field;
@@ -101,7 +105,10 @@ export interface ArrayFieldSchema
 
 export interface ObjectFieldSchema
   extends FieldSchema,
-    Pick<FormController, 'label' | 'helperText' | 'isRequired'> {
+    Pick<
+      FormController,
+      'label' | 'helperText' | 'isRequired' | 'divideAfter'
+    > {
   type: 'object';
   isCollapsable?: boolean;
   properties: Record<string, Field>;
@@ -111,14 +118,22 @@ export interface SwitchFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'defaultValue' | 'tooltip'
+      | 'label'
+      | 'helperText'
+      | 'isRequired'
+      | 'defaultValue'
+      | 'tooltip'
+      | 'divideAfter'
     > {
   type: 'switch';
 }
 
 export interface CheckboxFieldSchema
   extends FieldSchema,
-    Pick<FormController, 'label' | 'helperText' | 'isRequired'> {
+    Pick<
+      FormController,
+      'label' | 'helperText' | 'isRequired' | 'divideAfter'
+    > {
   type: 'checkbox';
   checkboxes: {
     name: string;
@@ -130,7 +145,7 @@ export interface SelectFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'defaultValue'
+      'label' | 'helperText' | 'isRequired' | 'defaultValue' | 'divideAfter'
     > {
   type: 'select';
   options: {
@@ -145,7 +160,12 @@ export interface SelectFieldOptionsFromContextSchema<
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'placeholder' | 'defaultValue'
+      | 'label'
+      | 'helperText'
+      | 'isRequired'
+      | 'placeholder'
+      | 'defaultValue'
+      | 'divideAfter'
     > {
   type: 'select-options-from-context';
   optionsKey: keyof T;

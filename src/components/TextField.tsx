@@ -8,6 +8,9 @@ import {
   InputRightAddon,
   FormHelperText,
   FormErrorMessage,
+  Divider,
+  Spacer,
+  Box,
 } from '@chakra-ui/react';
 
 import { FieldProps, FieldStyles, TextFieldSchema } from '../types';
@@ -32,6 +35,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     styles = {},
     defaultValue,
     tooltip,
+    divideAfter,
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('textField', styles);
@@ -51,20 +55,33 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
   }
 
   return (
-    <FormControl
-      isRequired={isRequired}
-      isInvalid={Boolean(errorMessage)}
-      {...fieldStyles.control}
-    >
-      <LabelElement
-        label={label}
-        name={name}
-        fieldStyles={fieldStyles}
-        tooltip={tooltip}
-      />
-      {leftInputAddon || rightInputAddon ? (
-        <InputGroup {...fieldStyles.inputGroup}>
-          {Boolean(leftInputAddon) && <InputLeftAddon {...leftInputAddon} />}
+    <>
+      <FormControl
+        isRequired={isRequired}
+        isInvalid={Boolean(errorMessage)}
+        {...fieldStyles.control}
+      >
+        <LabelElement
+          label={label}
+          name={name}
+          fieldStyles={fieldStyles}
+          tooltip={tooltip}
+        />
+        {leftInputAddon || rightInputAddon ? (
+          <InputGroup {...fieldStyles.inputGroup}>
+            {Boolean(leftInputAddon) && <InputLeftAddon {...leftInputAddon} />}
+            <Input
+              data-testid={id}
+              type={htmlInputType || 'text'}
+              aria-label={name}
+              {...register(name)}
+              placeholder={placeholder}
+              defaultValue={defaultValue || ''}
+              {...fieldStyles.input}
+            />
+            {rightInputAddon && <InputRightAddon {...rightInputAddon} />}
+          </InputGroup>
+        ) : (
           <Input
             data-testid={id}
             type={htmlInputType || 'text'}
@@ -74,27 +91,17 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
             defaultValue={defaultValue || ''}
             {...fieldStyles.input}
           />
-          {rightInputAddon && <InputRightAddon {...rightInputAddon} />}
-        </InputGroup>
-      ) : (
-        <Input
-          data-testid={id}
-          type={htmlInputType || 'text'}
-          aria-label={name}
-          {...register(name)}
-          placeholder={placeholder}
-          defaultValue={defaultValue || ''}
-          {...fieldStyles.input}
-        />
-      )}
-      {Boolean(helperText) && (
-        <FormHelperText {...fieldStyles.helperText}>
-          {helperText}
-        </FormHelperText>
-      )}
-      <FormErrorMessage {...fieldStyles.errorMessage}>
-        {errorMessage}
-      </FormErrorMessage>
-    </FormControl>
+        )}
+        {Boolean(helperText) && (
+          <FormHelperText {...fieldStyles.helperText}>
+            {helperText}
+          </FormHelperText>
+        )}
+        <FormErrorMessage {...fieldStyles.errorMessage}>
+          {errorMessage}
+        </FormErrorMessage>
+      </FormControl>
+      {divideAfter && <Divider mt="8" />}
+    </>
   );
 };

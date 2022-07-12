@@ -6,6 +6,7 @@ import {
   FormErrorMessage,
   Checkbox,
   Stack,
+  Divider,
 } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
 
@@ -25,7 +26,14 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
   name,
   field,
 }) => {
-  const { label, helperText, isRequired, shouldDisplay, styles = {} } = field;
+  const {
+    label,
+    helperText,
+    isRequired,
+    shouldDisplay,
+    styles = {},
+    divideAfter,
+  } = field;
 
   const { register, watch } = useFormContext();
 
@@ -39,37 +47,44 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
     return shouldDisplay ? shouldDisplay(values) : true;
   }, [values, shouldDisplay]);
 
-  return isVisible ? (
-    <FormControl
-      key={`${name}-control`}
-      isRequired={isRequired}
-      isInvalid={!!errorMessage}
-      {...fieldStyles.control}
-    >
-      {!!label && (
-        <FormLabel htmlFor={name} {...fieldStyles.label}>
-          {label}
-        </FormLabel>
-      )}
-      <Stack {...fieldStyles.checkboxGroup}>
-        {field.checkboxes.map((checkbox) => (
-          <Checkbox
-            key={checkbox.name}
-            {...register(checkbox.name)}
-            data-testid={`${id}-${checkbox.name}`}
-          >
-            {checkbox.label || checkbox.name}
-          </Checkbox>
-        ))}
-      </Stack>
-      {!!helperText && (
-        <FormHelperText {...fieldStyles.helperText}>
-          {helperText}
-        </FormHelperText>
-      )}
-      <FormErrorMessage {...fieldStyles.errorMessage}>
-        {errorMessage}
-      </FormErrorMessage>
-    </FormControl>
-  ) : null;
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
+    <>
+      <FormControl
+        key={`${name}-control`}
+        isRequired={isRequired}
+        isInvalid={!!errorMessage}
+        {...fieldStyles.control}
+      >
+        {!!label && (
+          <FormLabel htmlFor={name} {...fieldStyles.label}>
+            {label}
+          </FormLabel>
+        )}
+        <Stack {...fieldStyles.checkboxGroup}>
+          {field.checkboxes.map((checkbox) => (
+            <Checkbox
+              key={checkbox.name}
+              {...register(checkbox.name)}
+              data-testid={`${id}-${checkbox.name}`}
+            >
+              {checkbox.label || checkbox.name}
+            </Checkbox>
+          ))}
+        </Stack>
+        {!!helperText && (
+          <FormHelperText {...fieldStyles.helperText}>
+            {helperText}
+          </FormHelperText>
+        )}
+        <FormErrorMessage {...fieldStyles.errorMessage}>
+          {errorMessage}
+        </FormErrorMessage>
+      </FormControl>
+      {divideAfter && <Divider mt="8" />}
+    </>
+  );
 };

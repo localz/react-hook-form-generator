@@ -52,6 +52,7 @@ const args: FormProps = {
       label: 'Name',
       isRequired: true,
       defaultValue: 'compare',
+      divideAfter: true,
     },
     friendlyName: { type: 'text', label: 'Friendly name', isRequired: true },
     description: { type: 'text', label: 'Description', isRequired: true },
@@ -64,6 +65,7 @@ const args: FormProps = {
     },
     input: {
       type: 'object',
+      divideAfter: true,
       properties: {
         conditionType: {
           label: 'Condition',
@@ -95,6 +97,7 @@ const args: FormProps = {
           type: 'select-options-from-context',
           optionsKey: 'actionOptions',
         },
+
         headers: {
           label: 'Headers',
           type: 'array',

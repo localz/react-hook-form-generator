@@ -11,6 +11,7 @@ import {
   Stack,
   FormHelperText,
   FormErrorMessage,
+  Divider,
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useFormContext, useFieldArray } from 'react-hook-form';
@@ -165,6 +166,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     helperText,
     shouldDisplay,
     styles = {},
+    divideAfter,
   } = field;
 
   const { control, watch } = useFormContext();
@@ -193,76 +195,79 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   }
 
   return (
-    <FormControl
-      isRequired={isRequired}
-      isInvalid={Boolean(errorMessage)}
-      {...arrayStyles.control}
-    >
-      <Flex {...arrayStyles.toolbar}>
-        {Boolean(label) && (
-          <FormLabel htmlFor={name} {...arrayStyles.label}>
-            {label}
-            <Box>({fields.length})</Box>
-          </FormLabel>
-        )}
-        <ButtonGroup {...arrayStyles.buttonGroup}>
-          <IconButton
-            icon={<AddIcon />}
-            aria-label="Add item"
-            onClick={addItem}
-            {...arrayStyles.addButton}
-          />
-          <IconButton
-            icon={<DeleteIcon />}
-            aria-label="Clear items"
-            onClick={() => remove()}
-            {...arrayStyles.clearButton}
-          />
-          {isCollapsable && (
-            <IconButton
-              icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
-              aria-label={isOpen ? 'Hide items' : 'Show items'}
-              onClick={onToggle}
-              {...arrayStyles.collapseButton}
-            />
+    <>
+      <FormControl
+        isRequired={isRequired}
+        isInvalid={Boolean(errorMessage)}
+        {...arrayStyles.control}
+      >
+        <Flex {...arrayStyles.toolbar}>
+          {Boolean(label) && (
+            <FormLabel htmlFor={name} {...arrayStyles.label}>
+              {label}
+              <Box>({fields.length})</Box>
+            </FormLabel>
           )}
-        </ButtonGroup>
-      </Flex>
+          <ButtonGroup {...arrayStyles.buttonGroup}>
+            <IconButton
+              icon={<AddIcon />}
+              aria-label="Add item"
+              onClick={addItem}
+              {...arrayStyles.addButton}
+            />
+            <IconButton
+              icon={<DeleteIcon />}
+              aria-label="Clear items"
+              onClick={() => remove()}
+              {...arrayStyles.clearButton}
+            />
+            {isCollapsable && (
+              <IconButton
+                icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
+                aria-label={isOpen ? 'Hide items' : 'Show items'}
+                onClick={onToggle}
+                {...arrayStyles.collapseButton}
+              />
+            )}
+          </ButtonGroup>
+        </Flex>
 
-      <Collapse in={isOpen}>
-        <Stack {...arrayStyles.arrayContainer}>
-          {fields.map((item, i) => (
-            <Box
-              key={item?.id || `${name}[${i}].value`}
-              {...arrayStyles.itemContainer}
-            >
-              {renderField(
-                [`${name}[${i}].value`, itemField],
-                item.id,
-                // @ts-ignore
-                item.value
-              )}
-              <Box {...arrayStyles.deleteItemContainer}>
-                <IconButton
-                  icon={<DeleteIcon />}
-                  aria-label="Delete item"
-                  onClick={() => remove(i)}
-                  {...arrayStyles.deleteButton}
-                />
+        <Collapse in={isOpen}>
+          <Stack {...arrayStyles.arrayContainer}>
+            {fields.map((item, i) => (
+              <Box
+                key={item?.id || `${name}[${i}].value`}
+                {...arrayStyles.itemContainer}
+              >
+                {renderField(
+                  [`${name}[${i}].value`, itemField],
+                  item.id,
+                  // @ts-ignore
+                  item.value
+                )}
+                <Box {...arrayStyles.deleteItemContainer}>
+                  <IconButton
+                    icon={<DeleteIcon />}
+                    aria-label="Delete item"
+                    onClick={() => remove(i)}
+                    {...arrayStyles.deleteButton}
+                  />
+                </Box>
               </Box>
-            </Box>
-          ))}
-        </Stack>
-      </Collapse>
-      {Boolean(helperText) && (
-        <FormHelperText {...arrayStyles.helperText}>
-          {helperText}
-        </FormHelperText>
-      )}
-      <FormErrorMessage {...arrayStyles.errorMessage}>
-        {errorMessage}
-      </FormErrorMessage>
-    </FormControl>
+            ))}
+          </Stack>
+        </Collapse>
+        {Boolean(helperText) && (
+          <FormHelperText {...arrayStyles.helperText}>
+            {helperText}
+          </FormHelperText>
+        )}
+        <FormErrorMessage {...arrayStyles.errorMessage}>
+          {errorMessage}
+        </FormErrorMessage>
+      </FormControl>
+      {divideAfter && <Divider mt="8" />}
+    </>
   );
 };
 
@@ -301,6 +306,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
     helperText,
     shouldDisplay,
     styles = {},
+    divideAfter,
   } = field;
 
   const { watch } = useFormContext();
@@ -324,51 +330,54 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
   }
 
   return (
-    <FormControl
-      isRequired={isRequired}
-      isInvalid={Boolean(errorMessage)}
-      {...objectStyles.control}
-    >
-      <Flex {...objectStyles.toolbar}>
-        {Boolean(label) && (
-          <FormLabel htmlFor={name} {...objectStyles.label}>
-            {label}
-          </FormLabel>
-        )}
-        {isCollapsable && (
-          <IconButton
-            icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
-            aria-label={isOpen ? 'Hide items' : 'Show items'}
-            onClick={onToggle}
-            {...objectStyles.collapseButton}
-          />
-        )}
-      </Flex>
-      <Collapse in={isOpen}>
-        <Stack {...objectStyles.objectContainer}>
-          {Object.entries(field.properties).map(
-            ([fieldName, objectField], i) => {
-              return (
-                <Box key={i} {...objectStyles.propertyContainer}>
-                  {renderField(
-                    [`${name}.${fieldName}`, objectField],
-                    id,
-                    defaultValue?.[fieldName]
-                  )}
-                </Box>
-              );
-            }
+    <>
+      <FormControl
+        isRequired={isRequired}
+        isInvalid={Boolean(errorMessage)}
+        {...objectStyles.control}
+      >
+        <Flex {...objectStyles.toolbar}>
+          {Boolean(label) && (
+            <FormLabel htmlFor={name} {...objectStyles.label}>
+              {label}
+            </FormLabel>
           )}
-        </Stack>
-      </Collapse>
-      {Boolean(helperText) && (
-        <FormHelperText {...objectStyles.helperText}>
-          {helperText}
-        </FormHelperText>
-      )}
-      <FormErrorMessage {...objectStyles.errorMessage}>
-        {errorMessage}
-      </FormErrorMessage>
-    </FormControl>
+          {isCollapsable && (
+            <IconButton
+              icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
+              aria-label={isOpen ? 'Hide items' : 'Show items'}
+              onClick={onToggle}
+              {...objectStyles.collapseButton}
+            />
+          )}
+        </Flex>
+        <Collapse in={isOpen}>
+          <Stack {...objectStyles.objectContainer}>
+            {Object.entries(field.properties).map(
+              ([fieldName, objectField], i) => {
+                return (
+                  <Box key={i} {...objectStyles.propertyContainer}>
+                    {renderField(
+                      [`${name}.${fieldName}`, objectField],
+                      id,
+                      defaultValue?.[fieldName]
+                    )}
+                  </Box>
+                );
+              }
+            )}
+          </Stack>
+        </Collapse>
+        {Boolean(helperText) && (
+          <FormHelperText {...objectStyles.helperText}>
+            {helperText}
+          </FormHelperText>
+        )}
+        <FormErrorMessage {...objectStyles.errorMessage}>
+          {errorMessage}
+        </FormErrorMessage>
+      </FormControl>
+      {divideAfter && <Divider mt="8" />}
+    </>
   );
 };

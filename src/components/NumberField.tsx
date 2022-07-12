@@ -9,6 +9,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   FormErrorMessage,
+  Divider,
 } from '@chakra-ui/react';
 import { useFormContext, Controller } from 'react-hook-form';
 
@@ -22,7 +23,14 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
   field,
   defaultValue,
 }) => {
-  const { label, helperText, isRequired, shouldDisplay, styles = {} } = field;
+  const {
+    label,
+    helperText,
+    isRequired,
+    shouldDisplay,
+    styles = {},
+    divideAfter,
+  } = field;
 
   const fieldStyles = useStyles<FieldStyles>('numberField', styles);
 
@@ -36,36 +44,43 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
     return shouldDisplay ? shouldDisplay(values) : true;
   }, [values, shouldDisplay]);
 
-  return isVisible ? (
-    <FormControl
-      key={`${name}-control`}
-      isRequired={isRequired}
-      isInvalid={Boolean(errorMessage)}
-      {...fieldStyles.control}
-    >
-      {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
-      <Controller
-        name={name}
-        control={control}
-        defaultValue={defaultValue || 0}
-        render={() => (
-          <NumberInput>
-            <NumberInputField id={id} data-testid={id} />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
+    <>
+      <FormControl
+        key={`${name}-control`}
+        isRequired={isRequired}
+        isInvalid={Boolean(errorMessage)}
+        {...fieldStyles.control}
+      >
+        {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={defaultValue || 0}
+          render={() => (
+            <NumberInput>
+              <NumberInputField id={id} data-testid={id} />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          )}
+        />
+        {helperText && (
+          <FormHelperText {...fieldStyles.helperText}>
+            {helperText}
+          </FormHelperText>
         )}
-      />
-      {helperText && (
-        <FormHelperText {...fieldStyles.helperText}>
-          {helperText}
-        </FormHelperText>
-      )}
-      <FormErrorMessage {...fieldStyles.errorMessage}>
-        {errorMessage}
-      </FormErrorMessage>
-    </FormControl>
-  ) : null;
+        <FormErrorMessage {...fieldStyles.errorMessage}>
+          {errorMessage}
+        </FormErrorMessage>
+      </FormControl>
+      {divideAfter && <Divider mt="8" />}
+    </>
+  );
 };

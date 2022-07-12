@@ -6,6 +6,7 @@ import {
   FormErrorMessage,
   Textarea,
   FormHelperText,
+  Divider,
 } from '@chakra-ui/react';
 
 import { FieldProps, FieldStyles, TextAreaFieldSchema } from '../types';
@@ -24,6 +25,7 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
     isRequired,
     shouldDisplay,
     styles = {},
+    divideAfter,
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('textAreaField', styles);
@@ -38,30 +40,37 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
     return shouldDisplay ? shouldDisplay(values) : true;
   }, [values, shouldDisplay]);
 
-  return isVisible ? (
-    <FormControl
-      isRequired={isRequired}
-      isInvalid={!!errorMessage}
-      {...fieldStyles.control}
-    >
-      {!!label && (
-        <FormLabel htmlFor={name} {...fieldStyles.label}>
-          {label}
-        </FormLabel>
-      )}
-      <Textarea
-        placeholder={placeholder}
-        {...register(name)}
-        defaultValue={defaultValue || ''}
-      />
-      {!!helperText && (
-        <FormHelperText {...fieldStyles.helperText}>
-          {helperText}
-        </FormHelperText>
-      )}
-      <FormErrorMessage {...fieldStyles.errorMessage}>
-        {errorMessage}
-      </FormErrorMessage>
-    </FormControl>
-  ) : null;
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
+    <>
+      <FormControl
+        isRequired={isRequired}
+        isInvalid={!!errorMessage}
+        {...fieldStyles.control}
+      >
+        {!!label && (
+          <FormLabel htmlFor={name} {...fieldStyles.label}>
+            {label}
+          </FormLabel>
+        )}
+        <Textarea
+          placeholder={placeholder}
+          {...register(name)}
+          defaultValue={defaultValue || ''}
+        />
+        {!!helperText && (
+          <FormHelperText {...fieldStyles.helperText}>
+            {helperText}
+          </FormHelperText>
+        )}
+        <FormErrorMessage {...fieldStyles.errorMessage}>
+          {errorMessage}
+        </FormErrorMessage>
+      </FormControl>
+      {divideAfter && <Divider mt="8" />}
+    </>
+  );
 };

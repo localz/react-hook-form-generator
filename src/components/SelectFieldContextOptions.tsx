@@ -5,6 +5,7 @@ import {
   FormHelperText,
   FormErrorMessage,
   Select,
+  Divider,
 } from '@chakra-ui/react';
 import get from 'lodash.get';
 import { useFormContext } from 'react-hook-form';
@@ -28,6 +29,7 @@ export const SelectFieldContextOptions: FC<FieldProps<
     optionsKey,
     placeholder,
     defaultValue,
+    divideAfter,
   } = field;
 
   const { register, watch, ...restOfForm } = useFormContext();
@@ -56,38 +58,41 @@ export const SelectFieldContextOptions: FC<FieldProps<
   }
 
   return (
-    <FormControl
-      key={`${name}-control`}
-      isRequired={isRequired}
-      isInvalid={Boolean(errorMessage)}
-      {...fieldStyles.control}
-    >
-      {Boolean(label) && (
-        <FormLabel htmlFor={name} {...fieldStyles.label}>
-          {label}
-        </FormLabel>
-      )}
-      <Select
-        data-testid={id}
-        {...register(name)}
-        defaultValue={defaultValue || null}
-        {...(placeholder && { placeholder })}
-        {...fieldStyles.select}
+    <>
+      <FormControl
+        key={`${name}-control`}
+        isRequired={isRequired}
+        isInvalid={Boolean(errorMessage)}
+        {...fieldStyles.control}
       >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label || option.value}
-          </option>
-        ))}
-      </Select>
-      {Boolean(helperText) && (
-        <FormHelperText {...fieldStyles.helperText}>
-          {helperText}
-        </FormHelperText>
-      )}
-      <FormErrorMessage {...fieldStyles.errorMessage}>
-        {errorMessage}
-      </FormErrorMessage>
-    </FormControl>
+        {Boolean(label) && (
+          <FormLabel htmlFor={name} {...fieldStyles.label}>
+            {label}
+          </FormLabel>
+        )}
+        <Select
+          data-testid={id}
+          {...register(name)}
+          defaultValue={defaultValue || null}
+          {...(placeholder && { placeholder })}
+          {...fieldStyles.select}
+        >
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label || option.value}
+            </option>
+          ))}
+        </Select>
+        {Boolean(helperText) && (
+          <FormHelperText {...fieldStyles.helperText}>
+            {helperText}
+          </FormHelperText>
+        )}
+        <FormErrorMessage {...fieldStyles.errorMessage}>
+          {errorMessage}
+        </FormErrorMessage>
+      </FormControl>
+      {divideAfter && <Divider mt="8" />}
+    </>
   );
 };
