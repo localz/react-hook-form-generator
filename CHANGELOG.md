@@ -1,5 +1,12 @@
 
 
+### [0.5.5](https://github.com/localz/react-hook-form-generator/compare/v0.5.4...v0.5.5) (2022-07-12)
+
+
+### Bug Fixes
+
+* console logs ([5daef95](https://github.com/localz/react-hook-form-generator/commit/5daef95876e85f91987825e56e833d12adb29bca))
+
 ### [0.5.4](https://github.com/localz/react-hook-form-generator/compare/v0.5.3...v0.5.4) (2022-07-12)
 
 
