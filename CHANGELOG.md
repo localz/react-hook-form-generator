@@ -1,5 +1,17 @@
 
 
+### [0.5.8](https://github.com/localz/react-hook-form-generator/compare/v0.5.7...v0.5.8) (2022-07-13)
+
+
+### Features
+
+* json input ([a4a739f](https://github.com/localz/react-hook-form-generator/commit/a4a739fad5c4322e188248bfaa65ebd44850fa49))
+
+
+### Bug Fixes
+
+* remove unused const ([5f07dfa](https://github.com/localz/react-hook-form-generator/commit/5f07dfafb61aef94e9a6b98598f09483e2bbb891))
+
 ### [0.5.7](https://github.com/localz/react-hook-form-generator/compare/v0.5.6...v0.5.7) (2022-07-13)
 
 
