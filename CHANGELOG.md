@@ -1,5 +1,13 @@
 
 
+### [0.5.7](https://github.com/localz/react-hook-form-generator/compare/v0.5.6...v0.5.7) (2022-07-13)
+
+
+### Features
+
+* add trigger options ([9a7e82c](https://github.com/localz/react-hook-form-generator/commit/9a7e82c6bcf5ccc94f55dbb8b0b6879c209e017d))
+* readonly form ([033294d](https://github.com/localz/react-hook-form-generator/commit/033294d3d9a2448e7ad8b3f29dadc249bcf6a5b4))
+
 ### [0.5.6](https://github.com/localz/react-hook-form-generator/compare/v0.5.5...v0.5.6) (2022-07-12)
 
 
