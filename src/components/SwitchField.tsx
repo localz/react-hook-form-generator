@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 import {
   FormControl,
   FormHelperText,
@@ -11,6 +11,7 @@ import { FieldProps, SwitchFieldStyles, SwitchFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import LabelElement from './elements/Label';
+import { Ctx } from './Form';
 
 export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
   id,
@@ -29,6 +30,8 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
   } = field;
 
   const { register, watch } = useFormContext();
+
+  const { isReadOnly } = useContext(Ctx);
 
   const values = watch(name);
 
@@ -52,6 +55,7 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
         required
         isInvalid={!!errorMessage}
         {...fieldStyles.control}
+        isReadOnly={isReadOnly}
       >
         <LabelElement
           label={label}
@@ -64,6 +68,7 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
           data-testid={id}
           {...fieldStyles.switch}
           defaultChecked={defaultValue}
+          disabled={isReadOnly}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>

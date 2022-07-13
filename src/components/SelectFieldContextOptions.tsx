@@ -16,6 +16,7 @@ import {
 } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
+import { Ctx } from './Form';
 
 export const SelectFieldContextOptions: FC<FieldProps<
   SelectFieldOptionsFromContextSchema
@@ -31,6 +32,8 @@ export const SelectFieldContextOptions: FC<FieldProps<
     defaultValue,
     divideAfter,
   } = field;
+
+  const { isReadOnly } = useContext(Ctx);
 
   const { register, watch, ...restOfForm } = useFormContext();
 
@@ -64,6 +67,7 @@ export const SelectFieldContextOptions: FC<FieldProps<
         isRequired={isRequired}
         isInvalid={Boolean(errorMessage)}
         {...fieldStyles.control}
+        isReadOnly={isReadOnly}
       >
         {Boolean(label) && (
           <FormLabel htmlFor={name} {...fieldStyles.label}>
@@ -71,6 +75,7 @@ export const SelectFieldContextOptions: FC<FieldProps<
           </FormLabel>
         )}
         <Select
+          disabled={isReadOnly}
           data-testid={id}
           {...register(name)}
           defaultValue={defaultValue || null}

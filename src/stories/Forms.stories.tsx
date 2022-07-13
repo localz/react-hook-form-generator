@@ -3,7 +3,7 @@ import { ComponentStory } from '@storybook/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '..';
-import Z from 'zod';
+import * as Z from 'zod';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -22,7 +22,7 @@ const Template: ComponentStory<typeof Form> = (args) => (
 const validationSchema = Z.object({
   username: Z.string({
     required_error: 'Username is required',
-  }),
+  }).min(1),
   password: Z.string({
     required_error: 'Password is required',
   }).min(8),
@@ -31,6 +31,7 @@ const validationSchema = Z.object({
 export const Login = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Login.args = {
+  isReadOnly: true,
   title: 'Login',
   handleSubmit: (values) => {
     alert(JSON.stringify(values));
@@ -47,13 +48,14 @@ Login.args = {
     username: {
       type: 'text',
       label: 'Username',
-      isRequired: true,
+      defaultValue: 'tom',
     },
     password: {
       type: 'text',
       htmlInputType: 'password',
       label: 'Password',
       isRequired: true,
+      defaultValue: '123',
     },
   },
 };

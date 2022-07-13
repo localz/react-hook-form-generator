@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useMemo } from 'react';
+import React, { BaseSyntheticEvent, createContext, useMemo } from 'react';
 import { Box, Heading, Stack, ButtonGroup, Button } from '@chakra-ui/react';
 import { useForm, FormProvider, UseFormProps } from 'react-hook-form';
 import merge from 'lodash.merge';
@@ -27,6 +27,7 @@ export interface FormPropsGeneric {
 }
 
 export interface FormProps<T extends FormPropsGeneric = any> {
+  isReadOnly?: boolean;
   title?: string;
   schema: Schema;
   reactContext?: React.Context<T['ctx']>;
@@ -129,6 +130,10 @@ const renderField = ([name, field]: [string, Field]) => {
   );
 };
 
+export const Ctx = createContext<{ isReadOnly: boolean }>({
+  isReadOnly: false,
+});
+
 export function Form<T extends FormPropsGeneric = any>({
   title,
   schema,
@@ -138,6 +143,7 @@ export function Form<T extends FormPropsGeneric = any>({
   buttons,
   styles = {},
   reactContext,
+  isReadOnly,
 }: FormProps<T>) {
   const form = useForm(formOptions);
 
@@ -153,40 +159,49 @@ export function Form<T extends FormPropsGeneric = any>({
   }, [styles, overwriteDefaultStyles]);
 
   return (
-    <StyleCtx.Provider value={baseStyles}>
-      <FormProvider {...form}>
-        <Box
-          as="form"
-          onSubmit={form.handleSubmit(handleSubmit)}
-          {...baseStyles.form?.container}
-        >
-          {title && <Heading {...baseStyles.form?.title}>{title}</Heading>}
-          <Stack spacing={baseStyles.form?.fieldSpacing}>
-            {Object.entries(schema).map(renderField)}
-          </Stack>
-
-          <ButtonGroup
-            w="100%"
-            display="flex"
-            justifyContent="flex-end"
-            {...baseStyles.form?.buttonGroup}
+    <Ctx.Provider
+      value={{
+        isReadOnly: Boolean(isReadOnly),
+      }}
+    >
+      <StyleCtx.Provider value={baseStyles}>
+        <FormProvider {...form}>
+          <Box
+            as="form"
+            onSubmit={form.handleSubmit(handleSubmit)}
+            {...baseStyles.form?.container}
           >
-            {buttons?.reset?.show && (
-              <Button type="reset" {...baseStyles.form?.resetButton}>
-                {buttons?.reset?.text || 'Reset'}
-              </Button>
-            )}
-            <Button
-              size="lg"
-              variant="solid"
-              type="submit"
-              {...baseStyles.form?.submitButton}
+            {title && <Heading {...baseStyles.form?.title}>{title}</Heading>}
+            <Stack spacing={baseStyles.form?.fieldSpacing}>
+              {Object.entries(schema).map(renderField)}
+            </Stack>
+
+            <ButtonGroup
+              w="100%"
+              display="flex"
+              justifyContent="flex-end"
+              {...baseStyles.form?.buttonGroup}
             >
-              {buttons?.submit?.text || 'Submit'}
-            </Button>
-          </ButtonGroup>
-        </Box>
-      </FormProvider>
-    </StyleCtx.Provider>
+              {buttons?.reset?.show && (
+                <Button type="reset" {...baseStyles.form?.resetButton}>
+                  {buttons?.reset?.text || 'Reset'}
+                </Button>
+              )}
+
+              {!isReadOnly && (
+                <Button
+                  size="lg"
+                  variant="solid"
+                  type="submit"
+                  {...baseStyles.form?.submitButton}
+                >
+                  {buttons?.submit?.text || 'Submit'}
+                </Button>
+              )}
+            </ButtonGroup>
+          </Box>
+        </FormProvider>
+      </StyleCtx.Provider>
+    </Ctx.Provider>
   );
 }

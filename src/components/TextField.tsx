@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
@@ -15,6 +15,7 @@ import { FieldProps, FieldStyles, TextFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import LabelElement from './elements/Label';
+import { Ctx } from './Form';
 
 export const TextField: FC<FieldProps<TextFieldSchema>> = ({
   id,
@@ -35,6 +36,8 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     tooltip,
     divideAfter,
   } = field;
+
+  const { isReadOnly } = useContext(Ctx);
 
   const fieldStyles = useStyles<FieldStyles>('textField', styles);
 
@@ -58,6 +61,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
         isRequired={isRequired}
         isInvalid={Boolean(errorMessage)}
         {...fieldStyles.control}
+        isReadOnly={isReadOnly}
       >
         <LabelElement
           label={label}
@@ -88,6 +92,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
             placeholder={placeholder}
             defaultValue={defaultValue || ''}
             {...fieldStyles.input}
+            isDisabled={isReadOnly}
           />
         )}
         {Boolean(helperText) && (

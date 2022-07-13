@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -16,12 +16,12 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { FieldProps, FieldStyles, NumberFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
+import { Ctx } from './Form';
 
 export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
   id,
   name,
   field,
-  defaultValue,
 }) => {
   const {
     label,
@@ -30,7 +30,10 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
     shouldDisplay,
     styles = {},
     divideAfter,
+    defaultValue,
   } = field;
+
+  const { isReadOnly } = useContext(Ctx);
 
   const fieldStyles = useStyles<FieldStyles>('numberField', styles);
 
@@ -55,14 +58,17 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
         isRequired={isRequired}
         isInvalid={Boolean(errorMessage)}
         {...fieldStyles.control}
+        isReadOnly={isReadOnly}
       >
         {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
         <Controller
           name={name}
           control={control}
-          defaultValue={defaultValue || 0}
           render={() => (
-            <NumberInput>
+            <NumberInput
+              isDisabled={isReadOnly}
+              defaultValue={defaultValue || 0}
+            >
               <NumberInputField id={id} data-testid={id} />
               <NumberInputStepper>
                 <NumberIncrementStepper />

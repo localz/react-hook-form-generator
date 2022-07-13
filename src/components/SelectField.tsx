@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -12,6 +12,7 @@ import { useFormContext } from 'react-hook-form';
 import { FieldProps, SelectFieldSchema, SelectFieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
+import { Ctx } from './Form';
 
 export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   id,
@@ -27,6 +28,8 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     styles = {},
     divideAfter,
   } = field;
+
+  const { isReadOnly } = useContext(Ctx);
 
   const { register, watch } = useFormContext();
 
@@ -51,6 +54,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
         isRequired={isRequired}
         isInvalid={Boolean(errorMessage)}
         {...fieldStyles.control}
+        isReadOnly={isReadOnly}
       >
         {Boolean(label) && (
           <FormLabel htmlFor={name} {...fieldStyles.label}>
@@ -62,6 +66,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
           {...register(name)}
           defaultValue={defaultValue || field.options[0].value}
           {...fieldStyles.select}
+          disabled={isReadOnly}
         >
           {field.options.map((option) => (
             <option key={option.value} value={option.value}>

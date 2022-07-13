@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
@@ -12,6 +12,7 @@ import {
 import { FieldProps, FieldStyles, TextAreaFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
+import { Ctx } from './Form';
 
 export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
   name,
@@ -29,6 +30,8 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('textAreaField', styles);
+
+  const { isReadOnly } = useContext(Ctx);
 
   const { register, watch } = useFormContext();
 
@@ -50,8 +53,9 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
         isRequired={isRequired}
         isInvalid={!!errorMessage}
         {...fieldStyles.control}
+        isReadOnly={isReadOnly}
       >
-        {!!label && (
+        {Boolean(label) && (
           <FormLabel htmlFor={name} {...fieldStyles.label}>
             {label}
           </FormLabel>
@@ -60,8 +64,9 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
           placeholder={placeholder}
           {...register(name)}
           defaultValue={defaultValue || ''}
+          disabled={isReadOnly}
         />
-        {!!helperText && (
+        {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>
             {helperText}
           </FormHelperText>

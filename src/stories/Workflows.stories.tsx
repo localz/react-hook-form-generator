@@ -165,6 +165,7 @@ const args: FormProps = {
     },
   },
   reactContext: ActionOptionsContext,
+  isReadOnly: true,
   schema: {
     name: {
       type: 'text',
@@ -185,16 +186,40 @@ const args: FormProps = {
     triggers: {
       type: 'select',
       options: triggerOptions,
-      styles: {
-        select: {
-          multiple: true,
-        },
-      },
     },
     input: {
       type: 'object',
       divideAfter: true,
       properties: {
+        comments: {
+          type: 'textArea',
+          label: 'Comments',
+          placeholder: 'A textarea placeholder',
+        },
+
+        someNumber: {
+          type: 'number',
+          label: 'Number',
+          defaultValue: 10,
+        },
+        someCheckbox: {
+          type: 'checkbox',
+          label: 'Checkboxes',
+          checkboxes: [
+            {
+              label: 'Checkbox one',
+              name: 'one',
+            },
+            {
+              label: 'Checkbox two',
+              name: 'two',
+            },
+            {
+              label: 'Checkbox three',
+              name: 'three',
+            },
+          ],
+        },
         conditionType: {
           label: 'Condition',
           type: 'select',

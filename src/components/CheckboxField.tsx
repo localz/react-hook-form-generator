@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -13,6 +13,7 @@ import { useFormContext } from 'react-hook-form';
 import { FieldProps, CheckboxFieldSchema, CheckboxFieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
+import { Ctx } from './Form';
 
 export const checkboxFieldStyles: CheckboxFieldStyles = {
   checkboxGroup: {
@@ -37,6 +38,8 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
 
   const { register, watch } = useFormContext();
 
+  const { isReadOnly } = useContext(Ctx);
+
   const values = watch(name);
 
   const fieldStyles = useStyles<CheckboxFieldStyles>('checkboxField', styles);
@@ -58,8 +61,9 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
         isRequired={isRequired}
         isInvalid={!!errorMessage}
         {...fieldStyles.control}
+        isReadOnly={isReadOnly}
       >
-        {!!label && (
+        {Boolean(label) && (
           <FormLabel htmlFor={name} {...fieldStyles.label}>
             {label}
           </FormLabel>
@@ -67,6 +71,7 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
         <Stack {...fieldStyles.checkboxGroup}>
           {field.checkboxes.map((checkbox) => (
             <Checkbox
+              isDisabled={isReadOnly}
               key={checkbox.name}
               {...register(checkbox.name)}
               data-testid={`${id}-${checkbox.name}`}
