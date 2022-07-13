@@ -8,6 +8,7 @@ import { FormStyles, Field, Schema } from '../types';
 import { StyleCtx } from '../hooks/useStyles';
 import { TextField } from './TextField';
 import { TextAreaField } from './TextAreaField';
+import { JsonField } from './JsonField';
 import { NumberField } from './NumberField';
 import {
   ArrayField,
@@ -81,6 +82,10 @@ const renderField = ([name, field]: [string, Field]) => {
 
     case 'textArea':
       Component = TextAreaField;
+      break;
+
+    case 'json':
+      Component = JsonField;
       break;
 
     case 'number':

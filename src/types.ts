@@ -31,7 +31,8 @@ export type Field =
   | CheckboxFieldSchema
   | SelectFieldSchema
   | SelectFieldOptionsFromContextSchema
-  | CustomFieldSchema;
+  | CustomFieldSchema
+  | JsonFieldSchema;
 
 export interface FieldProps<T extends FieldSchema> {
   id?: string;
@@ -51,6 +52,7 @@ interface FieldSchema {
     | 'checkbox'
     | 'select'
     | 'select-options-from-context'
+    | 'json'
     | 'custom';
   styles?:
     | FieldStyles
@@ -86,6 +88,9 @@ export interface TextFieldSchema extends FieldSchema, FormController {
 
 export interface TextAreaFieldSchema extends FieldSchema, FormController {
   type: 'textArea';
+}
+export interface JsonFieldSchema extends FieldSchema, FormController {
+  type: 'json';
 }
 
 export interface NumberFieldSchema extends FieldSchema, FormController {
@@ -180,8 +185,10 @@ export interface FormStyles {
     submitButton?: Omit<ButtonProps, 'children' | 'type'>;
     resetButton?: Omit<ButtonProps, 'children' | 'type'>;
   };
+
   textField?: FieldStyles;
   textAreaField?: FieldStyles;
+  json?: FieldStyles;
   numberField?: FieldStyles;
   arrayField?: ArrayFieldStyles;
   objectField?: ObjectFieldStyles;

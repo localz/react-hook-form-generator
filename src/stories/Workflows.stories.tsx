@@ -142,22 +142,10 @@ type Ctx = {
 
 const ActionOptionsContext = React.createContext<Ctx>({ actionOptions: [] });
 
-const validationSchema = Z.object({
-  username: Z.string({
-    required_error: 'Username is required',
-  }),
-  password: Z.string({
-    required_error: 'Password is required',
-  }).min(8),
-});
-
 const args: FormProps = {
   title: 'Workflows',
   handleSubmit: (values) => {
-    alert(JSON.stringify(values));
-  },
-  formOptions: {
-    resolver: zodResolver(validationSchema),
+    console.log('form data', JSON.stringify(values, null, 2));
   },
   buttons: {
     submit: {
@@ -165,7 +153,7 @@ const args: FormProps = {
     },
   },
   reactContext: ActionOptionsContext,
-  isReadOnly: true,
+  isReadOnly: false,
   schema: {
     name: {
       type: 'text',
@@ -174,8 +162,8 @@ const args: FormProps = {
       defaultValue: 'compare',
       divideAfter: true,
     },
-    friendlyName: { type: 'text', label: 'Friendly name', isRequired: true },
-    description: { type: 'text', label: 'Description', isRequired: true },
+    friendlyName: { type: 'text', label: 'Friendly name' },
+    description: { type: 'text', label: 'Description' },
     important: {
       type: 'switch',
       label: 'Important',
@@ -187,6 +175,12 @@ const args: FormProps = {
       type: 'select',
       options: triggerOptions,
     },
+
+    jsonInput: {
+      type: 'json',
+      label: 'Some JSON input',
+    },
+
     input: {
       type: 'object',
       divideAfter: true,
@@ -234,7 +228,6 @@ const args: FormProps = {
         },
         argument: {
           label: 'Input field or function to match',
-          isRequired: true,
           type: 'text',
         },
         nextAction: {
