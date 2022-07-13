@@ -31,7 +31,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({ name, field }) => {
 
   const { isReadOnly } = useContext(Ctx);
 
-  const { watch, register, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   const errorMessage = useErrorMessage(name, label);
 
