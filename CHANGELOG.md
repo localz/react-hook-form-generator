@@ -1,5 +1,12 @@
 
 
+### [0.6.1](https://github.com/localz/react-hook-form-generator/compare/v0.6.0...v0.6.1) (2022-07-14)
+
+
+### Bug Fixes
+
+* default collapseable ([a0874c6](https://github.com/localz/react-hook-form-generator/commit/a0874c623e95fe5bfdf30f3b214170d8b74bd433))
+
 ## [0.6.0](https://github.com/localz/react-hook-form-generator/compare/v0.5.9...v0.6.0) (2022-07-14)
 
 
