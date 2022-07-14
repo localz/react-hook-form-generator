@@ -16,8 +16,16 @@ import {
   SelectProps,
   InputGroupProps,
   FormLabelProps,
+  HelpTextProps,
 } from '@chakra-ui/react';
-import { FormPropsGeneric } from 'components/Form';
+
+export type SelectOptions = Record<
+  string,
+  {
+    isLoading: boolean;
+    options: SelectFieldSchema['options'];
+  }
+>;
 
 export type Schema = Record<string, Field>;
 
@@ -30,7 +38,6 @@ export type Field =
   | SwitchFieldSchema
   | CheckboxFieldSchema
   | SelectFieldSchema
-  | SelectFieldOptionsFromContextSchema
   | CustomFieldSchema
   | JsonFieldSchema;
 
@@ -51,7 +58,6 @@ interface FieldSchema {
     | 'object'
     | 'checkbox'
     | 'select'
-    | 'select-options-from-context'
     | 'json'
     | 'custom';
   styles?:
@@ -146,40 +152,45 @@ export interface CheckboxFieldSchema
   }[];
 }
 
-export interface SelectFieldSchema
-  extends FieldSchema,
-    Pick<
-      FormController,
-      'label' | 'helperText' | 'isRequired' | 'defaultValue' | 'divideAfter'
-    > {
-  type: 'select';
-  options: {
-    label?: string;
-    value: string;
-  }[];
-}
-
-export interface SelectFieldOptionsFromContextSchema<
-  T extends FormPropsGeneric = any
->
+export interface SelectFieldSchemaWithOptions
   extends FieldSchema,
     Pick<
       FormController,
       | 'label'
       | 'helperText'
       | 'isRequired'
-      | 'placeholder'
       | 'defaultValue'
       | 'divideAfter'
+      | 'placeholder'
     > {
-  type: 'select-options-from-context';
-  optionsKey: keyof T;
+  type: 'select';
+  options?: {
+    label?: string;
+    value: string;
+  }[];
 }
+export interface SelectFieldSchemaWithOptions
+  extends FieldSchema,
+    Pick<
+      FormController,
+      | 'label'
+      | 'helperText'
+      | 'isRequired'
+      | 'defaultValue'
+      | 'divideAfter'
+      | 'placeholder'
+    > {
+  type: 'select';
+  selectKey?: keyof SelectOptions;
+}
+
+export type SelectFieldSchema = SelectFieldSchemaWithOptions;
 
 export interface FormStyles {
   form?: {
     container?: BoxProps;
     title?: HeadingProps;
+    helperText?: HelpTextProps;
     fieldSpacing?: number;
     buttonGroup?: ButtonGroupProps;
     submitButton?: Omit<ButtonProps, 'children' | 'type'>;

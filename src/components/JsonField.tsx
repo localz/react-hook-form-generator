@@ -14,7 +14,7 @@ import locale from 'react-json-editor-ajrm/locale/en';
 import { FieldProps, FieldStyles, JsonFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
-import { Ctx } from './Form';
+import { Ctx } from './Ctx';
 
 export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({ name, field }) => {
   const {

@@ -16,7 +16,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { FieldProps, FieldStyles, NumberFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
-import { Ctx } from './Form';
+import { Ctx } from './Ctx';
 
 export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
   id,

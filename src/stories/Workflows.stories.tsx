@@ -142,8 +142,9 @@ const ActionOptionsContext = React.createContext<Ctx>({ actionOptions: [] });
 
 const args: FormProps = {
   title: 'Workflows',
+  helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
-    console.log('form data', JSON.stringify(values, null, 2));
+    alert(JSON.stringify(values, null, 2));
   },
   buttons: {
     submit: {
@@ -152,6 +153,15 @@ const args: FormProps = {
   },
   reactContext: ActionOptionsContext,
   isReadOnly: false,
+  selectOptions: {
+    nextActions: {
+      isLoading: false,
+      options: [
+        { value: 'action-1', label: 'Action one' },
+        { value: 'action-2', label: 'Action two' },
+      ],
+    },
+  },
   schema: {
     name: {
       type: 'text',
@@ -230,19 +240,6 @@ const args: FormProps = {
           label: 'Input field or function to match',
           type: 'text',
         },
-        nextAction: {
-          placeholder: 'Select next action',
-          label: 'Next action',
-          type: 'select-options-from-context',
-          optionsKey: 'actionOptions',
-          defaultValue: 'action-1',
-        },
-        onSuccess: {
-          placeholder: 'Select success action',
-          label: 'On success',
-          type: 'select-options-from-context',
-          optionsKey: 'actionOptions',
-        },
 
         headers: {
           label: 'Headers',
@@ -275,6 +272,18 @@ const args: FormProps = {
           },
         },
       },
+    },
+    nextAction: {
+      placeholder: 'Select next action',
+      label: 'Next action',
+      type: 'select',
+      selectKey: 'nextActions',
+    },
+    onSuccess: {
+      placeholder: 'Select success action',
+      label: 'On success',
+      type: 'select-options-from-context',
+      optionsKey: 'actionOptions',
     },
   },
 };

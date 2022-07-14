@@ -31,7 +31,6 @@ import { NumberField } from './NumberField';
 import { SwitchField } from './SwitchField';
 import { CheckboxField } from './CheckboxField';
 import { SelectField } from './SelectField';
-import { SelectFieldContextOptions } from './SelectFieldContextOptions';
 import { TextAreaField } from './TextAreaField';
 import { JsonField } from './JsonField';
 
@@ -77,10 +76,6 @@ const renderField = (
 
     case 'select':
       Component = SelectField;
-      break;
-
-    case 'select-options-from-context':
-      Component = SelectFieldContextOptions;
       break;
 
     case 'custom':

@@ -1,10 +1,22 @@
-import React, { BaseSyntheticEvent, createContext, useMemo } from 'react';
-import { Box, Heading, Stack, ButtonGroup, Button } from '@chakra-ui/react';
+import React, { BaseSyntheticEvent, useMemo } from 'react';
+import {
+  Box,
+  Heading,
+  Stack,
+  ButtonGroup,
+  Button,
+  Text,
+  IconButton,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  Flex,
+} from '@chakra-ui/react';
+import { QuestionIcon } from '@chakra-ui/icons';
 import { useForm, FormProvider, UseFormProps } from 'react-hook-form';
 import merge from 'lodash.merge';
-import set from 'lodash.set';
-
-import { FormStyles, Field, Schema } from '../types';
+import { FormStyles, Field, Schema, SelectOptions } from '../types';
 import { StyleCtx } from '../hooks/useStyles';
 import { TextField } from './TextField';
 import { TextAreaField } from './TextAreaField';
@@ -19,23 +31,18 @@ import {
 import { SwitchField } from './SwitchField';
 import { CheckboxField, checkboxFieldStyles } from './CheckboxField';
 import { SelectField } from './SelectField';
-import { SelectFieldContextOptions } from './SelectFieldContextOptions';
+import { Ctx } from './Ctx';
 
-export interface FormPropsGeneric {
-  ctx?: {
-    actionOptions: Array<{ value: string; label: string }>;
-  };
-}
-
-export interface FormProps<T extends FormPropsGeneric = any> {
+export interface FormProps {
   isReadOnly?: boolean;
   title?: string;
+  helperText?: string;
   schema: Schema;
-  reactContext?: React.Context<T['ctx']>;
   handleSubmit: (values: any, e?: BaseSyntheticEvent) => void;
   styles?: FormStyles;
   overwriteDefaultStyles?: boolean;
   formOptions?: UseFormProps;
+  selectOptions?: SelectOptions;
   buttons?: {
     reset?: {
       text?: string;
@@ -112,10 +119,6 @@ const renderField = ([name, field]: [string, Field]) => {
       Component = SelectField;
       break;
 
-    case 'select-options-from-context':
-      Component = SelectFieldContextOptions;
-      break;
-
     case 'custom':
       Component = field.component;
       return (
@@ -135,29 +138,19 @@ const renderField = ([name, field]: [string, Field]) => {
   );
 };
 
-export const Ctx = createContext<{ isReadOnly: boolean }>({
-  isReadOnly: false,
-});
-
-export function Form<T extends FormPropsGeneric = any>({
+export function Form({
   title,
+  helperText,
   schema,
   handleSubmit,
   formOptions,
   overwriteDefaultStyles,
   buttons,
   styles = {},
-  reactContext,
   isReadOnly,
-}: FormProps<T>) {
+  selectOptions,
+}: FormProps) {
   const form = useForm(formOptions);
-
-  if (reactContext) {
-    /*
-     * This is yucky but putting context inside another provider would be even more yucky
-     */
-    set(form, 'reactContext', reactContext);
-  }
 
   const baseStyles = useMemo(() => {
     return overwriteDefaultStyles ? styles : merge(defaultStyles, styles);
@@ -167,6 +160,7 @@ export function Form<T extends FormPropsGeneric = any>({
     <Ctx.Provider
       value={{
         isReadOnly: Boolean(isReadOnly),
+        selectOptions: selectOptions || {},
       }}
     >
       <StyleCtx.Provider value={baseStyles}>
@@ -176,7 +170,42 @@ export function Form<T extends FormPropsGeneric = any>({
             onSubmit={form.handleSubmit(handleSubmit)}
             {...baseStyles.form?.container}
           >
-            {title && <Heading {...baseStyles.form?.title}>{title}</Heading>}
+            {title && !helperText && (
+              <Heading {...baseStyles.form?.title}>{title}</Heading>
+            )}
+
+            {title && helperText && (
+              <Accordion allowMultiple border="none" mb="4">
+                <AccordionItem border="none">
+                  <Flex alignItems="center">
+                    <Heading flex="1" {...baseStyles.form?.title}>
+                      {title}
+                    </Heading>
+                    <AccordionButton
+                      flex="0"
+                      backgroundColor="transparent"
+                      _hover={{
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <IconButton
+                        backgroundColor="transparent"
+                        _hover={{
+                          backgroundColor: 'transparent',
+                        }}
+                        aria-label="show helper text"
+                        icon={<QuestionIcon />}
+                      />
+                    </AccordionButton>
+                  </Flex>
+
+                  <AccordionPanel padding="0">
+                    <Text {...baseStyles.form?.helperText}>{helperText}</Text>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+            )}
+
             <Stack spacing={baseStyles.form?.fieldSpacing}>
               {Object.entries(schema).map(renderField)}
             </Stack>

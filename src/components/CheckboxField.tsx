@@ -13,7 +13,7 @@ import { useFormContext } from 'react-hook-form';
 import { FieldProps, CheckboxFieldSchema, CheckboxFieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
-import { Ctx } from './Form';
+import { Ctx } from './Ctx';
 
 export const checkboxFieldStyles: CheckboxFieldStyles = {
   checkboxGroup: {

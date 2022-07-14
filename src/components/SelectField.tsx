@@ -6,13 +6,14 @@ import {
   FormErrorMessage,
   Select,
   Divider,
+  Spinner,
 } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
 
 import { FieldProps, SelectFieldSchema, SelectFieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
-import { Ctx } from './Form';
+import { Ctx } from './Ctx';
 
 export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   id,
@@ -27,9 +28,10 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     shouldDisplay,
     styles = {},
     divideAfter,
+    placeholder,
   } = field;
 
-  const { isReadOnly } = useContext(Ctx);
+  const { isReadOnly, selectOptions } = useContext(Ctx);
 
   const { register, watch } = useFormContext();
 
@@ -45,6 +47,18 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
 
   if (!isVisible) {
     return null;
+  }
+
+  const isLoading = field.selectKey
+    ? selectOptions[field.selectKey].isLoading
+    : false;
+
+  const options = field.selectKey
+    ? selectOptions[field.selectKey].options
+    : field.options;
+
+  if (!options || !Array.isArray(options)) {
+    return <p>Could not find options for select field {name}</p>;
   }
 
   return (
@@ -64,11 +78,15 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
         <Select
           data-testid={id}
           {...register(name)}
-          defaultValue={defaultValue || field.options[0].value}
+          defaultValue={defaultValue || null}
+          disabled={isReadOnly || isLoading}
+          placeholder={placeholder}
           {...fieldStyles.select}
-          disabled={isReadOnly}
+          {...(isLoading && {
+            icon: <Spinner />,
+          })}
         >
-          {field.options.map((option) => (
+          {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label || option.value}
             </option>

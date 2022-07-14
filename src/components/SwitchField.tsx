@@ -11,7 +11,7 @@ import { FieldProps, SwitchFieldStyles, SwitchFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import LabelElement from './elements/Label';
-import { Ctx } from './Form';
+import { Ctx } from './Ctx';
 
 export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
   id,
