@@ -1,5 +1,13 @@
 
 
+## [0.6.0](https://github.com/localz/react-hook-form-generator/compare/v0.5.9...v0.6.0) (2022-07-14)
+
+
+### Features
+
+* pass array in ([07094f0](https://github.com/localz/react-hook-form-generator/commit/07094f0415377dd15e45d4d6007d7198dd924cf7))
+* update storybook ([c777946](https://github.com/localz/react-hook-form-generator/commit/c7779463a0e4983781d82b1e6afdd5d29cdc681e))
+
 ### [0.5.9](https://github.com/localz/react-hook-form-generator/compare/v0.5.8...v0.5.9) (2022-07-14)
 
 
