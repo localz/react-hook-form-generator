@@ -134,12 +134,6 @@ export default {
   component: Form,
 };
 
-type Ctx = {
-  actionOptions: Array<{ value: string; label: string }>;
-};
-
-const ActionOptionsContext = React.createContext<Ctx>({ actionOptions: [] });
-
 const args: FormProps = {
   title: 'Workflows',
   helperText: 'Some text that explains some stuff',
@@ -151,11 +145,17 @@ const args: FormProps = {
       text: 'Save',
     },
   },
-  reactContext: ActionOptionsContext,
   isReadOnly: false,
   selectOptions: {
     nextActions: {
       isLoading: false,
+      options: [
+        { value: 'action-1', label: 'Action one' },
+        { value: 'action-2', label: 'Action two' },
+      ],
+    },
+    actionOptions: {
+      isLoading: true,
       options: [
         { value: 'action-1', label: 'Action one' },
         { value: 'action-2', label: 'Action two' },
@@ -282,26 +282,17 @@ const args: FormProps = {
     onSuccess: {
       placeholder: 'Select success action',
       label: 'On success',
-      type: 'select-options-from-context',
-      optionsKey: 'actionOptions',
+      type: 'select',
+      selectKey: 'actionOptions',
     },
   },
 };
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Form> = () => (
-  <ActionOptionsContext.Provider
-    value={{
-      actionOptions: [
-        { value: 'action-1', label: 'Action one' },
-        { value: 'action-2', label: 'Action two' },
-      ],
-    }}
-  >
-    <ChakraProvider>
-      <Form {...args} />
-    </ChakraProvider>
-  </ActionOptionsContext.Provider>
+  <ChakraProvider>
+    <Form {...args} />
+  </ChakraProvider>
 );
 
 export const Workflows = Template.bind({});
