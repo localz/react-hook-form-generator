@@ -176,11 +176,6 @@ const args: FormProps = {
       options: triggerOptions,
     },
 
-    jsonInput: {
-      type: 'json',
-      label: 'Some JSON input',
-    },
-
     input: {
       type: 'object',
       divideAfter: true,
@@ -189,6 +184,13 @@ const args: FormProps = {
           type: 'textArea',
           label: 'Comments',
           placeholder: 'A textarea placeholder',
+        },
+
+        payloads: {
+          label: 'Payloads',
+          type: 'json',
+          tooltip: 'JSON array string. You can also use templating',
+          isRequired: true,
         },
 
         someNumber: {

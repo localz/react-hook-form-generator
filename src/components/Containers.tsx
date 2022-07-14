@@ -33,6 +33,7 @@ import { CheckboxField } from './CheckboxField';
 import { SelectField } from './SelectField';
 import { SelectFieldContextOptions } from './SelectFieldContextOptions';
 import { TextAreaField } from './TextAreaField';
+import { JsonField } from './JsonField';
 
 const renderField = (
   [name, field]: [string, Field],
@@ -48,6 +49,10 @@ const renderField = (
 
     case 'textArea':
       Component = TextAreaField;
+      break;
+
+    case 'json':
+      Component = JsonField;
       break;
 
     case 'number':
