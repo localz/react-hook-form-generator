@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import { ChakraProvider } from '@chakra-ui/react';
-import { Form, FormProps } from '..';
+import { Form } from '..';
 
 const triggerOptions = [
   { label: 'auspost_job_updated', value: 'auspost_job_updated' },
@@ -171,6 +171,19 @@ Workflows.args = {
       ],
     },
   },
+  formOptions: {
+    defaultValues: {
+      triggers: [
+        {
+          value: 'order_rescheduled',
+        },
+        {
+          value: 'workflows_internal',
+        },
+      ],
+    },
+  },
+
   schema: {
     name: {
       type: 'text',
@@ -189,8 +202,14 @@ Workflows.args = {
       helperText: 'help',
     },
     triggers: {
-      type: 'select',
-      options: triggerOptions,
+      type: 'array',
+      label: 'Triggers',
+      isCollapsable: true,
+      itemField: {
+        type: 'select',
+        label: 'Trigger type',
+        options: triggerOptions,
+      },
     },
 
     input: {

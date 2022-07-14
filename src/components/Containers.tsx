@@ -175,7 +175,9 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
 
   const { fields, append, remove } = useFieldArray({ name, control });
 
-  const { isOpen, onOpen, onToggle } = useDisclosure();
+  const { isOpen, onOpen, onToggle } = useDisclosure({
+    defaultIsOpen: !isCollapsable,
+  });
 
   const arrayStyles = useStyles<ArrayFieldStyles>('arrayField', styles);
 
