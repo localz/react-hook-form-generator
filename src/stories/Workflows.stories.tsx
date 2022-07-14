@@ -134,7 +134,16 @@ export default {
   component: Form,
 };
 
-const args: FormProps = {
+// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+const Template: ComponentStory<typeof Form> = (args) => (
+  <ChakraProvider>
+    <Form {...args} />
+  </ChakraProvider>
+);
+
+export const Workflows = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Workflows.args = {
   title: 'Workflows',
   helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
@@ -287,13 +296,3 @@ const args: FormProps = {
     },
   },
 };
-
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Form> = () => (
-  <ChakraProvider>
-    <Form {...args} />
-  </ChakraProvider>
-);
-
-export const Workflows = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
