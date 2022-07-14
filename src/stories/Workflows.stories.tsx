@@ -1,9 +1,7 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import { ChakraProvider } from '@chakra-ui/react';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormProps } from '..';
-import Z from 'zod';
 
 const triggerOptions = [
   { label: 'auspost_job_updated', value: 'auspost_job_updated' },
