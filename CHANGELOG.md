@@ -1,5 +1,18 @@
 
 
+### [0.5.9](https://github.com/localz/react-hook-form-generator/compare/v0.5.8...v0.5.9) (2022-07-14)
+
+
+### Bug Fixes
+
+* json render method ([7ec2dd3](https://github.com/localz/react-hook-form-generator/commit/7ec2dd3abb7244fe05964173ae81f3e5198f3790))
+
+
+### Chores
+
+* cleanup ([22babcc](https://github.com/localz/react-hook-form-generator/commit/22babcc6636f152c9773a687e58d2366c329bbbe))
+* **deps:** bump parse-url from 6.0.0 to 6.0.2 ([2a67cf4](https://github.com/localz/react-hook-form-generator/commit/2a67cf4324aa3f5b2345ace0deb1feae2d165964))
+
 ### [0.5.8](https://github.com/localz/react-hook-form-generator/compare/v0.5.7...v0.5.8) (2022-07-13)
 
 
