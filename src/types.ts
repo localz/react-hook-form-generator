@@ -39,7 +39,8 @@ export type Field =
   | CheckboxFieldSchema
   | SelectFieldSchema
   | CustomFieldSchema
-  | JsonFieldSchema;
+  | JsonFieldSchema
+  | DateFieldSchema;
 
 export interface FieldProps<T extends FieldSchema> {
   id?: string;
@@ -59,6 +60,7 @@ interface FieldSchema {
     | 'checkbox'
     | 'select'
     | 'json'
+    | 'date'
     | 'custom';
   styles?:
     | FieldStyles
@@ -150,6 +152,15 @@ export interface CheckboxFieldSchema
     name: string;
     label?: string;
   }[];
+}
+
+export interface DateFieldSchema
+  extends FieldSchema,
+    Pick<
+      FormController,
+      'label' | 'helperText' | 'isRequired' | 'divideAfter'
+    > {
+  type: 'date';
 }
 
 export interface SelectFieldSchemaWithOptions

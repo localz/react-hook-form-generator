@@ -32,6 +32,7 @@ import { SwitchField } from './SwitchField';
 import { CheckboxField, checkboxFieldStyles } from './CheckboxField';
 import { SelectField } from './SelectField';
 import { Ctx } from './Ctx';
+import DatePicker from './DateField';
 
 export interface FormProps {
   isReadOnly?: boolean;
@@ -117,6 +118,10 @@ const renderField = ([name, field]: [string, Field]) => {
 
     case 'select':
       Component = SelectField;
+      break;
+
+    case 'date':
+      Component = DatePicker;
       break;
 
     case 'custom':

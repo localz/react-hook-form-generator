@@ -185,6 +185,10 @@ Workflows.args = {
   },
 
   schema: {
+    dateTest: {
+      type: 'date',
+      label: 'Date',
+    },
     name: {
       type: 'text',
       label: 'Name',
