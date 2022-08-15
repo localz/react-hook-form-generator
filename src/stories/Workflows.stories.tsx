@@ -191,6 +191,8 @@ Workflows.args = {
       format: 'MM/dd/yyyy hh:mm a',
       showTime: true,
       placeholder: 'Select date and time',
+      isRequired: true,
+      isClearable: true,
     },
     name: {
       type: 'text',

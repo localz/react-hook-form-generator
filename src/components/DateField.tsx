@@ -1,6 +1,6 @@
 import React, { FC, forwardRef, useContext, useMemo } from 'react';
 import { InputGroup, Input, InputRightElement } from '@chakra-ui/react';
-import { CalendarIcon } from '@chakra-ui/icons';
+import { CalendarIcon, CloseIcon } from '@chakra-ui/icons';
 import ReactDatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './styles/datepicker.css';
@@ -38,7 +38,7 @@ const CustomInput = forwardRef(customDateInput);
 
 interface Props {
   isClearable?: boolean;
-  onChange: (date: Date) => any;
+  onChange: (date: Date | null) => any;
   selectedDate: Date | undefined;
   showPopperArrow?: boolean;
   props?: ReactDatePickerProps;
@@ -75,10 +75,18 @@ const DatePicker = ({
           showTimeSelectOnly={timeOnly}
           {...props}
         />
-        <InputRightElement
-          color="gray.500"
-          children={<CalendarIcon fontSize="sm" />}
-        />
+        {isClearable ? (
+          <InputRightElement
+            color="gray.500"
+            children={<CloseIcon fontSize="sm" cursor="pointer" />}
+            onClick={() => onChange(null)}
+          />
+        ) : (
+          <InputRightElement
+            color="gray.500"
+            children={<CalendarIcon fontSize="sm" />}
+          />
+        )}
       </InputGroup>
     </>
   );
@@ -133,7 +141,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
         )}
         <DatePicker
           selectedDate={values}
-          onChange={(value: Date) => {
+          onChange={(value: Date | null) => {
             setValue(name, value);
           }}
           isClearable={isClearable}
