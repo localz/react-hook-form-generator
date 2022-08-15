@@ -154,7 +154,7 @@ Workflows.args = {
       text: 'Save',
     },
   },
-  isReadOnly: true,
+  isReadOnly: false,
   selectOptions: {
     nextActions: {
       isLoading: false,
