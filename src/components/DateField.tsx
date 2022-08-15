@@ -83,7 +83,6 @@ const DatePicker = ({
         <ReactDatePicker
           selected={selectedDate}
           onChange={onChange}
-          isClearable={isClearable}
           showPopperArrow={false}
           className="react-datapicker__input-text"
           dateFormat={dateFormat}
@@ -127,6 +126,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
     timeOnly,
     timeInterval,
     pickerProps,
+    defaultValue,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -162,7 +162,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
           </FormLabel>
         )}
         <DatePicker
-          selectedDate={values}
+          selectedDate={values || defaultValue}
           onChange={(value: Date | null) => {
             setValue(name, value);
           }}
