@@ -158,9 +158,14 @@ export interface DateFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'divideAfter'
+      'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'placeholder'
     > {
   type: 'date';
+  defaultValue?: Date;
+  format?: string;
+  isClearable?: boolean;
+  showTime?: boolean;
+  timeOnly?: boolean;
 }
 
 export interface SelectFieldSchemaWithOptions

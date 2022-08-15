@@ -188,6 +188,9 @@ Workflows.args = {
     dateTest: {
       type: 'date',
       label: 'Date',
+      format: 'MM/dd/yyyy hh:mm a',
+      showTime: true,
+      placeholder: 'Select date and time',
     },
     name: {
       type: 'text',

@@ -32,7 +32,7 @@ import { SwitchField } from './SwitchField';
 import { CheckboxField, checkboxFieldStyles } from './CheckboxField';
 import { SelectField } from './SelectField';
 import { Ctx } from './Ctx';
-import DatePicker from './DateField';
+import DateField from './DateField';
 
 export interface FormProps {
   isReadOnly?: boolean;
@@ -121,7 +121,7 @@ const renderField = ([name, field]: [string, Field]) => {
       break;
 
     case 'date':
-      Component = DatePicker;
+      Component = DateField;
       break;
 
     case 'custom':
