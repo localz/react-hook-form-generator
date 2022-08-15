@@ -18,6 +18,7 @@ import {
   FormLabelProps,
   HelpTextProps,
 } from '@chakra-ui/react';
+import { ReactDatePickerProps } from 'react-datepicker';
 
 export type SelectOptions = Record<
   string,
@@ -167,6 +168,7 @@ export interface DateFieldSchema
   showTime?: boolean;
   timeOnly?: boolean;
   timeInterval?: number;
+  pickerProps?: ReactDatePickerProps;
 }
 
 export interface SelectFieldSchemaWithOptions

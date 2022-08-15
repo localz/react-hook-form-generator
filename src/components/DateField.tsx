@@ -42,13 +42,13 @@ interface Props {
   onChange: (date: Date | null) => any;
   selectedDate: Date | undefined;
   showPopperArrow?: boolean;
-  props?: ReactDatePickerProps;
   dateFormat?: string;
   placeholder?: string;
   showTime?: boolean;
   timeOnly?: boolean;
   timeInterval?: number;
   disabled?: boolean;
+  pickerProps?: ReactDatePickerProps;
 }
 
 const DatePicker = ({
@@ -61,7 +61,7 @@ const DatePicker = ({
   timeOnly,
   timeInterval = 30,
   disabled = false,
-  ...props
+  ...pickerProps
 }: Props) => {
   const isLight = useColorMode().colorMode === 'light';
   return (
@@ -80,7 +80,7 @@ const DatePicker = ({
           showTimeSelectOnly={timeOnly}
           timeIntervals={timeInterval}
           disabled={disabled}
-          {...props}
+          {...pickerProps}
         />
         {isClearable && !disabled ? (
           <InputRightElement
@@ -113,6 +113,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
     showTime,
     timeOnly,
     timeInterval,
+    pickerProps,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -159,6 +160,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
           timeOnly={timeOnly}
           timeInterval={timeInterval}
           disabled={isReadOnly}
+          pickerProps={pickerProps}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>
