@@ -1,5 +1,10 @@
 import React, { FC, forwardRef, useContext, useMemo } from 'react';
-import { InputGroup, Input, InputRightElement } from '@chakra-ui/react';
+import {
+  InputGroup,
+  Input,
+  InputRightElement,
+  InputProps,
+} from '@chakra-ui/react';
 import { CalendarIcon, CloseIcon } from '@chakra-ui/icons';
 import ReactDatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -19,7 +24,15 @@ import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
 
 const customDateInput = (
-  { value, onClick, onChange, placeholder, disabled }: any,
+  {
+    value,
+    onClick,
+    onChange,
+    placeholder,
+    disabled,
+  }: Pick<InputProps, 'value' | 'onClick' | 'onChange' | 'placeholder'> & {
+    disabled?: boolean;
+  },
   ref: any
 ) => (
   <Input
