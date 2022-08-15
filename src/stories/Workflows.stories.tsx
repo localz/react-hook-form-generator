@@ -154,7 +154,7 @@ Workflows.args = {
       text: 'Save',
     },
   },
-  isReadOnly: false,
+  isReadOnly: true,
   selectOptions: {
     nextActions: {
       isLoading: false,
@@ -193,6 +193,7 @@ Workflows.args = {
       placeholder: 'Select date and time',
       isRequired: true,
       isClearable: true,
+      timeInterval: 15,
     },
     name: {
       type: 'text',

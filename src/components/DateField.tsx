@@ -19,7 +19,7 @@ import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
 
 const customDateInput = (
-  { value, onClick, onChange, placeholder }: any,
+  { value, onClick, onChange, placeholder, disabled }: any,
   ref: any
 ) => (
   <Input
@@ -30,6 +30,7 @@ const customDateInput = (
     onClick={onClick}
     onChange={onChange}
     placeholder={placeholder}
+    disabled={disabled}
   />
 );
 customDateInput.displayName = 'DateInput';
@@ -46,6 +47,8 @@ interface Props {
   placeholder?: string;
   showTime?: boolean;
   timeOnly?: boolean;
+  timeInterval?: number;
+  disabled?: boolean;
 }
 
 const DatePicker = ({
@@ -56,6 +59,8 @@ const DatePicker = ({
   placeholder,
   showTime,
   timeOnly,
+  timeInterval = 30,
+  disabled = false,
   ...props
 }: Props) => {
   const isLight = useColorMode().colorMode === 'light';
@@ -73,9 +78,11 @@ const DatePicker = ({
           placeholderText={placeholder}
           showTimeSelect={showTime}
           showTimeSelectOnly={timeOnly}
+          timeIntervals={timeInterval}
+          disabled={disabled}
           {...props}
         />
-        {isClearable ? (
+        {isClearable && !disabled ? (
           <InputRightElement
             color="gray.500"
             children={<CloseIcon fontSize="sm" cursor="pointer" />}
@@ -105,6 +112,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
     isClearable,
     showTime,
     timeOnly,
+    timeInterval,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -149,6 +157,8 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
           placeholder={placeholder}
           showTime={showTime}
           timeOnly={timeOnly}
+          timeInterval={timeInterval}
+          disabled={isReadOnly}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>

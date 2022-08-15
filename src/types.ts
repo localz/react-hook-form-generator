@@ -166,6 +166,7 @@ export interface DateFieldSchema
   isClearable?: boolean;
   showTime?: boolean;
   timeOnly?: boolean;
+  timeInterval?: number;
 }
 
 export interface SelectFieldSchemaWithOptions
