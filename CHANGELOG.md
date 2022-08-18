@@ -1,5 +1,17 @@
 
 
+## [0.7.0](https://github.com/localz/react-hook-form-generator/compare/v0.6.2...v0.7.0) (2022-08-18)
+
+
+### Features
+
+* better select menu ([784712e](https://github.com/localz/react-hook-form-generator/commit/784712e072ed40f388dc4cd6dc7a7ce7c4dddb68))
+
+
+### Bug Fixes
+
+* lint ([1c242e2](https://github.com/localz/react-hook-form-generator/commit/1c242e2f290f551ed2277924debe899d9236d3c4))
+
 ### [0.6.1](https://github.com/localz/react-hook-form-generator/compare/v0.6.0...v0.6.1) (2022-07-14)
 
 
