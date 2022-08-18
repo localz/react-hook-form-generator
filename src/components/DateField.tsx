@@ -7,8 +7,6 @@ import {
 } from '@chakra-ui/react';
 import { CalendarIcon, CloseIcon } from '@chakra-ui/icons';
 import ReactDatePicker, { ReactDatePickerProps } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './styles/datepicker.css';
 import { useColorMode } from '@chakra-ui/react';
 import {
   FormControl,
@@ -22,6 +20,8 @@ import { FieldProps, FieldStyles, DateFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
+import './styles/datepicker.css';
+import './styles/react-datepicker.min';
 
 const customDateInput = (
   {
