@@ -7,7 +7,7 @@ import {
   Divider,
   Spinner,
 } from '@chakra-ui/react';
-import { Controller, useController, useFormContext } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 
 import { FieldProps, SelectFieldSchema, SelectFieldStyles } from '../types';
