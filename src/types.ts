@@ -13,11 +13,14 @@ import {
   Pseudos,
   SwitchProps,
   CheckboxProps,
-  SelectProps,
   InputGroupProps,
   FormLabelProps,
   HelpTextProps,
 } from '@chakra-ui/react';
+import {
+  OptionsOrGroups,
+  Props as ChakraReactSelectProps,
+} from 'chakra-react-select';
 import { ReactDatePickerProps } from 'react-datepicker';
 
 export type SelectOptions = Record<
@@ -171,8 +174,13 @@ export interface DateFieldSchema
   pickerProps?: ReactDatePickerProps;
 }
 
+type SelectProps = Pick<
+  ChakraReactSelectProps,
+  'isClearable' | 'isMulti' | 'isSearchable'
+>;
 export interface SelectFieldSchemaWithOptions
   extends FieldSchema,
+    SelectProps,
     Pick<
       FormController,
       | 'label'
@@ -183,10 +191,7 @@ export interface SelectFieldSchemaWithOptions
       | 'placeholder'
     > {
   type: 'select';
-  options?: {
-    label?: string;
-    value: string;
-  }[];
+  options?: OptionsOrGroups<string | number, any> | undefined;
 }
 export interface SelectFieldSchemaWithOptions
   extends FieldSchema,
@@ -201,6 +206,7 @@ export interface SelectFieldSchemaWithOptions
     > {
   type: 'select';
   selectKey?: keyof SelectOptions;
+  isMulti?: boolean;
 }
 
 export type SelectFieldSchema = SelectFieldSchemaWithOptions;

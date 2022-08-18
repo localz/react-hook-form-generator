@@ -173,6 +173,9 @@ Workflows.args = {
   },
   formOptions: {
     defaultValues: {
+      input: {
+        conditionType: 'is_greater_than',
+      },
       triggers: [
         {
           value: 'order_rescheduled',
@@ -221,6 +224,14 @@ Workflows.args = {
         options: triggerOptions,
       },
     },
+    multiSelectOption: {
+      placeholder: 'Multi select',
+      label: 'Multi select',
+      type: 'select',
+      isMulti: true,
+      options: triggerOptions,
+    },
+
     input: {
       type: 'object',
       divideAfter: true,
@@ -264,7 +275,7 @@ Workflows.args = {
         conditionType: {
           label: 'Condition',
           type: 'select',
-          defaultValue: { label: 'is_equal', value: 'is_equal' },
+          defaultValue: { label: 'is_greater_than', value: 'is_greater_than' },
           options: [
             { label: 'is_equal', value: 'is_equal' },
             { label: 'is_not_equal', value: 'is_not_equal' },
