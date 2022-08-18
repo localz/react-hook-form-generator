@@ -33,11 +33,11 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
 
   const { isReadOnly, selectOptions } = useContext(Ctx);
 
-  const { register, watch, control } = useFormContext();
+  const { watch, control } = useFormContext();
 
   const {
     field: { onChange, onBlur, value, ref },
-    fieldState: { invalid, error },
+    fieldState: { error },
   } = useController({
     name,
     control,
