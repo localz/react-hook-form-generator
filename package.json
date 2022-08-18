@@ -25,6 +25,10 @@
     "react": ">=16",
     "react-hook-form": "^6.14.1"
   },
+  "resolutions": {
+    "**/@typescript-eslint/eslint-plugin": "^4.1.1",
+    "**/@typescript-eslint/parser": "^4.1.1"
+  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
