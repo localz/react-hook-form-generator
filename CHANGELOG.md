@@ -1,5 +1,17 @@
 
 
+## [0.8.0](https://github.com/localz/react-hook-form-generator/compare/v0.7.4...v0.8.0) (2022-08-18)
+
+
+### Features
+
+* all values in condition ([2f22222](https://github.com/localz/react-hook-form-generator/commit/2f22222f304c983ef7f77fdfe62d356e674e0ab3))
+
+
+### Bug Fixes
+
+* build ([1a23d3b](https://github.com/localz/react-hook-form-generator/commit/1a23d3b543fe16e072a6929c7318dd307da07b04))
+
 ### [0.7.4](https://github.com/localz/react-hook-form-generator/compare/v0.7.3...v0.7.4) (2022-08-18)
 
 
