@@ -6,7 +6,7 @@ import {
   Switch,
   Divider,
 } from '@chakra-ui/react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { FieldProps, SwitchFieldStyles, SwitchFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
@@ -29,11 +29,13 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
     divideAfter,
   } = field;
 
-  const { register, watch } = useFormContext();
+  const { register, control } = useFormContext();
 
   const { isReadOnly } = useContext(Ctx);
 
-  const values = watch(name);
+  const values = useWatch({
+    control,
+  });
 
   const fieldStyles = useStyles<SwitchFieldStyles>('switchField', styles);
 

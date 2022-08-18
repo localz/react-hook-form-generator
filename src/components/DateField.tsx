@@ -15,7 +15,7 @@ import {
   FormErrorMessage,
   Divider,
 } from '@chakra-ui/react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { FieldProps, FieldStyles, DateFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
@@ -131,9 +131,9 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
 
   const { isReadOnly } = useContext(Ctx);
 
-  const { watch, setValue } = useFormContext();
+  const { control, setValue } = useFormContext();
 
-  const values = watch(name);
+  const values = useWatch({ control });
 
   const fieldStyles = useStyles<FieldStyles>('textAreaField', styles);
 

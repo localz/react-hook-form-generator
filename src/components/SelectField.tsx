@@ -7,7 +7,7 @@ import {
   Divider,
   Spinner,
 } from '@chakra-ui/react';
-import { useController, useFormContext } from 'react-hook-form';
+import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 
 import { FieldProps, SelectFieldSchema, SelectFieldStyles } from '../types';
@@ -33,7 +33,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
 
   const { isReadOnly, selectOptions } = useContext(Ctx);
 
-  const { watch, control } = useFormContext();
+  const { control } = useFormContext();
 
   const {
     field: { onChange, onBlur, value, ref },
@@ -43,7 +43,9 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     control,
   });
 
-  const values = watch(name);
+  const values = useWatch({
+    control,
+  });
 
   const fieldStyles = useStyles<SelectFieldStyles>('selectField', styles);
 

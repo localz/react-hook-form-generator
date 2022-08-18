@@ -1,5 +1,5 @@
 import React, { FC, useContext, useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import {
   FormControl,
   InputGroup,
@@ -41,11 +41,13 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
 
   const fieldStyles = useStyles<FieldStyles>('textField', styles);
 
-  const { register, watch } = useFormContext();
+  const { register, control } = useFormContext();
 
   const errorMessage = useErrorMessage(name, label);
 
-  const values = watch(name);
+  const values = useWatch({
+    control,
+  });
 
   const isVisible = useMemo(() => {
     return shouldDisplay ? shouldDisplay(values) : true;

@@ -11,7 +11,7 @@ import {
   FormErrorMessage,
   Divider,
 } from '@chakra-ui/react';
-import { useFormContext, Controller } from 'react-hook-form';
+import { useFormContext, Controller, useWatch } from 'react-hook-form';
 
 import { FieldProps, FieldStyles, NumberFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
@@ -37,9 +37,11 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
 
   const fieldStyles = useStyles<FieldStyles>('numberField', styles);
 
-  const { control, watch } = useFormContext();
+  const { control } = useFormContext();
 
-  const values = watch(name);
+  const values = useWatch({
+    control,
+  });
 
   const errorMessage = useErrorMessage(name, label);
 

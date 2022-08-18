@@ -1,5 +1,5 @@
 import React, { FC, useContext, useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import {
   FormControl,
   FormLabel,
@@ -31,11 +31,13 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({ name, field }) => {
 
   const { isReadOnly } = useContext(Ctx);
 
-  const { watch, setValue } = useFormContext();
+  const { control, setValue } = useFormContext();
 
   const errorMessage = useErrorMessage(name, label);
 
-  const values = watch(name);
+  const values = useWatch({
+    control,
+  });
 
   const isVisible = useMemo(() => {
     return shouldDisplay ? shouldDisplay(values) : true;

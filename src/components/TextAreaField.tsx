@@ -1,5 +1,5 @@
 import React, { FC, useContext, useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import {
   FormControl,
   FormLabel,
@@ -33,11 +33,13 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
 
   const { isReadOnly } = useContext(Ctx);
 
-  const { register, watch } = useFormContext();
+  const { register, control } = useFormContext();
 
   const errorMessage = useErrorMessage(name, label);
 
-  const values = watch(name);
+  const values = useWatch({
+    control,
+  });
 
   const isVisible = useMemo(() => {
     return shouldDisplay ? shouldDisplay(values) : true;

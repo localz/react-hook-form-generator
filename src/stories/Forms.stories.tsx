@@ -59,3 +59,38 @@ Login.args = {
     },
   },
 };
+
+export const ConditionalRendering = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+ConditionalRendering.args = {
+  title: 'Login',
+  handleSubmit: (values) => {
+    alert(JSON.stringify(values));
+  },
+  formOptions: {
+    resolver: zodResolver(validationSchema),
+  },
+  buttons: {
+    submit: {
+      text: 'Login',
+    },
+  },
+  schema: {
+    show: {
+      type: 'switch',
+      label: 'Show hidden field',
+    },
+    hiddenField: {
+      type: 'text',
+      htmlInputType: 'password',
+      label: 'Password',
+      isRequired: true,
+      defaultValue: '123',
+      shouldDisplay: (value) => {
+        console.log({ value });
+
+        return value.show;
+      },
+    },
+  },
+};
