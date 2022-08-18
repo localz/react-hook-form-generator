@@ -162,6 +162,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
           </FormLabel>
         )}
         <DatePicker
+          // @ts-ignore
           selectedDate={values || defaultValue}
           onChange={(value: Date | null) => {
             setValue(name, value);
