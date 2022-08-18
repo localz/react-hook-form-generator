@@ -1,5 +1,14 @@
 
 
+### [0.7.4](https://github.com/localz/react-hook-form-generator/compare/v0.7.3...v0.7.4) (2022-08-18)
+
+
+### Bug Fixes
+
+* linting ([7fc2429](https://github.com/localz/react-hook-form-generator/commit/7fc2429c1ed8ecb53477d6ac3f652900b7b48368))
+* select field ([ed90843](https://github.com/localz/react-hook-form-generator/commit/ed908439ce334b7bb2c13373228d0d7e5e61b6f2))
+* select field ([f96404f](https://github.com/localz/react-hook-form-generator/commit/f96404f03bdd951768776dd781df05645a7c8870))
+
 ### [0.7.3](https://github.com/localz/react-hook-form-generator/compare/v0.7.2...v0.7.3) (2022-08-18)
 
 
