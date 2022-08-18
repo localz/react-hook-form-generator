@@ -1,5 +1,13 @@
 
 
+### [0.7.2](https://github.com/localz/react-hook-form-generator/compare/v0.7.1...v0.7.2) (2022-08-18)
+
+
+### Bug Fixes
+
+* css import ([3e458c7](https://github.com/localz/react-hook-form-generator/commit/3e458c78031595e2557f6cb563f3fc07c4855c9f))
+* css import ([e26982a](https://github.com/localz/react-hook-form-generator/commit/e26982a9d7172591af7a8a4acd94cb81c0f8344c))
+
 ## [0.7.0](https://github.com/localz/react-hook-form-generator/compare/v0.6.2...v0.7.0) (2022-08-18)
 
 
