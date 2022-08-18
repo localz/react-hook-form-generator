@@ -197,6 +197,16 @@ Workflows.args = {
     },
     friendlyName: { type: 'text', label: 'Friendly name' },
     description: { type: 'text', label: 'Description' },
+    dateTime: {
+      type: 'date',
+      label: 'Date',
+      format: 'MM/dd/yyyy hh:mm a',
+      showTime: true,
+      placeholder: 'Select date and time',
+      isRequired: true,
+      isClearable: true,
+      timeInterval: 15,
+    },
     important: {
       type: 'switch',
       label: 'Important',
@@ -214,7 +224,6 @@ Workflows.args = {
         options: triggerOptions,
       },
     },
-
     multiSelectOption: {
       placeholder: 'Multi select',
       label: 'Multi select',

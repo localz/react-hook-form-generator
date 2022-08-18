@@ -66,6 +66,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({ name, field }) => {
           placeholder={placeholder}
           height="200px"
           width="100%"
+          viewOnly={isReadOnly}
           onChange={(value: { jsObject: any }) => {
             setValue(name, value.jsObject);
           }}
@@ -77,6 +78,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({ name, field }) => {
             contentBox: {
               fontSize: '1rem',
               color: 'rgb(26, 32, 44)',
+              ...(isReadOnly && { cursor: 'not-allowed' }),
             },
             body: {
               borderRadius: '4px',

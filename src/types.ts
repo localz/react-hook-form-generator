@@ -21,6 +21,7 @@ import {
   OptionsOrGroups,
   Props as ChakraReactSelectProps,
 } from 'chakra-react-select';
+import { ReactDatePickerProps } from 'react-datepicker';
 
 export type SelectOptions = Record<
   string,
@@ -42,7 +43,8 @@ export type Field =
   | CheckboxFieldSchema
   | SelectFieldSchema
   | CustomFieldSchema
-  | JsonFieldSchema;
+  | JsonFieldSchema
+  | DateFieldSchema;
 
 export interface FieldProps<T extends FieldSchema> {
   id?: string;
@@ -62,6 +64,7 @@ interface FieldSchema {
     | 'checkbox'
     | 'select'
     | 'json'
+    | 'date'
     | 'custom';
   styles?:
     | FieldStyles
@@ -155,11 +158,26 @@ export interface CheckboxFieldSchema
   }[];
 }
 
+export interface DateFieldSchema
+  extends FieldSchema,
+    Pick<
+      FormController,
+      'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'placeholder'
+    > {
+  type: 'date';
+  defaultValue?: Date;
+  format?: string;
+  isClearable?: boolean;
+  showTime?: boolean;
+  timeOnly?: boolean;
+  timeInterval?: number;
+  pickerProps?: ReactDatePickerProps;
+}
+
 type SelectProps = Pick<
   ChakraReactSelectProps,
   'isClearable' | 'isMulti' | 'isSearchable'
 >;
-
 export interface SelectFieldSchemaWithOptions
   extends FieldSchema,
     SelectProps,
