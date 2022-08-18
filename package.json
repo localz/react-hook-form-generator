@@ -75,6 +75,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@hookform/resolvers": "^2.9.0",
+    "chakra-react-select": "^3.3.8",
     "framer-motion": "4.1.17",
     "lodash-es": "^4.17.21",
     "lodash.get": "^4.4.2",

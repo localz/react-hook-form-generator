@@ -4,11 +4,11 @@ import {
   FormLabel,
   FormHelperText,
   FormErrorMessage,
-  Select,
   Divider,
   Spinner,
 } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
+import { Select } from 'chakra-react-select';
 
 import { FieldProps, SelectFieldSchema, SelectFieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
@@ -19,7 +19,6 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   id,
   name,
   field,
-  defaultValue,
 }) => {
   const {
     label,
@@ -29,6 +28,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     styles = {},
     divideAfter,
     placeholder,
+    ...selectProps
   } = field;
 
   const { isReadOnly, selectOptions } = useContext(Ctx);
@@ -75,23 +75,19 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
             {label}
           </FormLabel>
         )}
+
         <Select
           data-testid={id}
           {...register(name)}
-          defaultValue={defaultValue || null}
-          disabled={isReadOnly || isLoading}
+          isDisabled={isReadOnly || isLoading}
           placeholder={placeholder}
+          {...selectProps}
           {...fieldStyles.select}
           {...(isLoading && {
             icon: <Spinner />,
           })}
-        >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label || option.value}
-            </option>
-          ))}
-        </Select>
+          options={options}
+        />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>
             {helperText}
