@@ -7,7 +7,7 @@ import {
   Divider,
   Spinner,
 } from '@chakra-ui/react';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useController, useFormContext } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 
 import { FieldProps, SelectFieldSchema, SelectFieldStyles } from '../types';
@@ -33,7 +33,15 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
 
   const { isReadOnly, selectOptions } = useContext(Ctx);
 
-  const { register, watch } = useFormContext();
+  const { register, watch, control } = useFormContext();
+
+  const {
+    field: { onChange, onBlur, value, ref },
+    fieldState: { invalid, error },
+  } = useController({
+    name,
+    control,
+  });
 
   const values = watch(name);
 
@@ -75,10 +83,13 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
             {label}
           </FormLabel>
         )}
-
         <Select
           data-testid={id}
-          {...register(name)}
+          name={name}
+          ref={ref}
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
           isDisabled={isReadOnly || isLoading}
           placeholder={placeholder}
           {...selectProps}
@@ -88,6 +99,9 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
           })}
           options={options}
         />
+
+        <FormErrorMessage>{error && error.message}</FormErrorMessage>
+
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>
             {helperText}
