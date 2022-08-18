@@ -21,7 +21,7 @@ import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
 import './styles/datepicker.css';
-import './styles/react-datepicker.min';
+import './styles/react-datepicker.css';
 
 const customDateInput = (
   {
