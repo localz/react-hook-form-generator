@@ -1,5 +1,13 @@
 
 
+### [0.8.1](https://github.com/localz/react-hook-form-generator/compare/v0.8.0...v0.8.1) (2022-08-19)
+
+
+### Bug Fixes
+
+* rm console log from story ([f9cd945](https://github.com/localz/react-hook-form-generator/commit/f9cd945edabfd24647cda848eff661ec808acc5e))
+* use fragment instead of box ([28f69d2](https://github.com/localz/react-hook-form-generator/commit/28f69d2bbc701b052f8f5b2dd5489ebd54557887))
+
 ## [0.8.0](https://github.com/localz/react-hook-form-generator/compare/v0.7.4...v0.8.0) (2022-08-18)
 
 
