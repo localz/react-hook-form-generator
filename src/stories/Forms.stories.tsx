@@ -87,10 +87,16 @@ ConditionalRendering.args = {
       isRequired: true,
       defaultValue: '123',
       shouldDisplay: (value) => {
-        console.log({ value });
-
         return value.show;
       },
+    },
+
+    alwaysVisibleField: {
+      type: 'text',
+      htmlInputType: 'password',
+      label: 'Password',
+      isRequired: true,
+      defaultValue: '123',
     },
   },
 };
