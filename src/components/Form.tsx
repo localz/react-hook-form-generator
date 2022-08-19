@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useMemo } from 'react';
+import React, { BaseSyntheticEvent, Fragment, useMemo } from 'react';
 import {
   Box,
   Heading,
@@ -127,9 +127,9 @@ const renderField = ([name, field]: [string, Field]) => {
     case 'custom':
       Component = field.component;
       return (
-        <Box key={`${name}-container`}>
+        <Fragment key={`${name}-container`}>
           <Component name={name} field={field} {...field.props} />
-        </Box>
+        </Fragment>
       );
 
     default:
@@ -137,9 +137,9 @@ const renderField = ([name, field]: [string, Field]) => {
   }
 
   return (
-    <Box key={`${name}-container`}>
+    <Fragment key={`${name}-container`}>
       <Component name={name} field={field} />
-    </Box>
+    </Fragment>
   );
 };
 
