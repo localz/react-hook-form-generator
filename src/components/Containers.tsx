@@ -14,7 +14,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { useFormContext, useFieldArray } from 'react-hook-form';
+import { useFormContext, useFieldArray, useWatch } from 'react-hook-form';
 
 import {
   FieldProps,
@@ -169,9 +169,9 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     divideAfter,
   } = field;
 
-  const { control, watch } = useFormContext();
+  const { control } = useFormContext();
 
-  const values = watch(name);
+  const values = useWatch({ control });
 
   const { fields, append, remove } = useFieldArray({ name, control });
 
