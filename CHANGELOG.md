@@ -1,5 +1,12 @@
 
 
+### [0.8.2](https://github.com/localz/react-hook-form-generator/compare/v0.8.1...v0.8.2) (2022-08-31)
+
+
+### Bug Fixes
+
+* watch all values in array ([11b593a](https://github.com/localz/react-hook-form-generator/commit/11b593abeac670451b7e182bb21aeadaa44de325))
+
 ### [0.8.1](https://github.com/localz/react-hook-form-generator/compare/v0.8.0...v0.8.1) (2022-08-19)
 
 
