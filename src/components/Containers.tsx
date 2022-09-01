@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, Fragment } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -14,7 +14,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { useFormContext, useFieldArray } from 'react-hook-form';
+import { useFormContext, useFieldArray, useWatch } from 'react-hook-form';
 
 import {
   FieldProps,
@@ -81,7 +81,7 @@ const renderField = (
     case 'custom':
       Component = field.component;
       return (
-        <Box>
+        <Fragment>
           <Component
             id={id}
             data-testid={id}
@@ -90,7 +90,7 @@ const renderField = (
             defaultValue={defaultValue}
             {...field.props}
           />
-        </Box>
+        </Fragment>
       );
 
     default:
@@ -98,7 +98,7 @@ const renderField = (
   }
 
   return (
-    <Box>
+    <Fragment>
       <Component
         id={id}
         data-testid={id}
@@ -106,7 +106,7 @@ const renderField = (
         field={field}
         defaultValue={defaultValue}
       />
-    </Box>
+    </Fragment>
   );
 };
 
@@ -169,9 +169,9 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     divideAfter,
   } = field;
 
-  const { control, watch } = useFormContext();
+  const { control } = useFormContext();
 
-  const values = watch(name);
+  const values = useWatch({ control });
 
   const { fields, append, remove } = useFieldArray({ name, control });
 
