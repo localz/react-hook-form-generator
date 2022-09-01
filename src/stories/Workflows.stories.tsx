@@ -206,6 +206,7 @@ Workflows.args = {
       isRequired: true,
       isClearable: true,
       timeInterval: 15,
+      defaultValue: new Date(),
     },
     important: {
       type: 'switch',
