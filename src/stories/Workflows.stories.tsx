@@ -242,18 +242,19 @@ Workflows.args = {
           label: 'Comments',
           placeholder: 'A textarea placeholder',
         },
-
         payloads: {
           label: 'Payloads',
           type: 'json',
           tooltip: 'JSON array string. You can also use templating',
           isRequired: true,
         },
-
         someNumber: {
           type: 'number',
           label: 'Number',
-          defaultValue: 10,
+          min: 0,
+          max: 5,
+          format: (val: number) => `$` + (val || 0),
+          parse: (val: string) => parseInt(val.replace(/^\$/, '')),
         },
         someCheckbox: {
           type: 'checkbox',

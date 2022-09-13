@@ -107,6 +107,10 @@ export interface JsonFieldSchema extends FieldSchema, FormController {
 
 export interface NumberFieldSchema extends FieldSchema, FormController {
   type: 'number';
+  min?: number;
+  max?: number;
+  format?: (val: number) => string;
+  parse?: (val: string) => number;
 }
 
 export interface ArrayFieldSchema

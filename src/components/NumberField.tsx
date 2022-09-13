@@ -31,6 +31,10 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
     styles = {},
     divideAfter,
     defaultValue,
+    min,
+    max,
+    format,
+    parse,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -66,10 +70,14 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
         <Controller
           name={name}
           control={control}
-          render={() => (
+          render={({ field: { onChange, value } }) => (
             <NumberInput
               isDisabled={isReadOnly}
-              defaultValue={defaultValue || 0}
+              defaultValue={defaultValue}
+              value={format ? format(value) : value}
+              onChange={(val: string) => onChange(parse ? parse(val) : val)}
+              min={min}
+              max={max}
             >
               <NumberInputField id={id} data-testid={id} />
               <NumberInputStepper>
