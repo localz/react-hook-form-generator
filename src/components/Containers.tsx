@@ -154,6 +154,20 @@ export const arrayFieldStyles: ArrayFieldStyles = {
   },
 };
 
+const emptyFields = {
+  text: '',
+  textArea: '',
+  number: 0,
+  switch: false,
+  array: [],
+  object: {},
+  checkbox: [],
+  select: {},
+  json: {},
+  date: '',
+  custom: {},
+};
+
 export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   name,
   field,
@@ -184,7 +198,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   const errorMessage = useErrorMessage(name, label);
 
   const addItem = () => {
-    append('');
+    append(emptyFields[itemField.type]);
     onOpen();
   };
 
@@ -241,12 +255,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                 key={item?.id || `${name}[${i}]`}
                 {...arrayStyles.itemContainer}
               >
-                {renderField(
-                  [`${name}[${i}]`, itemField],
-                  item.id,
-                  // @ts-ignore
-                  item.value
-                )}
+                {renderField([`${name}[${i}]`, itemField], item.id, item)}
                 <Box {...arrayStyles.deleteItemContainer}>
                   <IconButton
                     icon={<DeleteIcon />}
