@@ -184,7 +184,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   const errorMessage = useErrorMessage(name, label);
 
   const addItem = () => {
-    append({});
+    append('');
     onOpen();
   };
 
@@ -234,15 +234,15 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
           </ButtonGroup>
         </Flex>
 
-        <Collapse in={isOpen}>
+        <Collapse in={isOpen} style={{ overflow: 'visible' }}>
           <Stack {...arrayStyles.arrayContainer}>
             {fields.map((item, i) => (
               <Box
-                key={item?.id || `${name}[${i}].value`}
+                key={item?.id || `${name}[${i}]`}
                 {...arrayStyles.itemContainer}
               >
                 {renderField(
-                  [`${name}[${i}].value`, itemField],
+                  [`${name}[${i}]`, itemField],
                   item.id,
                   // @ts-ignore
                   item.value
