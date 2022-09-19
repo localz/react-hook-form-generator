@@ -178,12 +178,15 @@ Workflows.args = {
       },
       triggers: [
         {
+          label: 'order_rescheduled',
           value: 'order_rescheduled',
         },
         {
+          label: 'workflows_internal',
           value: 'workflows_internal',
         },
       ],
+      textList: ['one', 'two'],
     },
   },
 
@@ -223,6 +226,15 @@ Workflows.args = {
         type: 'select',
         label: 'Trigger type',
         options: triggerOptions,
+      },
+    },
+    textList: {
+      type: 'array',
+      label: 'Text list',
+      isCollapsable: true,
+      itemField: {
+        type: 'text',
+        label: 'Text',
       },
     },
     multiSelectOption: {
