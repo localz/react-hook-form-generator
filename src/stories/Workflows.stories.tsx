@@ -186,7 +186,21 @@ Workflows.args = {
           value: 'workflows_internal',
         },
       ],
-      textList: ['one', 'two'],
+      textList: [
+        'No one will be home',
+        "I'm not feeling well",
+        'I no longer need the appointment',
+      ],
+      objects: [
+        {
+          label: 'order_rescheduled',
+          value: 'order_rescheduled',
+        },
+        {
+          label: 'workflows_internal',
+          value: 'workflows_internal',
+        },
+      ],
     },
   },
 
@@ -226,6 +240,24 @@ Workflows.args = {
         type: 'select',
         label: 'Trigger type',
         options: triggerOptions,
+      },
+    },
+    objects: {
+      type: 'array',
+      label: 'Objects',
+      itemField: {
+        type: 'object',
+        label: 'Object',
+        properties: {
+          label: {
+            type: 'text',
+            label: 'Label',
+          },
+          value: {
+            type: 'text',
+            label: 'Value',
+          },
+        },
       },
     },
     textList: {
