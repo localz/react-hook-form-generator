@@ -28,6 +28,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     styles = {},
     divideAfter,
     placeholder,
+    renderOption,
     ...selectProps
   } = field;
 
@@ -100,6 +101,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
             icon: <Spinner />,
           })}
           options={options}
+          {...(renderOption && { formatOptionLabel: renderOption })}
         />
 
         <FormErrorMessage>{error && error.message}</FormErrorMessage>
