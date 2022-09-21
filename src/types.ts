@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import {
   FormControlProps,
   InputProps,
@@ -195,6 +195,7 @@ export interface SelectFieldSchemaWithOptions
       | 'placeholder'
     > {
   type: 'select';
+  renderOption?: (option: any) => React.ReactNode;
   options?: OptionsOrGroups<string | number, any> | undefined;
 }
 export interface SelectFieldSchemaWithOptions

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Flex, Text, Circle } from '@chakra-ui/react';
 import { Form } from '..';
 
 const triggerOptions = [
@@ -275,6 +275,14 @@ Workflows.args = {
       type: 'select',
       isMulti: true,
       options: triggerOptions,
+      renderOption: (option) => {
+        return (
+          <Flex alignItems="center">
+            <Circle size="10px" bg="green" marginRight="10px" />
+            <Text>{option.label}</Text>
+          </Flex>
+        );
+      },
     },
 
     input: {
