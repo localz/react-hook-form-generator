@@ -121,6 +121,8 @@ export interface ArrayFieldSchema
     > {
   type: 'array';
   isCollapsable?: boolean;
+  defaultIsOpen?: boolean;
+  hideCount?: boolean;
   itemField: Field;
 }
 

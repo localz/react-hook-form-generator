@@ -236,6 +236,7 @@ Workflows.args = {
       type: 'array',
       label: 'Triggers',
       isCollapsable: true,
+      defaultIsOpen: true,
       itemField: {
         type: 'select',
         label: 'Trigger type',
@@ -245,6 +246,7 @@ Workflows.args = {
     objects: {
       type: 'array',
       label: 'Objects',
+      hideCount: true,
       itemField: {
         type: 'object',
         label: 'Object',
