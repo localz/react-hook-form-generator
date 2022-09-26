@@ -176,11 +176,13 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     label,
     isRequired,
     isCollapsable,
+    defaultIsOpen,
     itemField,
     helperText,
     shouldDisplay,
     styles = {},
     divideAfter,
+    hideCount,
   } = field;
 
   const { control } = useFormContext();
@@ -190,7 +192,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   const { fields, append, remove } = useFieldArray({ name, control });
 
   const { isOpen, onOpen, onToggle } = useDisclosure({
-    defaultIsOpen: !isCollapsable,
+    defaultIsOpen: !isCollapsable || defaultIsOpen,
   });
 
   const arrayStyles = useStyles<ArrayFieldStyles>('arrayField', styles);
@@ -221,7 +223,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
           {Boolean(label) && (
             <FormLabel htmlFor={name} {...arrayStyles.label}>
               {label}
-              <Box>({fields.length})</Box>
+              {!hideCount && <Box marginLeft="5px">({fields.length})</Box>}
             </FormLabel>
           )}
           <ButtonGroup {...arrayStyles.buttonGroup}>
@@ -362,7 +364,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
             />
           )}
         </Flex>
-        <Collapse in={isOpen}>
+        <Collapse in={isOpen} style={{ overflow: 'visible' }}>
           <Stack {...objectStyles.objectContainer}>
             {Object.entries(field.properties).map(
               ([fieldName, objectField], i) => {
