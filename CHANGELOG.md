@@ -1,5 +1,12 @@
 
 
+## [0.9.0](https://github.com/localz/react-hook-form-generator/compare/v0.8.11...v0.9.0) (2022-09-28)
+
+
+### Features
+
+* customer render after text field ([f4c50f3](https://github.com/localz/react-hook-form-generator/commit/f4c50f39c08f17710cfe0cff8853cbb6f0570e39))
+
 ### [0.8.11](https://github.com/localz/react-hook-form-generator/compare/v0.8.10...v0.8.11) (2022-09-28)
 
 
