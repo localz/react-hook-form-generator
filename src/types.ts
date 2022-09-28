@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import {
   FormControlProps,
   InputProps,
@@ -96,6 +96,7 @@ export interface TextFieldSchema extends FieldSchema, FormController {
   htmlInputType?: string;
   leftInputAddon?: InputAddonProps;
   rightInputAddon?: InputAddonProps;
+  renderAfter?: (values: any) => ReactNode;
 }
 
 export interface TextAreaFieldSchema extends FieldSchema, FormController {

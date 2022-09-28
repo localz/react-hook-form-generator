@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
-import { ChakraProvider, Flex, Text, Circle } from '@chakra-ui/react';
+import { ChakraProvider, Flex, Text, Circle, Box } from '@chakra-ui/react';
 import { Form } from '..';
 
 const triggerOptions = [
@@ -211,6 +211,15 @@ Workflows.args = {
       isRequired: true,
       defaultValue: 'compare',
       divideAfter: true,
+      renderAfter: (values) => {
+        return (
+          <Box bg="gray.400" p="2">
+            This is a custom render after the name field
+            <br />
+            Name: {values.name}
+          </Box>
+        );
+      },
     },
     friendlyName: { type: 'text', label: 'Friendly name' },
     description: { type: 'text', label: 'Description' },

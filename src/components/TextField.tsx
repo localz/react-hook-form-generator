@@ -35,6 +35,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     defaultValue,
     tooltip,
     divideAfter,
+    renderAfter,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -106,6 +107,9 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
           {errorMessage}
         </FormErrorMessage>
       </FormControl>
+
+      {renderAfter && renderAfter(values)}
+
       {divideAfter && <Divider mt="8" />}
     </>
   );
