@@ -1,5 +1,12 @@
 
 
+### [0.8.11](https://github.com/localz/react-hook-form-generator/compare/v0.8.10...v0.8.11) (2022-09-28)
+
+
+### Bug Fixes
+
+* select props ([efad6d4](https://github.com/localz/react-hook-form-generator/commit/efad6d44ca7f0b2cb82bf4bbdea7773cef679590))
+
 ### [0.8.6](https://github.com/localz/react-hook-form-generator/compare/v0.8.5...v0.8.6) (2022-09-13)
 
 
