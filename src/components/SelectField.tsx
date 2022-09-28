@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
-
 import { FieldProps, SelectFieldSchema, SelectFieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
@@ -28,7 +27,6 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     styles = {},
     divideAfter,
     placeholder,
-    renderOption,
     ...selectProps
   } = field;
 
@@ -101,7 +99,6 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
             icon: <Spinner />,
           })}
           options={options}
-          {...(renderOption && { formatOptionLabel: renderOption })}
         />
 
         <FormErrorMessage>{error && error.message}</FormErrorMessage>

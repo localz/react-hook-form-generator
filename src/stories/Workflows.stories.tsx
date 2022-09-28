@@ -277,11 +277,11 @@ Workflows.args = {
       type: 'select',
       isMulti: true,
       options: triggerOptions,
-      renderOption: (option) => {
+      formatOptionLabel: (option) => {
         return (
           <Flex alignItems="center">
             <Circle size="10px" bg="green" marginRight="10px" />
-            <Text>{option.label}</Text>
+            <Text>{(option as { label: string }).label}</Text>
           </Flex>
         );
       },

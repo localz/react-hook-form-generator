@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import {
   FormControlProps,
   InputProps,
@@ -182,7 +182,11 @@ export interface DateFieldSchema
 
 type SelectProps = Pick<
   ChakraReactSelectProps,
-  'isClearable' | 'isMulti' | 'isSearchable'
+  | 'isClearable'
+  | 'isMulti'
+  | 'isSearchable'
+  | 'hasStickyGroupHeaders'
+  | 'formatOptionLabel'
 >;
 export interface SelectFieldSchemaWithOptions
   extends FieldSchema,
@@ -197,7 +201,6 @@ export interface SelectFieldSchemaWithOptions
       | 'placeholder'
     > {
   type: 'select';
-  renderOption?: (option: any) => React.ReactNode;
   options?: OptionsOrGroups<string | number, any> | undefined;
 }
 export interface SelectFieldSchemaWithOptions
