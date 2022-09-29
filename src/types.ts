@@ -124,6 +124,7 @@ export interface ArrayFieldSchema
   isCollapsable?: boolean;
   defaultIsOpen?: boolean;
   hideCount?: boolean;
+  draggable?: boolean;
   itemField: Field;
 }
 
@@ -265,6 +266,7 @@ export interface ArrayFieldStyles
   addButton?: Partial<IconButtonProps>;
   deleteButton?: Partial<IconButtonProps>;
   clearButton?: Partial<IconButtonProps>;
+  dragButton?: Partial<IconButtonProps>;
   deleteItemContainer?: BoxProps;
   countText?: Pseudos;
 }

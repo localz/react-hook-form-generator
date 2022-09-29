@@ -246,6 +246,7 @@ Workflows.args = {
       label: 'Triggers',
       isCollapsable: true,
       defaultIsOpen: true,
+      draggable: true,
       itemField: {
         type: 'select',
         label: 'Trigger type',
