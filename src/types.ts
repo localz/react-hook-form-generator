@@ -44,7 +44,8 @@ export type Field =
   | SelectFieldSchema
   | CustomFieldSchema
   | JsonFieldSchema
-  | DateFieldSchema;
+  | DateFieldSchema
+  | ColorFieldSchema;
 
 export interface FieldProps<T extends FieldSchema> {
   id?: string;
@@ -65,6 +66,7 @@ interface FieldSchema {
     | 'select'
     | 'json'
     | 'date'
+    | 'color'
     | 'custom';
   styles?:
     | FieldStyles
@@ -180,6 +182,21 @@ export interface DateFieldSchema
   timeOnly?: boolean;
   timeInterval?: number;
   pickerProps?: ReactDatePickerProps;
+}
+
+export interface ColorFieldSchema
+  extends FieldSchema,
+    Pick<
+      FormController,
+      | 'label'
+      | 'helperText'
+      | 'isRequired'
+      | 'divideAfter'
+      | 'placeholder'
+      | 'tooltip'
+    > {
+  type: 'color';
+  defaultValue?: string;
 }
 
 type SelectProps = Pick<

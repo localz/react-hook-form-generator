@@ -45,6 +45,8 @@ import { CheckboxField } from './CheckboxField';
 import { SelectField } from './SelectField';
 import { TextAreaField } from './TextAreaField';
 import { JsonField } from './JsonField';
+import { ColorField } from './ColorField';
+import DateField from './DateField';
 
 const renderField = (
   [name, field]: [string, Field],
@@ -88,6 +90,14 @@ const renderField = (
 
     case 'select':
       Component = SelectField;
+      break;
+
+    case 'date':
+      Component = DateField;
+      break;
+
+    case 'color':
+      Component = ColorField;
       break;
 
     case 'custom':
@@ -183,6 +193,7 @@ const emptyFields = {
   json: {},
   date: '',
   custom: {},
+  color: '',
 };
 
 export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
