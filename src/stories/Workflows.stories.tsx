@@ -176,6 +176,7 @@ Workflows.args = {
       input: {
         conditionType: 'is_greater_than',
       },
+      color: '#000000',
       triggers: [
         {
           label: 'order_rescheduled',
@@ -240,6 +241,11 @@ Workflows.args = {
       tooltip:
         'If enabled, this workflow will be marked as having failed if this action takes the onFailure route',
       helperText: 'help',
+    },
+    color: {
+      type: 'color',
+      label: 'Color',
+      tooltip: 'Select a color with this handy picker!',
     },
     triggers: {
       type: 'array',

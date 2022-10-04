@@ -33,6 +33,7 @@ import { CheckboxField, checkboxFieldStyles } from './CheckboxField';
 import { SelectField } from './SelectField';
 import { Ctx } from './Ctx';
 import DateField from './DateField';
+import { ColorField } from './ColorField';
 
 export interface FormProps {
   isReadOnly?: boolean;
@@ -122,6 +123,10 @@ const renderField = ([name, field]: [string, Field]) => {
 
     case 'date':
       Component = DateField;
+      break;
+
+    case 'color':
+      Component = ColorField;
       break;
 
     case 'custom':
