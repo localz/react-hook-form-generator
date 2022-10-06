@@ -80,6 +80,7 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
                 children={
                   <Square size="20px" bg={values[name]} borderRadius="4px" />
                 }
+                zIndex={0}
               />
               <Input
                 data-testid={id}

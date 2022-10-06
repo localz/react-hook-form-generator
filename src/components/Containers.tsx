@@ -47,6 +47,7 @@ import { TextAreaField } from './TextAreaField';
 import { JsonField } from './JsonField';
 import { ColorField } from './ColorField';
 import DateField from './DateField';
+import FileField from './FileField';
 
 const renderField = (
   [name, field]: [string, Field],
@@ -98,6 +99,10 @@ const renderField = (
 
     case 'color':
       Component = ColorField;
+      break;
+
+    case 'file':
+      Component = FileField;
       break;
 
     case 'custom':
@@ -194,6 +199,7 @@ const emptyFields = {
   date: '',
   custom: {},
   color: '',
+  file: {},
 };
 
 export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({

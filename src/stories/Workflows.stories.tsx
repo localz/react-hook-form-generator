@@ -147,7 +147,7 @@ Workflows.args = {
   title: 'Workflows',
   helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
-    alert(JSON.stringify(values, null, 2));
+    alert(JSON.stringify(values['file'], null, 2));
   },
   buttons: {
     submit: {
@@ -246,6 +246,30 @@ Workflows.args = {
       type: 'color',
       label: 'Color',
       tooltip: 'Select a color with this handy picker!',
+    },
+    file: {
+      type: 'file',
+      label: 'File upload',
+      validator: (file: File) => {
+        const fileSizeMb = file.size / (1024 * 1024);
+        const MAX_FILE_SIZE = 10;
+        if (fileSizeMb > MAX_FILE_SIZE) {
+          return {
+            code: 'name-too-large',
+            message: `Max file size is 10 MB`,
+          };
+        }
+        return null;
+      },
+      accept: {
+        'image/png': ['.png'],
+      },
+      maxFiles: 2,
+      placeholder: 'Enter an image URL...',
+      uploadSubheading: '...or drop an image here',
+      showPreview: true,
+      tooltip: 'Only image files allowed',
+      enableUrlInput: true,
     },
     triggers: {
       type: 'array',
