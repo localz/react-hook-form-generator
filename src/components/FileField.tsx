@@ -84,7 +84,10 @@ const SelectedFile = ({
       <IconButton
         icon={<DeleteIcon />}
         aria-label="Clear items"
-        onClick={() => onRemove()}
+        onClick={(event: any) => {
+          event.stopPropagation();
+          onRemove();
+        }}
         size="xs"
         marginLeft="auto"
       />
@@ -138,18 +141,16 @@ const FileUpload = ({
     maxFiles,
     validator,
     onDrop,
-    disabled: disabled || uploaded || !isEmpty(imageUrl),
+    disabled: disabled,
   });
 
   useEffect(() => {
-    setSelectedFiles(acceptedFiles);
+    if (!isEmpty(acceptedFiles)) setSelectedFiles(acceptedFiles);
   }, [acceptedFiles]);
 
   useEffect(() => {
     if (uploaded) {
       setValue(name, parseFiles ? parseFiles(selectedFiles) : selectedFiles);
-    } else {
-      setValue(name, '');
     }
     setDisableUrlInput(uploaded);
   }, [selectedFiles]);
@@ -198,7 +199,6 @@ const FileUpload = ({
                 {uploadHeading}
               </Heading>
               <Text fontWeight="normal">{uploadSubheading}</Text>
-              <List>{errors}</List>
             </Stack>
           )}
           <Flex flexDirection="column" flexWrap="wrap">
@@ -209,13 +209,14 @@ const FileUpload = ({
                   url={URL.createObjectURL(file)}
                   isLoading={isLoading}
                   showPreview={showPreview}
-                  onRemove={() =>
+                  onRemove={() => {
                     setSelectedFiles(
                       selectedFiles.filter(
                         (selectedFile: File) => selectedFile.name !== file.name
                       )
-                    )
-                  }
+                    );
+                    setValue(name, '');
+                  }}
                 />
                 {index !== selectedFiles.length - 1 && (
                   <Divider borderStyle="dashed" />
@@ -233,6 +234,7 @@ const FileUpload = ({
           </Flex>
         </Stack>
       </Box>
+      <List marginTop={2}>{errors}</List>
     </Flex>
   );
 };
