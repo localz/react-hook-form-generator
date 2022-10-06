@@ -224,7 +224,7 @@ export interface FileFieldSchema
   onDrop?: (files: File[]) => Promise<void>;
   isLoading?: boolean;
   enableUrlInput?: boolean;
-  parseFiles?: (files: File[]) => any;
+  fileToUrl?: (file: File) => string;
 }
 
 type SelectProps = Pick<

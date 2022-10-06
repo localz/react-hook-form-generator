@@ -55,23 +55,29 @@ const SelectedFile = ({
           display="inline-flex"
           borderRadius={2}
           border="1px solid #EAEAEA"
-          width="100px"
-          height="100px"
+          width={100}
+          height={100}
+          justifyContent="center"
+          alignItems="center"
           padding={1}
         >
-          <Flex minWidth={0} overflow="hidden">
-            <Image
-              display="block"
-              objectFit="contain"
-              width="auto"
-              height="100%"
-              src={url}
-              onLoad={() => {
-                URL.revokeObjectURL(url);
-              }}
-              fallback={<Text>Invalid URL or image is unavailable</Text>}
-            />
-          </Flex>
+          {isLoading ? (
+            <Spinner size="xl" color="orange" />
+          ) : (
+            <Flex minWidth={0} overflow="hidden">
+              <Image
+                display="block"
+                objectFit="contain"
+                width="auto"
+                height="100%"
+                src={url}
+                onLoad={() => {
+                  URL.revokeObjectURL(url);
+                }}
+                fallback={<Text>Invalid URL or image is unavailable</Text>}
+              />
+            </Flex>
+          )}
         </Box>
       )}
       {file && (
@@ -108,8 +114,7 @@ type FileUploadProps = {
   isLoading?: boolean;
   onDrop?: (files: File[]) => void;
   disabled?: boolean;
-  setDisableUrlInput: (disable: boolean) => void;
-  parseFiles?: (files: File[]) => any;
+  fileToUrl?: (file: File) => string;
 };
 
 const FileUpload = ({
@@ -125,11 +130,11 @@ const FileUpload = ({
   isLoading,
   onDrop,
   disabled,
-  setDisableUrlInput,
-  parseFiles,
+  fileToUrl,
 }: FileUploadProps) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const uploaded = !isEmpty(selectedFiles);
+  const [fileString, setFileString] = useState('');
 
   const {
     acceptedFiles,
@@ -149,11 +154,21 @@ const FileUpload = ({
   }, [acceptedFiles]);
 
   useEffect(() => {
-    if (uploaded) {
-      setValue(name, parseFiles ? parseFiles(selectedFiles) : selectedFiles);
+    if (uploaded && !isLoading) {
+      const joinedFileString = fileToUrl
+        ? selectedFiles.map(fileToUrl).join()
+        : selectedFiles.toString();
+
+      setFileString(joinedFileString);
+      setValue(name, joinedFileString);
     }
-    setDisableUrlInput(uploaded);
-  }, [selectedFiles]);
+  }, [selectedFiles, isLoading]);
+
+  useEffect(() => {
+    if (uploaded && fileToUrl && imageUrl !== fileString) {
+      setSelectedFiles([]);
+    }
+  }, [imageUrl]);
 
   const errors = fileRejections.map(({ file, errors }: FileRejection) => (
     <ListItem key={file.name}>
@@ -206,7 +221,7 @@ const FileUpload = ({
               <>
                 <SelectedFile
                   file={file}
-                  url={URL.createObjectURL(file)}
+                  url={fileToUrl ? fileToUrl(file) : URL.createObjectURL(file)}
                   isLoading={isLoading}
                   showPreview={showPreview}
                   onRemove={() => {
@@ -259,10 +274,9 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({ id, name, field }) => {
     isLoading,
     onDrop,
     enableUrlInput,
-    parseFiles,
+    fileToUrl,
   } = field;
   const { register, control, setValue } = useFormContext();
-  const [disableUrlInput, setDisableUrlInput] = useState<boolean>(false);
 
   const { isReadOnly } = useContext(Ctx);
 
@@ -306,7 +320,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({ id, name, field }) => {
             defaultValue={defaultValue || ''}
             value={values[name]}
             {...fieldStyles.input}
-            isDisabled={isReadOnly || disableUrlInput}
+            isDisabled={isReadOnly}
             marginBottom={2}
           />
         )}
@@ -323,8 +337,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({ id, name, field }) => {
           isLoading={isLoading}
           onDrop={onDrop}
           disabled={isReadOnly}
-          setDisableUrlInput={setDisableUrlInput}
-          parseFiles={parseFiles}
+          fileToUrl={fileToUrl}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>

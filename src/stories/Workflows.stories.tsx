@@ -176,7 +176,7 @@ Workflows.args = {
       input: {
         conditionType: 'is_greater_than',
       },
-      color: '#000000',
+      color: null,
       triggers: [
         {
           label: 'order_rescheduled',
@@ -248,6 +248,7 @@ Workflows.args = {
       type: 'color',
       label: 'Color',
       tooltip: 'Select a color with this handy picker!',
+      placeholder: 'Select a color...',
     },
     imageFile: {
       type: 'file',
@@ -272,9 +273,7 @@ Workflows.args = {
       showPreview: true,
       tooltip: 'Only image files allowed',
       enableUrlInput: true,
-      parseFiles: (files: File[]) => {
-        return files.map((file: File) => file.name).join();
-      },
+      fileToUrl: (file: File) => URL.createObjectURL(file),
     },
     file: {
       type: 'file',
