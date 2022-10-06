@@ -12,6 +12,7 @@ import {
   List,
   ListItem,
   ListIcon,
+  Icon,
   Image,
   Input,
   Spinner,
@@ -33,43 +34,59 @@ import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
 
-const Thumbnail = ({
+const SelectedFile = ({
+  file,
   url,
   onRemove,
+  isLoading,
+  showPreview,
 }: {
+  file?: File;
   url: string;
   onRemove: () => void;
+  isLoading?: boolean;
+  showPreview?: boolean;
 }) => {
   return (
-    <Flex flexDirection="row">
-      <Box
-        boxSizing="border-box"
-        display="inline-flex"
-        borderRadius={2}
-        border="1px solid #EAEAEA"
-        width="200px"
-        height="200px"
-        padding={1}
-      >
-        <Flex minWidth={0} overflow="hidden">
-          <Image
-            display="block"
-            objectFit="contain"
-            width="auto"
-            height="100%"
-            src={url}
-            onLoad={() => {
-              URL.revokeObjectURL(url);
-            }}
-            fallback={<Text>Invalid URL or image is unavailable</Text>}
-          />
-        </Flex>
-      </Box>
+    <Flex flexDirection="row" alignItems="center" margin={2} columnGap={2}>
+      {showPreview && (
+        <Box
+          boxSizing="border-box"
+          display="inline-flex"
+          borderRadius={2}
+          border="1px solid #EAEAEA"
+          width="100px"
+          height="100px"
+          padding={1}
+        >
+          <Flex minWidth={0} overflow="hidden">
+            <Image
+              display="block"
+              objectFit="contain"
+              width="auto"
+              height="100%"
+              src={url}
+              onLoad={() => {
+                URL.revokeObjectURL(url);
+              }}
+              fallback={<Text>Invalid URL or image is unavailable</Text>}
+            />
+          </Flex>
+        </Box>
+      )}
+      {file && (
+        <Text>
+          {file.name} - {round(file.size / (1024 * 1024), 2)} MB
+        </Text>
+      )}
+      {isLoading && <Spinner size="xs" color="orange" marginRight={2} />}
+      {!isLoading && <Icon as={CheckCircleIcon} color="green.500" />}
       <IconButton
         icon={<DeleteIcon />}
         aria-label="Clear items"
         onClick={() => onRemove()}
         size="xs"
+        marginLeft="auto"
       />
     </Flex>
   );
@@ -88,6 +105,8 @@ type FileUploadProps = {
   isLoading?: boolean;
   onDrop?: (files: File[]) => void;
   disabled?: boolean;
+  setDisableUrlInput: (disable: boolean) => void;
+  parseFiles?: (files: File[]) => any;
 };
 
 const FileUpload = ({
@@ -103,7 +122,12 @@ const FileUpload = ({
   isLoading,
   onDrop,
   disabled,
+  setDisableUrlInput,
+  parseFiles,
 }: FileUploadProps) => {
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const uploaded = !isEmpty(selectedFiles);
+
   const {
     acceptedFiles,
     fileRejections,
@@ -114,27 +138,21 @@ const FileUpload = ({
     maxFiles,
     validator,
     onDrop,
-    disabled,
+    disabled: disabled || uploaded || !isEmpty(imageUrl),
   });
 
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-
   useEffect(() => {
-    // if (!imageUrl) {
-    //   setValue(name, acceptedFiles);
-    // } else {
-    //   setValue(name, '');
-    // }
     setSelectedFiles(acceptedFiles);
   }, [acceptedFiles]);
 
-  const files = selectedFiles.map((file: File) => (
-    <ListItem key={file.name}>
-      {isLoading && <Spinner size="xs" color="orange" marginRight={2} />}
-      {!isLoading && <ListIcon as={CheckCircleIcon} color="green.500" />}
-      {file.name} - {round(file.size / (1024 * 1024), 2)} MB
-    </ListItem>
-  ));
+  useEffect(() => {
+    if (uploaded) {
+      setValue(name, parseFiles ? parseFiles(selectedFiles) : selectedFiles);
+    } else {
+      setValue(name, '');
+    }
+    setDisableUrlInput(uploaded);
+  }, [selectedFiles]);
 
   const errors = fileRejections.map(({ file, errors }: FileRejection) => (
     <ListItem key={file.name}>
@@ -170,39 +188,51 @@ const FileUpload = ({
           height="100%"
           width="100%"
           display="flex"
-          alignItems="center"
           justify="center"
           spacing="4"
         >
-          <Stack p="8" textAlign="center" alignItems="center" spacing="1">
-            <FileUploadIcon />
-            <Heading fontSize="md" color="gray.700" fontWeight="bold">
-              {uploadHeading}
-            </Heading>
-            <Text fontWeight="normal">{uploadSubheading}</Text>
-            <List>{errors}</List>
-            <List>{files}</List>
-          </Stack>
+          {!uploaded && !imageUrl && (
+            <Stack p="8" textAlign="center" alignItems="center" spacing="1">
+              <FileUploadIcon />
+              <Heading fontSize="md" color="gray.700" fontWeight="bold">
+                {uploadHeading}
+              </Heading>
+              <Text fontWeight="normal">{uploadSubheading}</Text>
+              <List>{errors}</List>
+            </Stack>
+          )}
+          <Flex flexDirection="column" flexWrap="wrap">
+            {selectedFiles.map((file: File, index: number) => (
+              <>
+                <SelectedFile
+                  file={file}
+                  url={URL.createObjectURL(file)}
+                  isLoading={isLoading}
+                  showPreview={showPreview}
+                  onRemove={() =>
+                    setSelectedFiles(
+                      selectedFiles.filter(
+                        (selectedFile: File) => selectedFile.name !== file.name
+                      )
+                    )
+                  }
+                />
+                {index !== selectedFiles.length - 1 && (
+                  <Divider borderStyle="dashed" />
+                )}
+              </>
+            ))}
+            {imageUrl && !uploaded && (
+              <SelectedFile
+                url={imageUrl}
+                onRemove={() => setValue(name, '')}
+                isLoading={isLoading}
+                showPreview={showPreview}
+              />
+            )}
+          </Flex>
         </Stack>
       </Box>
-      {showPreview && (imageUrl || !isEmpty(acceptedFiles)) && (
-        <Text fontWeight="normal" marginTop="2">
-          Preview:
-        </Text>
-      )}
-      {showPreview && (
-        <Flex flexDirection="row" flexWrap="wrap" columnGap="2">
-          {selectedFiles.map((file: File) => (
-            <Thumbnail
-              url={URL.createObjectURL(file)}
-              onRemove={() => setSelectedFiles([])}
-            />
-          ))}
-        </Flex>
-      )}
-      {showPreview && imageUrl && (
-        <Thumbnail url={imageUrl} onRemove={() => setValue(name, '')} />
-      )}
     </Flex>
   );
 };
@@ -227,8 +257,10 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({ id, name, field }) => {
     isLoading,
     onDrop,
     enableUrlInput,
+    parseFiles,
   } = field;
   const { register, control, setValue } = useFormContext();
+  const [disableUrlInput, setDisableUrlInput] = useState<boolean>(false);
 
   const { isReadOnly } = useContext(Ctx);
 
@@ -272,7 +304,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({ id, name, field }) => {
             defaultValue={defaultValue || ''}
             value={values[name]}
             {...fieldStyles.input}
-            isDisabled={isReadOnly}
+            isDisabled={isReadOnly || disableUrlInput}
             marginBottom={2}
           />
         )}
@@ -289,6 +321,8 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({ id, name, field }) => {
           isLoading={isLoading}
           onDrop={onDrop}
           disabled={isReadOnly}
+          setDisableUrlInput={setDisableUrlInput}
+          parseFiles={parseFiles}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>
