@@ -202,6 +202,8 @@ Workflows.args = {
           value: 'workflows_internal',
         },
       ],
+      imageFile:
+        'https://localz-public-assets-master-ap-southeast-2.s3.ap-southeast-2.amazonaws.com/media_api_green/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000-customerPortalLogo.png/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000_vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000-customerPortalLogo.png_1614580263540_0.png',
     },
   },
 
@@ -246,6 +248,40 @@ Workflows.args = {
       type: 'color',
       label: 'Color',
       tooltip: 'Select a color with this handy picker!',
+    },
+    imageFile: {
+      type: 'file',
+      label: 'Image upload',
+      validator: (file: File) => {
+        const fileSizeMb = file.size / (1024 * 1024);
+        const MAX_FILE_SIZE = 10;
+        if (fileSizeMb > MAX_FILE_SIZE) {
+          return {
+            code: 'name-too-large',
+            message: `Max file size is 10 MB`,
+          };
+        }
+        return null;
+      },
+      accept: {
+        'image/png': ['.png'],
+      },
+      maxFiles: 2,
+      placeholder: 'Enter an image URL...',
+      uploadSubheading: '...or drop an image here',
+      showPreview: true,
+      tooltip: 'Only image files allowed',
+      enableUrlInput: true,
+      parseFiles: (files: File[]) => {
+        return files.map((file: File) => file.name).join();
+      },
+    },
+    file: {
+      type: 'file',
+      label: 'File upload',
+      maxFiles: 5,
+      uploadHeading: 'Drop your file here',
+      tooltip: 'Any type of file accepted!',
     },
     triggers: {
       type: 'array',

@@ -22,6 +22,7 @@ import {
   Props as ChakraReactSelectProps,
 } from 'chakra-react-select';
 import { ReactDatePickerProps } from 'react-datepicker';
+import { FileError, Accept } from 'react-dropzone';
 
 export type SelectOptions = Record<
   string,
@@ -45,7 +46,8 @@ export type Field =
   | CustomFieldSchema
   | JsonFieldSchema
   | DateFieldSchema
-  | ColorFieldSchema;
+  | ColorFieldSchema
+  | FileFieldSchema;
 
 export interface FieldProps<T extends FieldSchema> {
   id?: string;
@@ -67,6 +69,7 @@ interface FieldSchema {
     | 'json'
     | 'date'
     | 'color'
+    | 'file'
     | 'custom';
   styles?:
     | FieldStyles
@@ -197,6 +200,31 @@ export interface ColorFieldSchema
     > {
   type: 'color';
   defaultValue?: string;
+}
+
+export interface FileFieldSchema
+  extends FieldSchema,
+    Pick<
+      FormController,
+      | 'label'
+      | 'helperText'
+      | 'isRequired'
+      | 'divideAfter'
+      | 'placeholder'
+      | 'tooltip'
+    > {
+  type: 'file';
+  defaultValue?: string;
+  validator?: (file: File) => FileError | FileError[] | null;
+  accept?: Accept;
+  maxFiles?: number;
+  showPreview?: boolean;
+  uploadHeading?: string;
+  uploadSubheading?: string;
+  onDrop?: (files: File[]) => Promise<void>;
+  isLoading?: boolean;
+  enableUrlInput?: boolean;
+  parseFiles?: (files: File[]) => any;
 }
 
 type SelectProps = Pick<

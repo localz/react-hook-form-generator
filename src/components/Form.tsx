@@ -34,6 +34,7 @@ import { SelectField } from './SelectField';
 import { Ctx } from './Ctx';
 import DateField from './DateField';
 import { ColorField } from './ColorField';
+import FileField from './FileField';
 
 export interface FormProps {
   isReadOnly?: boolean;
@@ -127,6 +128,10 @@ const renderField = ([name, field]: [string, Field]) => {
 
     case 'color':
       Component = ColorField;
+      break;
+
+    case 'file':
+      Component = FileField;
       break;
 
     case 'custom':
