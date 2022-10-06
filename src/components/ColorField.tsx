@@ -79,9 +79,9 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
                 pointerEvents="none"
                 children={
                   <Square
-                    size="20px"
+                    size={6}
                     bg={values[name]}
-                    borderRadius="4px"
+                    borderRadius={4}
                     border="1px solid #EAEAEA"
                   />
                 }

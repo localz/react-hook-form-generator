@@ -55,23 +55,29 @@ const SelectedFile = ({
           display="inline-flex"
           borderRadius={2}
           border="1px solid #EAEAEA"
-          width="100px"
-          height="100px"
+          width={100}
+          height={100}
+          justifyContent="center"
+          alignItems="center"
           padding={1}
         >
-          <Flex minWidth={0} overflow="hidden">
-            <Image
-              display="block"
-              objectFit="contain"
-              width="auto"
-              height="100%"
-              src={url}
-              onLoad={() => {
-                URL.revokeObjectURL(url);
-              }}
-              fallback={<Text>Invalid URL or image is unavailable</Text>}
-            />
-          </Flex>
+          {isLoading ? (
+            <Spinner size="xl" color="orange" />
+          ) : (
+            <Flex minWidth={0} overflow="hidden">
+              <Image
+                display="block"
+                objectFit="contain"
+                width="auto"
+                height="100%"
+                src={url}
+                onLoad={() => {
+                  URL.revokeObjectURL(url);
+                }}
+                fallback={<Text>Invalid URL or image is unavailable</Text>}
+              />
+            </Flex>
+          )}
         </Box>
       )}
       {file && (
@@ -148,7 +154,7 @@ const FileUpload = ({
   }, [acceptedFiles]);
 
   useEffect(() => {
-    if (uploaded) {
+    if (uploaded && !isLoading) {
       const joinedFileString = fileToUrl
         ? selectedFiles.map(fileToUrl).join()
         : selectedFiles.toString();
@@ -156,7 +162,7 @@ const FileUpload = ({
       setFileString(joinedFileString);
       setValue(name, joinedFileString);
     }
-  }, [selectedFiles]);
+  }, [selectedFiles, isLoading]);
 
   useEffect(() => {
     if (uploaded && fileToUrl && imageUrl !== fileString) {
