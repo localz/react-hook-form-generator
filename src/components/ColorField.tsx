@@ -78,7 +78,12 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
               <InputLeftElement
                 pointerEvents="none"
                 children={
-                  <Square size="20px" bg={values[name]} borderRadius="4px" />
+                  <Square
+                    size="20px"
+                    bg={values[name]}
+                    borderRadius="4px"
+                    border="1px solid #EAEAEA"
+                  />
                 }
                 zIndex={0}
               />
@@ -87,7 +92,7 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
                 aria-label={name}
                 {...register(name)}
                 placeholder={placeholder}
-                defaultValue={defaultValue}
+                defaultValue={defaultValue || ''}
                 {...fieldStyles.input}
                 isDisabled={isReadOnly}
               />
@@ -96,7 +101,7 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
           <PopoverContent width="fit-content">
             <PopoverArrow placeSelf="flex-start" />
             <HexColorPicker
-              color={values[name]}
+              color={values[name] || ''}
               onChange={(color: string) => setValue(name, color)}
             />
           </PopoverContent>
