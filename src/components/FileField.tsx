@@ -254,7 +254,12 @@ const FileUpload = ({
   );
 };
 
-const FileField: FC<FieldProps<FileFieldSchema>> = ({ id, name, field }) => {
+const FileField: FC<FieldProps<FileFieldSchema>> = ({
+  id,
+  name,
+  field,
+  index,
+}) => {
   const {
     label,
     helperText,
@@ -287,7 +292,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({ id, name, field }) => {
   const errorMessage = useErrorMessage(name, label);
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {

@@ -16,7 +16,11 @@ import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
 
-export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({ name, field }) => {
+export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
+  name,
+  field,
+  index,
+}) => {
   const {
     label,
     helperText,
@@ -40,7 +44,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({ name, field }) => {
   });
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {

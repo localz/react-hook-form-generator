@@ -16,12 +16,12 @@ import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import LabelElement from './elements/Label';
 import { Ctx } from './Ctx';
-import { getIndex } from './utils/getIndex';
 
 export const TextField: FC<FieldProps<TextFieldSchema>> = ({
   id,
   name,
   field,
+  index,
 }) => {
   const {
     label,
@@ -52,7 +52,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
   });
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values, getIndex(name)) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {

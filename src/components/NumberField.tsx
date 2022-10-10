@@ -22,6 +22,7 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
   id,
   name,
   field,
+  index,
 }) => {
   const {
     label,
@@ -52,7 +53,7 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
   const errorMessage = useErrorMessage(name, label);
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {

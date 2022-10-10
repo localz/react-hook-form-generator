@@ -54,6 +54,7 @@ export interface FieldProps<T extends FieldSchema> {
   name: string;
   field: T;
   defaultValue?: any;
+  index?: number;
 }
 
 interface FieldSchema {

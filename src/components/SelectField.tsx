@@ -18,6 +18,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   id,
   name,
   field,
+  index,
 }) => {
   const {
     label,
@@ -51,7 +52,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   const errorMessage = useErrorMessage(name, label);
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {
