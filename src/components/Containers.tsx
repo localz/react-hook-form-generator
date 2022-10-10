@@ -52,7 +52,8 @@ import FileField from './FileField';
 const renderField = (
   [name, field]: [string, Field],
   id?: string,
-  defaultValue?: any
+  defaultValue?: any,
+  index?: any
 ) => {
   let Component: any = null;
 
@@ -115,6 +116,7 @@ const renderField = (
             name={name}
             field={field}
             defaultValue={defaultValue}
+            index={index}
             {...field.props}
           />
         </Fragment>
@@ -132,6 +134,7 @@ const renderField = (
         name={name}
         field={field}
         defaultValue={defaultValue}
+        index={index}
       />
     </Fragment>
   );
@@ -205,6 +208,7 @@ const emptyFields = {
 export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   name,
   field,
+  index,
 }) => {
   const {
     label,
@@ -246,7 +250,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   };
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {
@@ -320,7 +324,8 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                             {renderField(
                               [`${name}[${i}]`, itemField],
                               item.id,
-                              item
+                              item,
+                              i
                             )}
                             <ButtonGroup {...arrayStyles.buttonGroup}>
                               <IconButton
@@ -353,7 +358,12 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                       key={item?.id || `${name}[${i}]`}
                       {...arrayStyles.itemContainer}
                     >
-                      {renderField([`${name}[${i}]`, itemField], item.id, item)}
+                      {renderField(
+                        [`${name}[${i}]`, itemField],
+                        item.id,
+                        item,
+                        i
+                      )}
                       <Box {...arrayStyles.deleteItemContainer}>
                         <IconButton
                           icon={<DeleteIcon />}
@@ -410,6 +420,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
   field,
   id,
   defaultValue,
+  index,
 }) => {
   const {
     label,
@@ -434,7 +445,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
   const errorMessage = useErrorMessage(name, field.label);
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {
@@ -472,7 +483,8 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
                     {renderField(
                       [`${name}.${fieldName}`, objectField],
                       id,
-                      defaultValue?.[fieldName]
+                      defaultValue?.[fieldName],
+                      index
                     )}
                   </Box>
                 );

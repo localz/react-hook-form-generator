@@ -22,6 +22,7 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
   id,
   name,
   field,
+  index,
 }) => {
   const {
     label,
@@ -35,6 +36,8 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
     max,
     format,
     parse,
+    precision,
+    step,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -50,7 +53,7 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
   const errorMessage = useErrorMessage(name, label);
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {
@@ -78,6 +81,8 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
               onChange={(val: string) => onChange(parse ? parse(val) : val)}
               min={min}
               max={max}
+              precision={precision}
+              step={step}
             >
               <NumberInputField id={id} data-testid={id} />
               <NumberInputStepper>

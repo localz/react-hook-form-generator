@@ -20,6 +20,7 @@ import { FieldProps, FieldStyles, DateFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import './styles/datepicker.css';
 
@@ -111,7 +112,11 @@ const DatePicker = ({
   );
 };
 
-export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
+export const DateField: FC<FieldProps<DateFieldSchema>> = ({
+  name,
+  field,
+  index,
+}) => {
   const {
     label,
     helperText,
@@ -140,7 +145,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({ name, field }) => {
   const errorMessage = useErrorMessage(name, label);
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {

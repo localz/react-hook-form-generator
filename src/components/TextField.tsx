@@ -21,6 +21,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
   id,
   name,
   field,
+  index,
 }) => {
   const {
     label,
@@ -51,7 +52,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
   });
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values) : true;
+    return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {
