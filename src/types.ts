@@ -77,7 +77,7 @@ interface FieldSchema {
     | ObjectFieldStyles
     | CheckboxFieldStyles
     | SelectFieldStyles;
-  shouldDisplay?: (values?: any) => boolean;
+  shouldDisplay?: (values?: any, index?: number | null) => boolean;
 }
 
 export interface CustomFieldSchema extends Pick<FieldSchema, 'type'> {
@@ -117,6 +117,8 @@ export interface NumberFieldSchema extends FieldSchema, FormController {
   max?: number;
   format?: (val: number) => string;
   parse?: (val: string) => number;
+  step?: number;
+  precision?: number;
 }
 
 export interface ArrayFieldSchema

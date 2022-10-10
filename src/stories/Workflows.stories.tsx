@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import { ChakraProvider, Flex, Text, Circle, Box } from '@chakra-ui/react';
 import { Form } from '..';
+import get from 'lodash.get';
 
 const triggerOptions = [
   { label: 'auspost_job_updated', value: 'auspost_job_updated' },
@@ -309,6 +310,8 @@ Workflows.args = {
           value: {
             type: 'text',
             label: 'Value',
+            shouldDisplay: (values, index) =>
+              get(values, `objects[${index}].label`) === 'x',
           },
         },
       },
