@@ -12,6 +12,7 @@ import {
   FormHelperText,
   FormErrorMessage,
   Divider,
+  Tooltip,
 } from '@chakra-ui/react';
 import {
   AddIcon,
@@ -19,6 +20,7 @@ import {
   ViewIcon,
   ViewOffIcon,
   DragHandleIcon,
+  InfoIcon,
 } from '@chakra-ui/icons';
 import { useFormContext, useFieldArray, useWatch } from 'react-hook-form';
 import {
@@ -222,6 +224,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     divideAfter,
     hideCount,
     draggable,
+    tooltip,
   } = field;
 
   const { control } = useFormContext();
@@ -270,6 +273,11 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
               <FormLabel htmlFor={name} {...arrayStyles.label}>
                 {label}
                 {!hideCount && <Box marginLeft="5px">({fields.length})</Box>}
+                {Boolean(tooltip) && (
+                  <Tooltip label={tooltip}>
+                    <InfoIcon ml="1" />
+                  </Tooltip>
+                )}
               </FormLabel>
             )}
             <ButtonGroup {...arrayStyles.buttonGroup}>
@@ -430,6 +438,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
     shouldDisplay,
     styles = {},
     divideAfter,
+    tooltip,
   } = field;
 
   const { watch } = useFormContext();
@@ -463,6 +472,11 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
           {Boolean(label) && (
             <FormLabel htmlFor={name} {...objectStyles.label}>
               {label}
+              {Boolean(tooltip) && (
+                <Tooltip label={tooltip}>
+                  <InfoIcon ml="1" />
+                </Tooltip>
+              )}
             </FormLabel>
           )}
           {isCollapsable && (
