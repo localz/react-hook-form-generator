@@ -1,5 +1,12 @@
 
 
+### [0.9.7](https://github.com/localz/react-hook-form-generator/compare/v0.9.6...v0.9.7) (2022-10-11)
+
+
+### Bug Fixes
+
+* json default value ([27272d1](https://github.com/localz/react-hook-form-generator/commit/27272d13902b576d2ec2b89ee20bc7c2d2c02d75))
+
 ## [0.9.0](https://github.com/localz/react-hook-form-generator/compare/v0.8.11...v0.9.0) (2022-09-28)
 
 
