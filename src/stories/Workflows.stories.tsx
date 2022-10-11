@@ -1,6 +1,13 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
-import { ChakraProvider, Flex, Text, Circle, Box } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  Flex,
+  Text,
+  Circle,
+  Box,
+  Button,
+} from '@chakra-ui/react';
 import { Form } from '..';
 import get from 'lodash.get';
 
@@ -142,6 +149,18 @@ const Template: ComponentStory<typeof Form> = (args) => (
   </ChakraProvider>
 );
 
+const renderButton = (values: any) => {
+  return (
+    <Button
+      size="sm"
+      variant="solid"
+      onClick={() => alert(JSON.stringify(values, null, 2))}
+    >
+      Promote
+    </Button>
+  );
+};
+
 export const Workflows = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Workflows.args = {
@@ -154,6 +173,7 @@ Workflows.args = {
     submit: {
       text: 'Save',
     },
+    customButtons: [{ render: renderButton }],
   },
   isReadOnly: false,
   selectOptions: {

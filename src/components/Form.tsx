@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, Fragment, useMemo } from 'react';
+import React, { BaseSyntheticEvent, Fragment, ReactNode, useMemo } from 'react';
 import {
   Box,
   Heading,
@@ -14,7 +14,7 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { QuestionIcon } from '@chakra-ui/icons';
-import { useForm, FormProvider, UseFormProps } from 'react-hook-form';
+import { useForm, useWatch, FormProvider, UseFormProps } from 'react-hook-form';
 import merge from 'lodash.merge';
 import { FormStyles, Field, Schema, SelectOptions } from '../types';
 import { StyleCtx } from '../hooks/useStyles';
@@ -36,6 +36,10 @@ import DateField from './DateField';
 import { ColorField } from './ColorField';
 import FileField from './FileField';
 
+type CustomButton = {
+  render: (values: { [x: string]: any }) => ReactNode;
+};
+
 export interface FormProps {
   isReadOnly?: boolean;
   title?: string;
@@ -54,6 +58,7 @@ export interface FormProps {
     submit?: {
       text?: string;
     };
+    customButtons?: CustomButton[];
   };
 }
 
@@ -166,6 +171,7 @@ export function Form({
   selectOptions,
 }: FormProps) {
   const form = useForm(formOptions);
+  const values = useWatch({ control: form.control });
 
   const baseStyles = useMemo(() => {
     return overwriteDefaultStyles ? styles : merge(defaultStyles, styles);
@@ -231,6 +237,9 @@ export function Form({
               justifyContent="flex-end"
               {...baseStyles.form?.buttonGroup}
             >
+              {buttons?.customButtons?.map(({ render }: CustomButton) =>
+                render(values)
+              )}
               {buttons?.reset?.show && (
                 <Button type="reset" {...baseStyles.form?.resetButton}>
                   {buttons?.reset?.text || 'Reset'}
