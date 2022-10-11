@@ -126,7 +126,7 @@ export interface ArrayFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'divideAfter'
+      'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'tooltip'
     > {
   type: 'array';
   isCollapsable?: boolean;
@@ -140,7 +140,7 @@ export interface ObjectFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'divideAfter'
+      'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'tooltip'
     > {
   type: 'object';
   isCollapsable?: boolean;

@@ -25,7 +25,7 @@ const Template: ComponentStory<typeof Form> = (args) => (
 export const Select = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Select.args = {
-  title: 'Workflows',
+  title: 'Select',
   helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
     alert(JSON.stringify(values, null, 2));
