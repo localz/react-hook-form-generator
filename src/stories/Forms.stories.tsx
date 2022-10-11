@@ -60,6 +60,37 @@ Login.args = {
   },
 };
 
+export const Json = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Json.args = {
+  title: 'Json',
+  handleSubmit: (values) => {
+    alert(JSON.stringify(values));
+  },
+  formOptions: {
+    defaultValues: {
+      jaysonWithDefaultValue: JSON.stringify({
+        name: 'Default value',
+      }),
+    },
+  },
+
+  buttons: {
+    submit: {
+      text: 'Submit',
+    },
+  },
+  schema: {
+    jayson: {
+      type: 'json',
+      label: 'Some JSON input',
+    },
+    jaysonWithDefaultValue: {
+      type: 'json',
+      label: 'Some JSON input with a default value',
+    },
+  },
+};
 export const ConditionalRendering = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 ConditionalRendering.args = {
