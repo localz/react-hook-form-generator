@@ -249,6 +249,7 @@ export interface SelectFieldSchemaWithOptions
       | 'defaultValue'
       | 'divideAfter'
       | 'placeholder'
+      | 'tooltip'
     > {
   type: 'select';
   options?: OptionsOrGroups<string | number, any> | undefined;
@@ -263,6 +264,7 @@ export interface SelectFieldSchemaWithOptions
       | 'defaultValue'
       | 'divideAfter'
       | 'placeholder'
+      | 'tooltip'
     > {
   type: 'select';
   selectKey?: keyof SelectOptions;

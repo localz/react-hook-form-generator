@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import { ChakraProvider, Flex, Text, Circle, Box } from '@chakra-ui/react';
-import { Form } from '..';
+import { Form, FormProps } from '..';
 
 const triggerOptions = [
   { label: 'auspost_job_updated', value: 'auspost_job_updated' },
@@ -142,6 +142,218 @@ const Template: ComponentStory<typeof Form> = (args) => (
 );
 
 export const Workflows = Template.bind({});
+
+const schema: FormProps['schema'] = {
+  name: {
+    type: 'text',
+    label: 'Name',
+    isRequired: true,
+    defaultValue: 'compare',
+    divideAfter: true,
+    renderAfter: (values) => {
+      return (
+        <Box bg="gray.400" p="2">
+          This is a custom render after the name field
+          <br />
+          Name: {values.name}
+        </Box>
+      );
+    },
+  },
+  friendlyName: { type: 'text', label: 'Friendly name' },
+  description: { type: 'text', label: 'Description' },
+  dateTime: {
+    type: 'date',
+    label: 'Date',
+    format: 'MM/dd/yyyy hh:mm a',
+    showTime: true,
+    placeholder: 'Select date and time',
+    isRequired: true,
+    isClearable: true,
+    timeInterval: 15,
+    defaultValue: new Date(),
+  },
+  important: {
+    type: 'switch',
+    label: 'Important',
+    tooltip:
+      'If enabled, this workflow will be marked as having failed if this action takes the onFailure route',
+    helperText: 'help',
+  },
+  triggers: {
+    type: 'array',
+    label: 'Triggers',
+    isCollapsable: true,
+    defaultIsOpen: true,
+    draggable: true,
+    itemField: {
+      type: 'select',
+      label: 'Trigger type',
+      options: triggerOptions,
+    },
+  },
+  multiSelectOption: {
+    placeholder: 'Multi select',
+    label: 'Multi select',
+    type: 'select',
+    isMulti: true,
+    options: triggerOptions,
+    formatOptionLabel: (option) => {
+      return (
+        <Flex alignItems="center">
+          <Circle size="10px" bg="green" marginRight="10px" />
+          <Text>{(option as { label: string }).label}</Text>
+        </Flex>
+      );
+    },
+  },
+  split: {
+    type: 'object',
+    label: 'Split',
+    properties: {
+      input: {
+        type: 'object',
+        properties: {
+          argument: {
+            type: 'text',
+            label: 'Input field or function to match',
+            tooltip: 'Value or expression to compare',
+            placeholder: '{{ .order.orderStatus }}',
+          },
+          cases: {
+            type: 'array',
+            label: 'Cases',
+            tooltip:
+              'A list of different values, with the next action to execute to when a match occurs',
+            itemField: {
+              type: 'object',
+              properties: {
+                value: {
+                  type: 'text',
+                  label: 'Case to test',
+                  tooltip: 'The value to compare against argument',
+                  placeholder: 'PENDING',
+                  isRequired: true,
+                },
+                onMatch: {
+                  label: 'Next action',
+                  type: 'select',
+                  isRequired: true,
+                  selectKey: 'actionOptions',
+                  placeholder: 'Select next action',
+                  tooltip: 'The next action to execute when a match occurs',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  input: {
+    type: 'object',
+    divideAfter: true,
+    properties: {
+      comments: {
+        type: 'textArea',
+        label: 'Comments',
+        placeholder: 'A textarea placeholder',
+      },
+      payloads: {
+        label: 'Payloads',
+        type: 'json',
+        tooltip: 'JSON array string. You can also use templating',
+        isRequired: true,
+      },
+      someNumber: {
+        type: 'number',
+        label: 'Number',
+        min: 0,
+        max: 5,
+        format: (val: number) => `$` + (val || 0),
+        parse: (val: string) => parseInt(val.replace(/^\$/, '')),
+      },
+      someCheckbox: {
+        type: 'checkbox',
+        label: 'Checkboxes',
+        checkboxes: [
+          {
+            label: 'Checkbox one',
+            name: 'one',
+          },
+          {
+            label: 'Checkbox two',
+            name: 'two',
+          },
+          {
+            label: 'Checkbox three',
+            name: 'three',
+          },
+        ],
+      },
+      conditionType: {
+        label: 'Condition',
+        type: 'select',
+        defaultValue: { label: 'is_greater_than', value: 'is_greater_than' },
+        options: [
+          { label: 'is_equal', value: 'is_equal' },
+          { label: 'is_not_equal', value: 'is_not_equal' },
+          { label: 'is_less_than', value: 'is_less_than' },
+          { label: 'is_greater_than', value: 'is_greater_than' },
+        ],
+        isRequired: true,
+      },
+      argument: {
+        label: 'Input field or function to match',
+        type: 'text',
+      },
+
+      headers: {
+        label: 'Headers',
+        type: 'array',
+        isCollapsable: true,
+        itemField: {
+          type: 'object',
+          styles: {
+            objectContainer: {
+              direction: 'row',
+              align: 'stretch',
+            },
+            propertyContainer: {
+              flex: 1,
+            },
+          },
+          properties: {
+            key: {
+              isRequired: true,
+              type: 'text',
+              label: 'Key',
+            },
+            value: {
+              isRequired: true,
+              type: 'text',
+              label: 'Value',
+              htmlInputType: 'text',
+            },
+          },
+        },
+      },
+    },
+  },
+  nextAction: {
+    placeholder: 'Select next action',
+    label: 'Next action',
+    type: 'select',
+    selectKey: 'nextActions',
+  },
+  onSuccess: {
+    placeholder: 'Select success action',
+    label: 'On success',
+    type: 'select',
+    selectKey: 'actionOptions',
+  },
+};
+
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Workflows.args = {
   title: 'Workflows',
@@ -164,7 +376,7 @@ Workflows.args = {
       ],
     },
     actionOptions: {
-      isLoading: true,
+      isLoading: false,
       options: [
         { value: 'action-1', label: 'Action one' },
         { value: 'action-2', label: 'Action two' },
@@ -188,173 +400,6 @@ Workflows.args = {
       ],
     },
   },
-
-  schema: {
-    name: {
-      type: 'text',
-      label: 'Name',
-      isRequired: true,
-      defaultValue: 'compare',
-      divideAfter: true,
-      renderAfter: (values) => {
-        return (
-          <Box bg="gray.400" p="2">
-            This is a custom render after the name field
-            <br />
-            Name: {values.name}
-          </Box>
-        );
-      },
-    },
-    friendlyName: { type: 'text', label: 'Friendly name' },
-    description: { type: 'text', label: 'Description' },
-    dateTime: {
-      type: 'date',
-      label: 'Date',
-      format: 'MM/dd/yyyy hh:mm a',
-      showTime: true,
-      placeholder: 'Select date and time',
-      isRequired: true,
-      isClearable: true,
-      timeInterval: 15,
-      defaultValue: new Date(),
-    },
-    important: {
-      type: 'switch',
-      label: 'Important',
-      tooltip:
-        'If enabled, this workflow will be marked as having failed if this action takes the onFailure route',
-      helperText: 'help',
-    },
-    triggers: {
-      type: 'array',
-      label: 'Triggers',
-      isCollapsable: true,
-      defaultIsOpen: true,
-      draggable: true,
-      itemField: {
-        type: 'select',
-        label: 'Trigger type',
-        options: triggerOptions,
-      },
-    },
-    multiSelectOption: {
-      placeholder: 'Multi select',
-      label: 'Multi select',
-      type: 'select',
-      isMulti: true,
-      options: triggerOptions,
-      formatOptionLabel: (option) => {
-        return (
-          <Flex alignItems="center">
-            <Circle size="10px" bg="green" marginRight="10px" />
-            <Text>{(option as { label: string }).label}</Text>
-          </Flex>
-        );
-      },
-    },
-
-    input: {
-      type: 'object',
-      divideAfter: true,
-      properties: {
-        comments: {
-          type: 'textArea',
-          label: 'Comments',
-          placeholder: 'A textarea placeholder',
-        },
-        payloads: {
-          label: 'Payloads',
-          type: 'json',
-          tooltip: 'JSON array string. You can also use templating',
-          isRequired: true,
-        },
-        someNumber: {
-          type: 'number',
-          label: 'Number',
-          min: 0,
-          max: 5,
-          format: (val: number) => `$` + (val || 0),
-          parse: (val: string) => parseInt(val.replace(/^\$/, '')),
-        },
-        someCheckbox: {
-          type: 'checkbox',
-          label: 'Checkboxes',
-          checkboxes: [
-            {
-              label: 'Checkbox one',
-              name: 'one',
-            },
-            {
-              label: 'Checkbox two',
-              name: 'two',
-            },
-            {
-              label: 'Checkbox three',
-              name: 'three',
-            },
-          ],
-        },
-        conditionType: {
-          label: 'Condition',
-          type: 'select',
-          defaultValue: { label: 'is_greater_than', value: 'is_greater_than' },
-          options: [
-            { label: 'is_equal', value: 'is_equal' },
-            { label: 'is_not_equal', value: 'is_not_equal' },
-            { label: 'is_less_than', value: 'is_less_than' },
-            { label: 'is_greater_than', value: 'is_greater_than' },
-          ],
-          isRequired: true,
-        },
-        argument: {
-          label: 'Input field or function to match',
-          type: 'text',
-        },
-
-        headers: {
-          label: 'Headers',
-          type: 'array',
-          isCollapsable: true,
-          itemField: {
-            type: 'object',
-            styles: {
-              objectContainer: {
-                direction: 'row',
-                align: 'stretch',
-              },
-              propertyContainer: {
-                flex: 1,
-              },
-            },
-            properties: {
-              key: {
-                isRequired: true,
-                type: 'text',
-                label: 'Key',
-              },
-              value: {
-                isRequired: true,
-                type: 'text',
-                label: 'Value',
-                htmlInputType: 'text',
-              },
-            },
-          },
-        },
-      },
-    },
-    nextAction: {
-      placeholder: 'Select next action',
-      label: 'Next action',
-      type: 'select',
-      selectKey: 'nextActions',
-    },
-    onSuccess: {
-      placeholder: 'Select success action',
-      label: 'On success',
-      type: 'select',
-      selectKey: 'actionOptions',
-    },
-  },
+  formatResults: true,
+  schema,
 };

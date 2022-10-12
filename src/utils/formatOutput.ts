@@ -1,4 +1,4 @@
-import { Schema } from '../types';
+import { ObjectFieldSchema, Schema } from '../types';
 
 function formatSelect(
   value:
@@ -31,12 +31,40 @@ export function formatOutput({
 
     const prop = schema[name];
 
+    if (!prop) {
+      acc[name] = value;
+      return acc;
+    }
+
     if (prop.type === 'object') {
       acc[name] = formatOutput({
         values: value,
         schema: prop.properties,
       });
 
+      return acc;
+    }
+
+    if (prop.type === 'array' && prop.itemField.type === 'select') {
+      acc[name] = value.map(formatSelect);
+      return acc;
+    }
+
+    if (prop.type === 'array' && prop.itemField.type === 'object') {
+      if (Array.isArray(value)) {
+        acc[name] = value.map((v) => {
+          return formatOutput({
+            values: v,
+            schema: (prop.itemField as ObjectFieldSchema).properties,
+          });
+        });
+        return acc;
+      }
+
+      acc[name] = formatOutput({
+        values: value,
+        schema: prop.itemField.properties,
+      });
       return acc;
     }
 

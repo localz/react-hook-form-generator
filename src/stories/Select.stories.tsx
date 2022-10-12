@@ -27,8 +27,9 @@ export const Select = Template.bind({});
 Select.args = {
   title: 'Select',
   helperText: 'Some text that explains some stuff',
+  formatResults: true,
   handleSubmit: (values) => {
-    // alert(JSON.stringify(values, null, 2));
+    alert(JSON.stringify(values, null, 2));
   },
   buttons: {
     submit: {
