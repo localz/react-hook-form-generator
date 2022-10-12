@@ -35,6 +35,7 @@ import { Ctx } from './Ctx';
 import DateField from './DateField';
 import { ColorField } from './ColorField';
 import FileField from './FileField';
+import { formatOutput } from '../utils/formatOutput';
 
 type CustomButton = {
   render: (values: { [x: string]: any }) => ReactNode;
@@ -60,6 +61,7 @@ export interface FormProps {
     };
     customButtons?: CustomButton[];
   };
+  formatResults?: boolean;
 }
 
 const defaultStyles: FormStyles = {
@@ -169,6 +171,7 @@ export function Form({
   styles = {},
   isReadOnly,
   selectOptions,
+  formatResults = false,
 }: FormProps) {
   const form = useForm(formOptions);
   const values = useWatch({ control: form.control });
@@ -188,7 +191,13 @@ export function Form({
         <FormProvider {...form}>
           <Box
             as="form"
-            onSubmit={form.handleSubmit(handleSubmit)}
+            onSubmit={form.handleSubmit((values) => {
+              if (formatResults) {
+                return handleSubmit(formatOutput({ values, schema }));
+              }
+
+              return handleSubmit(values);
+            })}
             {...baseStyles.form?.container}
           >
             {title && !helperText && (
