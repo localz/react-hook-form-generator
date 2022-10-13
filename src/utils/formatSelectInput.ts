@@ -76,6 +76,9 @@ export function formatSelectInput({
       console.warn(
         `${name} has no field in the schema. Check that your schema is correct and the default values match that schema.`
       );
+
+      acc[name] = value;
+
       return acc;
     }
 
