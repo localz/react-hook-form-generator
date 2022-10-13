@@ -2,7 +2,8 @@ import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Form } from '..';
-import { schema, defaultValues, selectOptions } from './data/workflows';
+import { selectOptions } from './data/workflows';
+import { schema, defaultValues } from './data/workflowSidebar';
 
 /*
  * NOTE: You can't bind args for this story because it passes react context as an arg
@@ -11,8 +12,8 @@ import { schema, defaultValues, selectOptions } from './data/workflows';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Workflows/Action',
-  displayName: 'tes',
+  title: 'Workflows/Sidebar',
+  displayName: 'Workflows sidebar',
   component: Form,
 };
 
@@ -27,7 +28,7 @@ export const Workflows = Template.bind({});
 
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Workflows.args = {
-  title: 'Workflows',
+  title: 'Workflows sidebar',
   helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
     alert(JSON.stringify(values, null, 2));

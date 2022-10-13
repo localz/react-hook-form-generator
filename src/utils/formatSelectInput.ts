@@ -72,6 +72,13 @@ export function formatSelectInput({
 
     const prop = schema[name];
 
+    if (!prop) {
+      console.warn(
+        `${name} has no field in the schema. Check that your schema is correct and the default values match that schema.`
+      );
+      return acc;
+    }
+
     if (prop.type === 'object') {
       acc[name] = formatSelectInput({
         defaultValues: value,

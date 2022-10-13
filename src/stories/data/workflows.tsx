@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Text, Circle, Box } from '@chakra-ui/react';
 import { FormProps } from '../..';
 
-const triggerOptions = [
+export const triggerOptions = [
   { label: 'auspost_job_updated', value: 'auspost_job_updated' },
   { label: 'auspost_route_created', value: 'auspost_route_created' },
   { label: 'chat_channel_deleted', value: 'chat_channel_deleted' },
@@ -227,6 +227,7 @@ export const schema: FormProps['schema'] = {
                   isRequired: true,
                 },
                 onMatch: {
+                  isClearable: true,
                   label: 'Next action',
                   type: 'select',
                   isRequired: true,
