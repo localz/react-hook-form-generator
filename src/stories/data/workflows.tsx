@@ -125,7 +125,6 @@ export const schema: FormProps['schema'] = {
   name: {
     type: 'text',
     label: 'Name',
-    isRequired: true,
     defaultValue: 'compare',
     divideAfter: true,
     renderAfter: (values) => {

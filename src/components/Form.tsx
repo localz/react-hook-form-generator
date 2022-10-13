@@ -69,6 +69,7 @@ export interface FormProps {
   };
   formatSelectResults?: boolean;
   formatSelectDefaultValues?: boolean;
+  debug?: boolean;
 }
 
 const defaultStyles: FormStyles = {
@@ -180,6 +181,7 @@ export function Form({
   selectOptions,
   formatSelectResults = false,
   formatSelectDefaultValues = false,
+  debug = false,
 }: FormProps) {
   const getOptions = useCallback(() => {
     if (!formOptions) {
@@ -201,6 +203,11 @@ export function Form({
   }, [formOptions, formatSelectDefaultValues]);
 
   const form = useForm(getOptions());
+
+  if (debug) {
+    console.table(form.formState.errors);
+  }
+
   const values = useWatch({ control: form.control });
 
   const baseStyles = useMemo(() => {

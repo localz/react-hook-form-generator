@@ -3,6 +3,8 @@ import { ComponentStory } from '@storybook/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Form } from '..';
 import { schema, defaultValues, selectOptions } from './data/workflows';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { object, string } from 'zod';
 
 /*
  * NOTE: You can't bind args for this story because it passes react context as an arg
@@ -41,8 +43,15 @@ Workflows.args = {
   selectOptions,
   formOptions: {
     defaultValues,
+    resolver: zodResolver(
+      object({
+        name: string(),
+        description: string().min(1),
+      })
+    ),
   },
   formatSelectDefaultValues: true,
   formatSelectResults: true,
   schema,
+  debug: true,
 };
