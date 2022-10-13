@@ -1,5 +1,12 @@
 
 
+### [0.12.1](https://github.com/localz/react-hook-form-generator/compare/v0.12.0...v0.12.1) (2022-10-13)
+
+
+### Bug Fixes
+
+* set undefined values ([06cd1e6](https://github.com/localz/react-hook-form-generator/commit/06cd1e639543a9da497adf435952dbe5dbd86b19))
+
 ## [0.12.0](https://github.com/localz/react-hook-form-generator/compare/v0.11.1...v0.12.0) (2022-10-13)
 
 
