@@ -17,8 +17,6 @@ function getOptions({
   }
 
   if (field.selectKey) {
-    console.log('field.selectKey', field.selectKey);
-    console.log('selectOptions', selectOptions);
     return selectOptions[field.selectKey].options;
   }
 

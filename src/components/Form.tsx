@@ -200,8 +200,6 @@ export function Form({
     return formOptions;
   }, [formOptions, formatSelectDefaultValues]);
 
-  // console.log('defaultValues', JSON.stringify(options.defaultValues, null, 2));
-
   const form = useForm(getOptions());
   const values = useWatch({ control: form.control });
 
