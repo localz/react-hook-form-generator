@@ -1,5 +1,5 @@
 import { FormProps } from 'components/Form';
-import { Field, SelectOptions } from '../types';
+import { Field, ObjectFieldSchema, SelectOptions } from '../types';
 
 function getOptions({
   field,
@@ -105,6 +105,18 @@ export function formatSelectInput({
     }
 
     if (prop.type === 'array' && prop.itemField.type === 'object') {
+      if (Array.isArray(value)) {
+        acc[name] = value.map((v) => {
+          return formatSelectInput({
+            defaultValues: v,
+            schema: (prop.itemField as ObjectFieldSchema).properties,
+            selectOptions,
+          });
+        });
+
+        return acc;
+      }
+
       acc[name] = formatSelectInput({
         defaultValues: value,
         schema: prop.itemField.properties,
