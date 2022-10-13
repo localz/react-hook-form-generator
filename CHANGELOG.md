@@ -1,5 +1,12 @@
 
 
+## [0.12.0](https://github.com/localz/react-hook-form-generator/compare/v0.11.1...v0.12.0) (2022-10-13)
+
+
+### Features
+
+* debug mode ([ceba6e4](https://github.com/localz/react-hook-form-generator/commit/ceba6e4b050996adad55ac0faba7d260917d1f39))
+
 ### [0.11.1](https://github.com/localz/react-hook-form-generator/compare/v0.11.0...v0.11.1) (2022-10-13)
 
 
