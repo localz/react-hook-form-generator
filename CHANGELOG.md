@@ -1,5 +1,12 @@
 
 
+## [0.11.0](https://github.com/localz/react-hook-form-generator/compare/v0.10.0...v0.11.0) (2022-10-13)
+
+
+### Features
+
+* log warning ([a368051](https://github.com/localz/react-hook-form-generator/commit/a368051a4075f227e020c9c9aa597f3d14042fd4))
+
 ## [0.10.0](https://github.com/localz/react-hook-form-generator/compare/v0.9.7...v0.10.0) (2022-10-13)
 
 
