@@ -190,6 +190,7 @@ export function Form({
       return {
         ...formOptions,
         defaultValues: formatSelectInput({
+          selectOptions: selectOptions || {},
           defaultValues: formOptions.defaultValues,
           schema,
         }),
