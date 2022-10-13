@@ -27,6 +27,7 @@ export const Select = Template.bind({});
 Select.args = {
   title: 'Select',
   helperText: 'Some text that explains some stuff',
+  formatResults: true,
   handleSubmit: (values) => {
     alert(JSON.stringify(values, null, 2));
   },
@@ -45,7 +46,7 @@ Select.args = {
       ],
     },
     actionOptions: {
-      isLoading: true,
+      isLoading: false,
       options: [
         { value: 'action-1', label: 'Action one' },
         { value: 'action-2', label: 'Action two' },
@@ -54,37 +55,36 @@ Select.args = {
   },
   formOptions: {
     defaultValues: {
-      input: {
-        conditionType: 'is_greater_than',
-      },
-      triggers: [
-        {
-          label: 'order_rescheduled',
-          value: 'order_rescheduled',
-        },
-        {
-          label: 'workflows_internal',
-          value: 'workflows_internal',
-        },
-      ],
-      textList: [
-        'No one will be home',
-        "I'm not feeling well",
-        'I no longer need the appointment',
-      ],
-      objects: [
-        {
-          label: 'order_rescheduled',
-          value: 'order_rescheduled',
-        },
-        {
-          label: 'workflows_internal',
-          value: 'workflows_internal',
-        },
-      ],
+      fromContext: 'action-2',
     },
   },
   schema: {
+    input: {
+      type: 'object',
+      label: 'Parent object',
+      properties: {
+        nestedSelect: {
+          placeholder: 'Select option...',
+          label: 'Nested select',
+          type: 'select',
+          selectKey: 'actionOptions',
+        },
+      },
+    },
+
+    fromContext: {
+      placeholder: 'Select option...',
+      label: 'From context',
+      type: 'select',
+      selectKey: 'actionOptions',
+    },
+    multiSelect: {
+      placeholder: 'Select option...',
+      label: 'Multi select',
+      type: 'select',
+      selectKey: 'actionOptions',
+      isMulti: true,
+    },
     stickyHeader: {
       type: 'select',
       label: 'Sticky header',

@@ -1,4 +1,10 @@
-import React, { BaseSyntheticEvent, Fragment, ReactNode, useMemo } from 'react';
+import React, {
+  BaseSyntheticEvent,
+  Fragment,
+  ReactNode,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   Box,
   Heading,
@@ -35,6 +41,7 @@ import { Ctx } from './Ctx';
 import DateField from './DateField';
 import { ColorField } from './ColorField';
 import FileField from './FileField';
+import { formatSelectInput, formatSelectOutput } from '../utils';
 
 type CustomButton = {
   render: (values: { [x: string]: any }) => ReactNode;
@@ -60,6 +67,8 @@ export interface FormProps {
     };
     customButtons?: CustomButton[];
   };
+  formatSelectResults?: boolean;
+  formatSelectDefaultValues?: boolean;
 }
 
 const defaultStyles: FormStyles = {
@@ -169,8 +178,29 @@ export function Form({
   styles = {},
   isReadOnly,
   selectOptions,
+  formatSelectResults = false,
+  formatSelectDefaultValues = false,
 }: FormProps) {
-  const form = useForm(formOptions);
+  const getOptions = useCallback(() => {
+    if (!formOptions) {
+      return {};
+    }
+
+    if (formOptions.defaultValues && formatSelectDefaultValues) {
+      return {
+        ...formOptions,
+        defaultValues: formatSelectInput({
+          selectOptions: selectOptions || {},
+          defaultValues: formOptions.defaultValues,
+          schema,
+        }),
+      };
+    }
+
+    return formOptions;
+  }, [formOptions, formatSelectDefaultValues]);
+
+  const form = useForm(getOptions());
   const values = useWatch({ control: form.control });
 
   const baseStyles = useMemo(() => {
@@ -188,7 +218,13 @@ export function Form({
         <FormProvider {...form}>
           <Box
             as="form"
-            onSubmit={form.handleSubmit(handleSubmit)}
+            onSubmit={form.handleSubmit((values) => {
+              if (formatSelectResults) {
+                return handleSubmit(formatSelectOutput({ values, schema }));
+              }
+
+              return handleSubmit(values);
+            })}
             {...baseStyles.form?.container}
           >
             {title && !helperText && (
