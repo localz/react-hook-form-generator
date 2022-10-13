@@ -1,5 +1,12 @@
 
 
+### [0.11.1](https://github.com/localz/react-hook-form-generator/compare/v0.11.0...v0.11.1) (2022-10-13)
+
+
+### Bug Fixes
+
+* array of objects ([ac82ab4](https://github.com/localz/react-hook-form-generator/commit/ac82ab4e8af7051603dc31d7d7d89488ece76030))
+
 ## [0.11.0](https://github.com/localz/react-hook-form-generator/compare/v0.10.0...v0.11.0) (2022-10-13)
 
 
