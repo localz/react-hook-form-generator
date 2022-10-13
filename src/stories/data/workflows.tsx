@@ -1,5 +1,6 @@
-import { FormProps } from '../../components/Form';
-import { formatOutput } from '../formatOutput';
+import React from 'react';
+import { Flex, Text, Circle, Box } from '@chakra-ui/react';
+import { FormProps } from '../..';
 
 const triggerOptions = [
   { label: 'auspost_job_updated', value: 'auspost_job_updated' },
@@ -120,13 +121,22 @@ const triggerOptions = [
   { label: 'workflows_internal', value: 'workflows_internal' },
 ];
 
-const schema: FormProps['schema'] = {
+export const schema: FormProps['schema'] = {
   name: {
     type: 'text',
     label: 'Name',
     isRequired: true,
     defaultValue: 'compare',
     divideAfter: true,
+    renderAfter: (values) => {
+      return (
+        <Box bg="gray.400" p="2">
+          This is a custom render after the name field
+          <br />
+          Name: {values.name}
+        </Box>
+      );
+    },
   },
   friendlyName: { type: 'text', label: 'Friendly name' },
   description: { type: 'text', label: 'Description' },
@@ -160,12 +170,33 @@ const schema: FormProps['schema'] = {
       options: triggerOptions,
     },
   },
+  triggersWithSelectKey: {
+    type: 'array',
+    label: 'Triggers',
+    isCollapsable: true,
+    defaultIsOpen: true,
+    draggable: true,
+    itemField: {
+      type: 'select',
+      label: 'Trigger type',
+      selectKey: 'triggerOptions',
+    },
+  },
+
   multiSelectOption: {
     placeholder: 'Multi select',
     label: 'Multi select',
     type: 'select',
     isMulti: true,
     options: triggerOptions,
+    formatOptionLabel: (option) => {
+      return (
+        <Flex alignItems="center">
+          <Circle size="10px" bg="green" marginRight="10px" />
+          <Text>{(option as { label: string }).label}</Text>
+        </Flex>
+      );
+    },
   },
   split: {
     type: 'object',
@@ -263,6 +294,13 @@ const schema: FormProps['schema'] = {
         ],
         isRequired: true,
       },
+      conditionTypeWithSelectKey: {
+        label: 'Condition',
+        type: 'select',
+        defaultValue: { label: 'is_greater_than', value: 'is_greater_than' },
+        selectKey: 'actionOptions',
+        isRequired: true,
+      },
       argument: {
         label: 'Input field or function to match',
         type: 'text',
@@ -313,114 +351,34 @@ const schema: FormProps['schema'] = {
   },
 };
 
-const values = {
+export const defaultValues = {
   input: {
-    conditionType: { label: 'is_equal', value: 'is_equal' },
-    comments: '',
-    payloads: { Hello: true },
-    argument: '',
-    headers: [{ key: 'Content-Type', value: 'application/json' }],
+    conditionType: 'is_greater_than',
+    conditionTypeWithSelectKey: ['action-2', 'action-1'],
   },
-  triggers: [
-    { label: 'order_rescheduled', value: 'order_rescheduled' },
-    { label: 'workflows_internal', value: 'workflows_internal' },
-  ],
-  name: 'compare',
-  friendlyName: 'Friendly name',
-  description: '',
-  important: false,
-  multiSelectOption: [
-    { label: 'auspost_job_updated', value: 'auspost_job_updated' },
-    { label: 'create_collection_order', value: 'create_collection_order' },
-    { label: 'create_delivery_route', value: 'create_delivery_route' },
-  ],
-  split: {
-    input: {
-      argument: '{{ .order.status }}',
-      cases: [
-        {
-          value: 'PENDING',
-          onMatch: { value: 'action-1', label: 'Action one' },
-        },
-      ],
-    },
-  },
-  one: false,
-  two: true,
-  three: true,
-  nextAction: { value: 'action-1', label: 'Action one' },
-  onSuccess: { value: 'action-2', label: 'Action two' },
+  triggers: ['order_rescheduled', 'workflows_internal'],
+  triggersWithSelectKey: ['auspost_job_updated', 'auspost_route_created'],
+  nextAction: ['next_action_one', 'next_action_two'],
 };
 
-describe('format output', () => {
-  it('should', () => {
-    const result = formatOutput({
-      values,
-      schema,
-    });
+export const selectOptions = {
+  nextActions: {
+    isLoading: false,
+    options: [
+      { value: 'next_action_one', label: 'Next action one' },
+      { value: 'next_action_two', label: 'Next action two' },
+    ],
+  },
+  actionOptions: {
+    isLoading: false,
+    options: [
+      { value: 'action-1', label: 'Action one' },
+      { value: 'action-2', label: 'Action two' },
+    ],
+  },
 
-    expect(result.triggers).toEqual([
-      'order_rescheduled',
-      'workflows_internal',
-    ]);
-
-    expect(result.input.headers).toEqual([
-      { key: 'Content-Type', value: 'application/json' },
-    ]);
-
-    expect(result.split.input.cases).toEqual([
-      {
-        value: 'PENDING',
-        onMatch: 'action-1',
-      },
-    ]);
-
-    expect(result).toMatchInlineSnapshot(`
-      Object {
-        "description": "",
-        "friendlyName": "Friendly name",
-        "important": false,
-        "input": Object {
-          "argument": "",
-          "comments": "",
-          "conditionType": "is_equal",
-          "headers": Array [
-            Object {
-              "key": "Content-Type",
-              "value": "application/json",
-            },
-          ],
-          "payloads": Object {
-            "Hello": true,
-          },
-        },
-        "multiSelectOption": Array [
-          "auspost_job_updated",
-          "create_collection_order",
-          "create_delivery_route",
-        ],
-        "name": "compare",
-        "nextAction": "action-1",
-        "onSuccess": "action-2",
-        "one": false,
-        "split": Object {
-          "input": Object {
-            "argument": "{{ .order.status }}",
-            "cases": Array [
-              Object {
-                "onMatch": "action-1",
-                "value": "PENDING",
-              },
-            ],
-          },
-        },
-        "three": true,
-        "triggers": Array [
-          "order_rescheduled",
-          "workflows_internal",
-        ],
-        "two": true,
-      }
-    `);
-  });
-});
+  triggerOptions: {
+    isLoading: false,
+    options: triggerOptions,
+  },
+};

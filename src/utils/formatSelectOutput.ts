@@ -17,7 +17,7 @@ function formatSelect(
   return value;
 }
 
-export function formatOutput({
+export function formatSelectOutput({
   values,
   schema,
 }: {
@@ -37,7 +37,7 @@ export function formatOutput({
     }
 
     if (prop.type === 'object') {
-      acc[name] = formatOutput({
+      acc[name] = formatSelectOutput({
         values: value,
         schema: prop.properties,
       });
@@ -53,7 +53,7 @@ export function formatOutput({
     if (prop.type === 'array' && prop.itemField.type === 'object') {
       if (Array.isArray(value)) {
         acc[name] = value.map((v) => {
-          return formatOutput({
+          return formatSelectOutput({
             values: v,
             schema: (prop.itemField as ObjectFieldSchema).properties,
           });
@@ -61,7 +61,7 @@ export function formatOutput({
         return acc;
       }
 
-      acc[name] = formatOutput({
+      acc[name] = formatSelectOutput({
         values: value,
         schema: prop.itemField.properties,
       });

@@ -1,4 +1,10 @@
-import React, { BaseSyntheticEvent, Fragment, ReactNode, useMemo } from 'react';
+import React, {
+  BaseSyntheticEvent,
+  Fragment,
+  ReactNode,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   Box,
   Heading,
@@ -35,7 +41,7 @@ import { Ctx } from './Ctx';
 import DateField from './DateField';
 import { ColorField } from './ColorField';
 import FileField from './FileField';
-import { formatOutput } from '../utils/formatOutput';
+import { formatSelectInput, formatSelectOutput } from '../utils';
 
 type CustomButton = {
   render: (values: { [x: string]: any }) => ReactNode;
@@ -61,7 +67,8 @@ export interface FormProps {
     };
     customButtons?: CustomButton[];
   };
-  formatResults?: boolean;
+  formatSelectResults?: boolean;
+  formatSelectDefaultValues?: boolean;
 }
 
 const defaultStyles: FormStyles = {
@@ -171,9 +178,30 @@ export function Form({
   styles = {},
   isReadOnly,
   selectOptions,
-  formatResults = false,
+  formatSelectResults = false,
+  formatSelectDefaultValues = false,
 }: FormProps) {
-  const form = useForm(formOptions);
+  const getOptions = useCallback(() => {
+    if (!formOptions) {
+      return {};
+    }
+
+    if (formOptions.defaultValues && formatSelectDefaultValues) {
+      return {
+        ...formOptions,
+        defaultValues: formatSelectInput({
+          defaultValues: formOptions.defaultValues,
+          schema,
+        }),
+      };
+    }
+
+    return formOptions;
+  }, [formOptions, formatSelectDefaultValues]);
+
+  // console.log('defaultValues', JSON.stringify(options.defaultValues, null, 2));
+
+  const form = useForm(getOptions());
   const values = useWatch({ control: form.control });
 
   const baseStyles = useMemo(() => {
@@ -192,8 +220,8 @@ export function Form({
           <Box
             as="form"
             onSubmit={form.handleSubmit((values) => {
-              if (formatResults) {
-                return handleSubmit(formatOutput({ values, schema }));
+              if (formatSelectResults) {
+                return handleSubmit(formatSelectOutput({ values, schema }));
               }
 
               return handleSubmit(values);
