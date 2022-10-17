@@ -77,6 +77,11 @@ Sandbox.args = {
           },
         },
       ],
+      input: {
+        payloads: JSON.stringify({
+          wow: 'wow',
+        }),
+      },
       imageFile:
         'https://localz-public-assets-master-ap-southeast-2.s3.ap-southeast-2.amazonaws.com/media_api_green/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000-customerPortalLogo.png/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000_vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000-customerPortalLogo.png_1614580263540_0.png',
     },
