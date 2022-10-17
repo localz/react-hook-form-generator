@@ -111,6 +111,7 @@ export interface TextAreaFieldSchema extends FieldSchema, FormController {
 }
 export interface JsonFieldSchema extends FieldSchema, FormController {
   type: 'json';
+  stringify?: boolean;
 }
 
 export interface NumberFieldSchema extends FieldSchema, FormController {

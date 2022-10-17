@@ -11,6 +11,7 @@ import JSONInput from 'react-json-editor-ajrm';
 // @ts-ignore
 import locale from 'react-json-editor-ajrm/locale/en';
 import get from 'lodash.get';
+import { isString } from '../utils/isString';
 
 import { FieldProps, FieldStyles, JsonFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
@@ -31,6 +32,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
     divideAfter,
     placeholder,
     disabled,
+    stringify,
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('textAreaField', styles);
@@ -51,8 +53,8 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
 
   useEffect(() => {
     const value = get(values, name);
-    if (value) {
-      setValue(name, JSON.parse(value));
+    if (value && isString(value)) {
+      setValue(name, stringify ? value : JSON.parse(value));
     }
   }, []);
 
@@ -69,7 +71,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
           const getPlaceholder = () => {
             if (value) {
               try {
-                return JSON.parse(value);
+                return isString(value) ? JSON.parse(value) : value;
               } catch (e) {
                 return undefined;
               }
@@ -100,7 +102,10 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
                 width="100%"
                 viewOnly={isReadOnly || disabled}
                 onChange={(value: { jsObject: any }) => {
-                  setValue(name, value.jsObject);
+                  setValue(
+                    name,
+                    stringify ? JSON.stringify(value.jsObject) : value.jsObject
+                  );
                 }}
                 style={{
                   labelColumn: {
