@@ -1,4 +1,4 @@
-import React, { FC, useContext, useMemo } from 'react';
+import React, { FC, useContext, useMemo, useEffect } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import {
   FormControl,
@@ -10,6 +10,7 @@ import {
 import JSONInput from 'react-json-editor-ajrm';
 // @ts-ignore
 import locale from 'react-json-editor-ajrm/locale/en';
+import get from 'lodash.get';
 
 import { FieldProps, FieldStyles, JsonFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
@@ -47,6 +48,13 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
   const isVisible = useMemo(() => {
     return shouldDisplay ? shouldDisplay(values, index) : true;
   }, [values, shouldDisplay]);
+
+  useEffect(() => {
+    const value = get(values, name);
+    if (value) {
+      setValue(name, JSON.parse(value));
+    }
+  }, []);
 
   if (!isVisible) {
     return null;
