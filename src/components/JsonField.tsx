@@ -11,7 +11,7 @@ import JSONInput from 'react-json-editor-ajrm';
 // @ts-ignore
 import locale from 'react-json-editor-ajrm/locale/en';
 import get from 'lodash.get';
-import { isString } from '../utils/isString';
+import { isString } from 'lodash';
 
 import { FieldProps, FieldStyles, JsonFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
@@ -71,9 +71,9 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
           const getPlaceholder = () => {
             if (value) {
               try {
-                return isString(value) ? JSON.parse(value) : value;
+                return JSON.parse(value);
               } catch (e) {
-                return undefined;
+                return value;
               }
             }
 
