@@ -2,7 +2,6 @@ import React, { FC, useContext, useMemo, useEffect } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import {
   FormControl,
-  FormLabel,
   FormErrorMessage,
   FormHelperText,
   Divider,
@@ -13,6 +12,7 @@ import locale from 'react-json-editor-ajrm/locale/en';
 import get from 'lodash.get';
 import { isString } from 'lodash';
 
+import LabelElement from './elements/Label';
 import { FieldProps, FieldStyles, JsonFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
@@ -33,6 +33,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
     placeholder,
     disabled,
     stringify,
+    tooltip,
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('textAreaField', styles);
@@ -87,11 +88,12 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
               {...fieldStyles.control}
               isReadOnly={isReadOnly}
             >
-              {Boolean(label) && (
-                <FormLabel htmlFor={name} {...fieldStyles.label}>
-                  {label}
-                </FormLabel>
-              )}
+              <LabelElement
+                label={label}
+                name={name}
+                fieldStyles={fieldStyles}
+                tooltip={tooltip}
+              />
               <JSONInput
                 id={`json-input__${name}`}
                 theme="light_mitsuketa_tribute"
