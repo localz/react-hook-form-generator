@@ -28,6 +28,7 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
     shouldDisplay,
     styles = {},
     divideAfter,
+    disabled,
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('textAreaField', styles);
@@ -67,7 +68,7 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
           placeholder={placeholder}
           {...register(name)}
           defaultValue={defaultValue || ''}
-          disabled={isReadOnly}
+          disabled={isReadOnly || disabled}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>

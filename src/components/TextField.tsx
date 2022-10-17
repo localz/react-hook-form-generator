@@ -37,6 +37,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     tooltip,
     divideAfter,
     renderAfter,
+    disabled,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -84,6 +85,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
               placeholder={placeholder}
               defaultValue={defaultValue || ''}
               {...fieldStyles.input}
+              isDisabled={isReadOnly || disabled}
             />
             {rightInputAddon && <InputRightAddon {...rightInputAddon} />}
           </InputGroup>
@@ -96,7 +98,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
             placeholder={placeholder}
             defaultValue={defaultValue || ''}
             {...fieldStyles.input}
-            isDisabled={isReadOnly}
+            isDisabled={isReadOnly || disabled}
           />
         )}
         {Boolean(helperText) && (

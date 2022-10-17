@@ -29,6 +29,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
     styles = {},
     divideAfter,
     placeholder,
+    disabled,
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('textAreaField', styles);
@@ -89,7 +90,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
                 placeholder={getPlaceholder()}
                 height="200px"
                 width="100%"
-                viewOnly={isReadOnly}
+                viewOnly={isReadOnly || disabled}
                 onChange={(value: { jsObject: any }) => {
                   setValue(name, value.jsObject);
                 }}

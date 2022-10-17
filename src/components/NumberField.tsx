@@ -38,6 +38,7 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
     parse,
     precision,
     step,
+    disabled,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -75,7 +76,7 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
           control={control}
           render={({ field: { onChange, value } }) => (
             <NumberInput
-              isDisabled={isReadOnly}
+              isDisabled={isReadOnly || disabled}
               defaultValue={defaultValue}
               value={format ? format(value) : value}
               onChange={(val: string) => onChange(parse ? parse(val) : val)}
