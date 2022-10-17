@@ -31,8 +31,10 @@ const customDateInput = (
     onChange,
     placeholder,
     disabled,
+    fieldStyles,
   }: Pick<InputProps, 'value' | 'onClick' | 'onChange' | 'placeholder'> & {
     disabled?: boolean;
+    fieldStyles: FieldStyles;
   },
   ref: any
 ) => (
@@ -45,6 +47,7 @@ const customDateInput = (
     onChange={onChange}
     placeholder={placeholder}
     disabled={disabled}
+    {...fieldStyles.input}
   />
 );
 customDateInput.displayName = 'DateInput';
@@ -55,6 +58,7 @@ interface Props {
   isClearable?: boolean;
   onChange: (date: Date | null) => any;
   selectedDate: Date | undefined;
+  fieldStyles: FieldStyles;
   showPopperArrow?: boolean;
   dateFormat?: string;
   placeholder?: string;
@@ -75,6 +79,7 @@ const DatePicker = ({
   timeOnly,
   timeInterval = 30,
   disabled = false,
+  fieldStyles,
   ...pickerProps
 }: Props) => {
   const isLight = useColorMode().colorMode === 'light';
@@ -87,7 +92,7 @@ const DatePicker = ({
           showPopperArrow={false}
           className="react-datapicker__input-text"
           dateFormat={dateFormat}
-          customInput={<CustomInput />}
+          customInput={<CustomInput fieldStyles={fieldStyles} />}
           placeholderText={placeholder}
           showTimeSelect={showTime}
           showTimeSelectOnly={timeOnly}
@@ -132,6 +137,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({
     timeInterval,
     pickerProps,
     defaultValue,
+    disabled,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -177,8 +183,9 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({
           showTime={showTime}
           timeOnly={timeOnly}
           timeInterval={timeInterval}
-          disabled={isReadOnly}
+          disabled={isReadOnly || disabled}
           pickerProps={pickerProps}
+          fieldStyles={fieldStyles}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>

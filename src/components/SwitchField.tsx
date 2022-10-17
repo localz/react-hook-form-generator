@@ -28,6 +28,7 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
     defaultValue,
     tooltip,
     divideAfter,
+    disabled,
   } = field;
 
   const { register, control } = useFormContext();
@@ -71,7 +72,7 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
           data-testid={id}
           {...fieldStyles.switch}
           defaultChecked={defaultValue}
-          disabled={isReadOnly}
+          disabled={isReadOnly || disabled}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>

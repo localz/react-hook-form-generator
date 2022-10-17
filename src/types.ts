@@ -79,6 +79,7 @@ interface FieldSchema {
     | CheckboxFieldStyles
     | SelectFieldStyles;
   shouldDisplay?: (values?: any, index?: number | null) => boolean;
+  disabled?: true;
 }
 
 export interface CustomFieldSchema extends Pick<FieldSchema, 'type'> {

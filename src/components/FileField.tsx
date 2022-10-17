@@ -194,9 +194,11 @@ const FileUpload = ({
         role="group"
         transition="all 150ms ease-in-out"
         flexDirection="column"
-        _hover={{
-          shadow: 'md',
-        }}
+        {...(!disabled && {
+          _hover: {
+            shadow: 'md',
+          },
+        })}
         {...getRootProps()}
       >
         <input {...getInputProps()} />
@@ -280,6 +282,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
     onDrop,
     enableUrlInput,
     fileToUrl,
+    disabled,
   } = field;
   const { register, control, setValue } = useFormContext();
 
@@ -325,7 +328,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
             defaultValue={defaultValue || ''}
             value={values[name]}
             {...fieldStyles.input}
-            isDisabled={isReadOnly}
+            isDisabled={isReadOnly || disabled}
             marginBottom={2}
           />
         )}
@@ -341,7 +344,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
           {...(enableUrlInput && { imageUrl: values[name] })}
           isLoading={isLoading}
           onDrop={onDrop}
-          disabled={isReadOnly}
+          disabled={isReadOnly || disabled}
           fileToUrl={fileToUrl}
         />
         {Boolean(helperText) && (

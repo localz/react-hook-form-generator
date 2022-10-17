@@ -110,11 +110,11 @@ Sandbox.args = {
       label: 'Image upload',
       validator: (file: File) => {
         const fileSizeMb = file.size / (1024 * 1024);
-        const MAX_FILE_SIZE = 10;
+        const MAX_FILE_SIZE = 1;
         if (fileSizeMb > MAX_FILE_SIZE) {
           return {
             code: 'name-too-large',
-            message: `Max file size is 10 MB`,
+            message: `Max file size is 1 MB`,
           };
         }
         return null;

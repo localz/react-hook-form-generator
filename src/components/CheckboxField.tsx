@@ -35,6 +35,7 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
     shouldDisplay,
     styles = {},
     divideAfter,
+    disabled,
   } = field;
 
   const { register, control } = useFormContext();
@@ -72,7 +73,7 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
         <Stack {...fieldStyles.checkboxGroup}>
           {field.checkboxes.map((checkbox) => (
             <Checkbox
-              isDisabled={isReadOnly}
+              isDisabled={isReadOnly || disabled}
               key={checkbox.name}
               {...register(checkbox.name)}
               data-testid={`${id}-${checkbox.name}`}

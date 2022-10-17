@@ -37,6 +37,7 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
     tooltip,
     placeholder,
     defaultValue,
+    disabled,
   } = field;
 
   const { register, control, setValue } = useFormContext();
@@ -95,17 +96,19 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
                 placeholder={placeholder}
                 defaultValue={defaultValue || ''}
                 {...fieldStyles.input}
-                isDisabled={isReadOnly}
+                isDisabled={isReadOnly || disabled}
               />
             </InputGroup>
           </PopoverTrigger>
-          <PopoverContent width="fit-content">
-            <PopoverArrow placeSelf="flex-start" />
-            <HexColorPicker
-              color={values[name] || ''}
-              onChange={(color: string) => setValue(name, color)}
-            />
-          </PopoverContent>
+          {!isReadOnly && !disabled && (
+            <PopoverContent width="fit-content">
+              <PopoverArrow placeSelf="flex-start" />
+              <HexColorPicker
+                color={values[name] || ''}
+                onChange={(color: string) => setValue(name, color)}
+              />
+            </PopoverContent>
+          )}
         </Popover>
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>
