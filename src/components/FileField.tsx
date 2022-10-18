@@ -40,12 +40,14 @@ const SelectedFile = ({
   onRemove,
   isLoading,
   showPreview,
+  fieldStyles,
 }: {
   file?: File;
   url: string;
   onRemove: () => void;
   isLoading?: boolean;
   showPreview?: boolean;
+  fieldStyles: FieldStyles;
 }) => {
   return (
     <Flex flexDirection="row" alignItems="center" margin={2} columnGap={2}>
@@ -96,6 +98,7 @@ const SelectedFile = ({
         }}
         size="xs"
         marginLeft="auto"
+        {...fieldStyles.button}
       />
     </Flex>
   );
@@ -104,9 +107,7 @@ const SelectedFile = ({
 type FileUploadProps = {
   name: string;
   setValue: UseFormSetValue<FieldValues>;
-  validator?: (file: File) => FileError | FileError[] | null;
-  accept?: Accept;
-  maxFiles?: number;
+  fieldStyles: FieldStyles;
   uploadHeading?: string;
   uploadSubheading?: string;
   showPreview?: boolean;
@@ -115,14 +116,15 @@ type FileUploadProps = {
   onDrop?: (files: File[]) => void;
   disabled?: boolean;
   fileToUrl?: (file: File) => string;
+  validator?: (file: File) => FileError | FileError[] | null;
+  accept?: Accept;
+  maxFiles?: number;
 };
 
 const FileUpload = ({
   name,
   setValue,
-  validator,
-  accept,
-  maxFiles = 1,
+  fieldStyles,
   uploadHeading,
   uploadSubheading,
   showPreview,
@@ -131,6 +133,9 @@ const FileUpload = ({
   onDrop,
   disabled,
   fileToUrl,
+  validator,
+  accept,
+  maxFiles = 1,
 }: FileUploadProps) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const uploaded = !isEmpty(selectedFiles);
@@ -226,6 +231,7 @@ const FileUpload = ({
                   url={fileToUrl ? fileToUrl(file) : URL.createObjectURL(file)}
                   isLoading={isLoading}
                   showPreview={showPreview}
+                  fieldStyles={fieldStyles}
                   onRemove={() => {
                     setSelectedFiles(
                       selectedFiles.filter(
@@ -246,6 +252,7 @@ const FileUpload = ({
                 onRemove={() => setValue(name, '')}
                 isLoading={isLoading}
                 showPreview={showPreview}
+                fieldStyles={fieldStyles}
               />
             )}
           </Flex>
@@ -290,7 +297,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
 
   const values = useWatch({ control });
 
-  const fieldStyles = useStyles<FieldStyles>('textField', styles);
+  const fieldStyles = useStyles<FieldStyles>('fileField', styles);
 
   const errorMessage = useErrorMessage(name, label);
 
@@ -346,6 +353,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
           onDrop={onDrop}
           disabled={isReadOnly || disabled}
           fileToUrl={fileToUrl}
+          fieldStyles={fieldStyles}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>

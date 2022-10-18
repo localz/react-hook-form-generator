@@ -290,6 +290,7 @@ export interface FormStyles {
   textAreaField?: FieldStyles;
   json?: FieldStyles;
   numberField?: FieldStyles;
+  fileField?: FieldStyles;
   arrayField?: ArrayFieldStyles;
   objectField?: ObjectFieldStyles;
   switchField?: SwitchFieldStyles;
@@ -304,6 +305,7 @@ export interface FieldStyles {
   helperText?: BoxProps;
   errorMessage?: BoxProps;
   inputGroup?: Omit<InputGroupProps, 'children'>;
+  button?: Omit<ButtonProps, 'children' | 'type'>;
 }
 
 export interface ArrayFieldStyles
