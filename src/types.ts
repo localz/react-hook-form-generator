@@ -165,6 +165,8 @@ export interface DragDropFieldSchema
   options: { [x: string]: any }[];
   dragText?: string;
   noOptionsText?: string;
+  maxDropAreaHeight?: string;
+  maxDragAreaHeight?: string;
 }
 
 export interface SwitchFieldSchema

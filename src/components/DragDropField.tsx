@@ -147,6 +147,8 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
     disabled,
     dragText,
     noOptionsText,
+    maxDropAreaHeight,
+    maxDragAreaHeight,
   } = field;
 
   const { control } = useFormContext();
@@ -250,6 +252,10 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
               role="group"
               transition="all 150ms ease-in-out"
               flexDirection="column"
+              {...(maxDropAreaHeight && {
+                maxHeight: maxDropAreaHeight,
+                overflow: 'scroll',
+              })}
             >
               <Droppable droppableId="selectedDroppable">
                 {(provided) => (
@@ -292,6 +298,10 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
               role="group"
               transition="all 150ms ease-in-out"
               flexDirection="column"
+              {...(maxDragAreaHeight && {
+                maxHeight: maxDragAreaHeight,
+                overflow: 'scroll',
+              })}
             >
               <Droppable droppableId="unselectedDroppable">
                 {(provided) => (
