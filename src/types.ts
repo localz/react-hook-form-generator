@@ -40,6 +40,7 @@ export type Field =
   | NumberFieldSchema
   | ArrayFieldSchema
   | ObjectFieldSchema
+  | DragDropFieldSchema
   | SwitchFieldSchema
   | CheckboxFieldSchema
   | SelectFieldSchema
@@ -65,6 +66,7 @@ interface FieldSchema {
     | 'switch'
     | 'array'
     | 'object'
+    | 'dragDrop'
     | 'checkbox'
     | 'select'
     | 'json'
@@ -112,6 +114,8 @@ export interface TextAreaFieldSchema extends FieldSchema, FormController {
 export interface JsonFieldSchema extends FieldSchema, FormController {
   type: 'json';
   stringify?: boolean;
+  isCollapsable?: boolean;
+  defaultIsOpen?: boolean;
 }
 
 export interface NumberFieldSchema extends FieldSchema, FormController {
@@ -147,6 +151,20 @@ export interface ObjectFieldSchema
   type: 'object';
   isCollapsable?: boolean;
   properties: Record<string, Field>;
+}
+
+export interface DragDropFieldSchema
+  extends FieldSchema,
+    Pick<
+      FormController,
+      'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'tooltip'
+    > {
+  type: 'dragDrop';
+  optionField: Field;
+  optionToString: (values: { [x: string]: any }) => string;
+  options: { [x: string]: any }[];
+  dragText?: string;
+  noOptionsText?: string;
 }
 
 export interface SwitchFieldSchema
@@ -290,6 +308,8 @@ export interface FormStyles {
   textAreaField?: FieldStyles;
   json?: FieldStyles;
   numberField?: FieldStyles;
+  fileField?: FieldStyles;
+  jsonField?: FieldStyles;
   arrayField?: ArrayFieldStyles;
   objectField?: ObjectFieldStyles;
   switchField?: SwitchFieldStyles;
@@ -304,6 +324,7 @@ export interface FieldStyles {
   helperText?: BoxProps;
   errorMessage?: BoxProps;
   inputGroup?: Omit<InputGroupProps, 'children'>;
+  button?: Omit<ButtonProps, 'children' | 'type'>;
 }
 
 export interface ArrayFieldStyles

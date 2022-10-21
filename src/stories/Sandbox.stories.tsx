@@ -82,12 +82,57 @@ Sandbox.args = {
           wow: 'wow',
         }),
       },
+      expectedActions: [
+        {
+          name: 'test_sms',
+          input: {
+            orderId: '123',
+          },
+        },
+      ],
       imageFile:
         'https://localz-public-assets-master-ap-southeast-2.s3.ap-southeast-2.amazonaws.com/media_api_green/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000-customerPortalLogo.png/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000_vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000-customerPortalLogo.png_1614580263540_0.png',
     },
   },
+  styles: {
+    fileField: {
+      button: {
+        variant: 'solid',
+      },
+    },
+    jsonField: {
+      button: {
+        variant: 'ghost',
+      },
+    },
+  },
 
   schema: {
+    expectedActions: {
+      type: 'dragDrop',
+      label: 'Expected actions',
+      dragText: 'Drag actions here',
+      noOptionsText: 'No actions remaining',
+      optionField: {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'text',
+            disabled: true,
+          },
+          input: {
+            type: 'json',
+            label: 'Action input',
+            isCollapsable: true,
+          },
+        },
+      },
+      optionToString: (values) => values.name,
+      options: [
+        { name: 'test_sms', input: null },
+        { name: 'check_attribute', input: null },
+      ],
+    },
     name: {
       type: 'text',
       label: 'Name',
@@ -177,6 +222,8 @@ Sandbox.args = {
           type: 'json',
           tooltip: 'JSON array string. You can also use templating',
           isRequired: true,
+          isCollapsable: true,
+          defaultIsOpen: true,
         },
         file: {
           type: 'file',
