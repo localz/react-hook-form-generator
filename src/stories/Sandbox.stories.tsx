@@ -57,7 +57,7 @@ Sandbox.args = {
   title: 'Sandbox',
   helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
-    alert(JSON.stringify(values, null, 2));
+    alert(JSON.stringify(values['expectedActions'], null, 2));
   },
   buttons: {
     submit: {
@@ -113,6 +113,7 @@ Sandbox.args = {
       label: 'Expected actions',
       dragText: 'Drag actions here',
       noOptionsText: 'No actions remaining',
+      maxDropAreaHeight: '150px',
       optionField: {
         type: 'object',
         properties: {
