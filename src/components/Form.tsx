@@ -34,6 +34,7 @@ import {
   ObjectField,
   objectFieldStyles,
 } from './Containers';
+import { DragDropField } from './DragDropField';
 import { SwitchField } from './SwitchField';
 import { CheckboxField, checkboxFieldStyles } from './CheckboxField';
 import { SelectField } from './SelectField';
@@ -123,6 +124,10 @@ const renderField = ([name, field]: [string, Field]) => {
 
     case 'object':
       Component = ObjectField;
+      break;
+
+    case 'dragDrop':
+      Component = DragDropField;
       break;
 
     case 'switch':

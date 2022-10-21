@@ -146,7 +146,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({
 
   const values = useWatch({ control });
 
-  const fieldStyles = useStyles<FieldStyles>('textAreaField', styles);
+  const fieldStyles = useStyles<FieldStyles>('textField', styles);
 
   const errorMessage = useErrorMessage(name, label);
 

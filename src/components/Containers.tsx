@@ -51,8 +51,9 @@ import { JsonField } from './JsonField';
 import { ColorField } from './ColorField';
 import DateField from './DateField';
 import FileField from './FileField';
+import { DragDropField } from './DragDropField';
 
-const renderField = (
+export const renderField = (
   [name, field]: [string, Field],
   id?: string,
   defaultValue?: any,
@@ -83,6 +84,10 @@ const renderField = (
 
     case 'object':
       Component = ObjectField;
+      break;
+
+    case 'dragDrop':
+      Component = DragDropField;
       break;
 
     case 'switch':
@@ -206,6 +211,7 @@ const emptyFields = {
   custom: {},
   color: '',
   file: {},
+  dragDrop: [],
 };
 
 export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
