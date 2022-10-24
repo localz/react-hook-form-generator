@@ -30,26 +30,50 @@ import { differenceBy } from 'lodash';
 import {
   Field,
   FieldProps,
-  ArrayFieldStyles,
   DragDropFieldSchema,
+  DragDropFieldStyles,
 } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { renderField } from './Containers';
 import DragDropIcon from './elements/DragDropIcon';
 
+export const dragDropFieldStyles: DragDropFieldStyles = {
+  arrayContainer: {
+    spacing: 4,
+    marginTop: 2,
+  },
+  itemContainer: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 2.5rem',
+    paddingLeft: 2,
+    paddingBottom: 2,
+    paddingTop: 1,
+    border: '1px solid',
+    borderRadius: 4,
+    borderColor: 'gray.200',
+    backgroundColor: 'gray.50',
+  },
+  unselectedContainer: {
+    width: '50%',
+  },
+  selectedContainer: {
+    width: '50%',
+  },
+};
+
 const UnselectedField = ({
   option,
   optionToString,
   i,
-  arrayStyles,
+  dragDropStyles,
   isReadOnly,
   disabled,
 }: {
   option: { [x: string]: any };
   optionToString: (values: { [x: string]: any }) => string;
   i: number;
-  arrayStyles: ArrayFieldStyles;
+  dragDropStyles: DragDropFieldStyles;
   isReadOnly: boolean;
   disabled?: boolean;
 }) => {
@@ -62,21 +86,17 @@ const UnselectedField = ({
     >
       {(provided) => (
         <Box
+          width="100%"
           key={`unselectedOptions[${i}]`}
-          {...arrayStyles.itemContainer}
           ref={provided.innerRef}
           sx={{
             ...provided.draggableProps.style,
           }}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          {...dragDropStyles.itemContainer}
         >
-          <Text
-            width="150px"
-            overflow="hidden"
-            whiteSpace="nowrap"
-            textOverflow="ellipsis"
-          >
+          <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
             {optionToString(option)}
           </Text>
         </Box>
@@ -90,7 +110,7 @@ const SelectedField = ({
   name,
   i,
   item,
-  arrayStyles,
+  dragDropStyles,
   isReadOnly,
   disabled,
 }: {
@@ -98,7 +118,7 @@ const SelectedField = ({
   name: string;
   i: number;
   item: Record<'id', string>;
-  arrayStyles: ArrayFieldStyles;
+  dragDropStyles: DragDropFieldStyles;
   isReadOnly: boolean;
   disabled?: boolean;
 }) => {
@@ -111,8 +131,9 @@ const SelectedField = ({
     >
       {(provided) => (
         <Box
+          width="100%"
           key={item?.id || `${name}[${i}]`}
-          {...arrayStyles.itemContainer}
+          {...dragDropStyles.itemContainer}
           ref={provided.innerRef}
           sx={{
             ...provided.draggableProps.style,
@@ -147,8 +168,8 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
     disabled,
     dragText,
     noOptionsText,
-    maxDropAreaHeight,
-    maxDragAreaHeight,
+    maxSelectedContainerHeight,
+    maxUnselectedContainerHeight,
   } = field;
 
   const { control } = useFormContext();
@@ -174,7 +195,10 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
     insert: insertSelected,
   } = useFieldArray({ name, control });
 
-  const arrayStyles = useStyles<ArrayFieldStyles>('arrayField', styles);
+  const dragDropStyles = useStyles<DragDropFieldStyles>(
+    'dragDropField',
+    styles
+  );
 
   const errorMessage = useErrorMessage(name, label);
 
@@ -223,11 +247,11 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
         <FormControl
           isRequired={isRequired}
           isInvalid={Boolean(errorMessage)}
-          {...arrayStyles.control}
+          {...dragDropStyles.control}
         >
-          <Flex {...arrayStyles.toolbar}>
+          <Flex>
             {Boolean(label) && (
-              <FormLabel htmlFor={name} {...arrayStyles.label}>
+              <FormLabel htmlFor={name} {...dragDropStyles.label}>
                 {label}
                 {Boolean(tooltip) && (
                   <Tooltip label={tooltip}>
@@ -252,15 +276,16 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
               role="group"
               transition="all 150ms ease-in-out"
               flexDirection="column"
-              {...(maxDropAreaHeight && {
-                maxHeight: maxDropAreaHeight,
+              {...(maxSelectedContainerHeight && {
+                maxHeight: maxSelectedContainerHeight,
                 overflow: 'scroll',
               })}
+              {...dragDropStyles.selectedContainer}
             >
               <Droppable droppableId="selectedDroppable">
                 {(provided) => (
                   <Stack
-                    {...arrayStyles.arrayContainer}
+                    {...dragDropStyles.arrayContainer}
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                     margin={selectedFields.length === 0 ? 4 : 2}
@@ -269,7 +294,7 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
                     {selectedFields.length === 0 && (
                       <>
                         <DragDropIcon />
-                        <Text color="gray.400">
+                        <Text color="gray.400" textAlign="center">
                           {dragText ?? 'Drag and drop here'}
                         </Text>
                       </>
@@ -280,7 +305,7 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
                         name={name}
                         i={i}
                         item={item}
-                        arrayStyles={arrayStyles}
+                        dragDropStyles={dragDropStyles}
                         isReadOnly={isReadOnly}
                         disabled={disabled}
                       />
@@ -298,15 +323,16 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
               role="group"
               transition="all 150ms ease-in-out"
               flexDirection="column"
-              {...(maxDragAreaHeight && {
-                maxHeight: maxDragAreaHeight,
+              {...(maxUnselectedContainerHeight && {
+                maxHeight: maxUnselectedContainerHeight,
                 overflow: 'scroll',
               })}
+              {...dragDropStyles.unselectedContainer}
             >
               <Droppable droppableId="unselectedDroppable">
                 {(provided) => (
                   <Stack
-                    {...arrayStyles.arrayContainer}
+                    {...dragDropStyles.arrayContainer}
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                     margin={unselectedFields.length === 0 ? 4 : 2}
@@ -314,7 +340,7 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
                   >
                     {unselectedFields.length === 0 && (
                       <>
-                        <Text color="gray.400">
+                        <Text color="gray.400" textAlign="center">
                           {noOptionsText ?? 'No options left'}
                         </Text>
                       </>
@@ -324,7 +350,7 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
                         i={i}
                         option={option}
                         optionToString={optionToString}
-                        arrayStyles={arrayStyles}
+                        dragDropStyles={dragDropStyles}
                         isReadOnly={isReadOnly}
                         disabled={disabled}
                       />
@@ -336,11 +362,11 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
             </Box>
           </Flex>
           {Boolean(helperText) && (
-            <FormHelperText {...arrayStyles.helperText}>
+            <FormHelperText {...dragDropStyles.helperText}>
               {helperText}
             </FormHelperText>
           )}
-          <FormErrorMessage {...arrayStyles.errorMessage}>
+          <FormErrorMessage {...dragDropStyles.errorMessage}>
             {errorMessage}
           </FormErrorMessage>
         </FormControl>

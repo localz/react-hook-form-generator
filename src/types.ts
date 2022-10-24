@@ -165,8 +165,8 @@ export interface DragDropFieldSchema
   options: { [x: string]: any }[];
   dragText?: string;
   noOptionsText?: string;
-  maxDropAreaHeight?: string;
-  maxDragAreaHeight?: string;
+  maxSelectedContainerHeight?: string;
+  maxUnselectedContainerHeight?: string;
 }
 
 export interface SwitchFieldSchema
@@ -314,6 +314,7 @@ export interface FormStyles {
   jsonField?: FieldStyles;
   arrayField?: ArrayFieldStyles;
   objectField?: ObjectFieldStyles;
+  dragDropField?: DragDropFieldStyles;
   switchField?: SwitchFieldStyles;
   checkboxField?: CheckboxFieldStyles;
   selectField?: SelectFieldStyles;
@@ -354,6 +355,17 @@ export interface ObjectFieldStyles
     CollapsableStyles {
   objectContainer?: StackProps;
   propertyContainer?: BoxProps;
+}
+
+export interface DragDropFieldStyles
+  extends Pick<
+    FieldStyles,
+    'control' | 'label' | 'helperText' | 'errorMessage'
+  > {
+  arrayContainer?: StackProps;
+  itemContainer?: BoxProps;
+  selectedContainer?: BoxProps;
+  unselectedContainer?: BoxProps;
 }
 
 export interface CollapsableStyles {

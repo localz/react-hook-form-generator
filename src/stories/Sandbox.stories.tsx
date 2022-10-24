@@ -105,6 +105,14 @@ Sandbox.args = {
         variant: 'ghost',
       },
     },
+    dragDropField: {
+      selectedContainer: {
+        width: '70%',
+      },
+      unselectedContainer: {
+        width: '30%',
+      },
+    },
   },
 
   schema: {
@@ -113,7 +121,6 @@ Sandbox.args = {
       label: 'Expected actions',
       dragText: 'Drag actions here',
       noOptionsText: 'No actions remaining',
-      maxDropAreaHeight: '150px',
       optionField: {
         type: 'object',
         properties: {
