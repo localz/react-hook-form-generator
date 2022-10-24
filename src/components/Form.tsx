@@ -34,7 +34,7 @@ import {
   ObjectField,
   objectFieldStyles,
 } from './Containers';
-import { DragDropField } from './DragDropField';
+import { DragDropField, dragDropFieldStyles } from './DragDropField';
 import { SwitchField } from './SwitchField';
 import { CheckboxField, checkboxFieldStyles } from './CheckboxField';
 import { SelectField } from './SelectField';
@@ -96,6 +96,7 @@ const defaultStyles: FormStyles = {
   arrayField: arrayFieldStyles,
   objectField: objectFieldStyles,
   checkboxField: checkboxFieldStyles,
+  dragDropField: dragDropFieldStyles,
 };
 
 const renderField = ([name, field]: [string, Field]) => {
