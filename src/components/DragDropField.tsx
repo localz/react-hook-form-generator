@@ -24,6 +24,7 @@ import {
   Draggable,
   DropResult,
 } from 'react-beautiful-dnd';
+import NoSSR from 'react-no-ssr';
 import { Ctx } from './Ctx';
 import { differenceBy } from 'lodash';
 
@@ -242,136 +243,138 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
   }
 
   return (
-    <DragDropContext onDragEnd={handleDrag}>
-      <>
-        <FormControl
-          isRequired={isRequired}
-          isInvalid={Boolean(errorMessage)}
-          {...dragDropStyles.control}
-        >
-          <Flex>
-            {Boolean(label) && (
-              <FormLabel htmlFor={name} {...dragDropStyles.label}>
-                {label}
-                {Boolean(tooltip) && (
-                  <Tooltip label={tooltip}>
-                    <InfoIcon ml="1" />
-                  </Tooltip>
-                )}
-              </FormLabel>
-            )}
-          </Flex>
-          <Flex
-            flexDirection="row"
-            columnGap={5}
-            alignItems="center"
-            alignContent="center"
+    <NoSSR>
+      <DragDropContext onDragEnd={handleDrag}>
+        <>
+          <FormControl
+            isRequired={isRequired}
+            isInvalid={Boolean(errorMessage)}
+            {...dragDropStyles.control}
           >
-            <Box
-              borderColor="gray.300"
-              borderStyle="dashed"
-              borderWidth="2px"
-              rounded="md"
-              shadow="sm"
-              role="group"
-              transition="all 150ms ease-in-out"
-              flexDirection="column"
-              {...(maxSelectedContainerHeight && {
-                maxHeight: maxSelectedContainerHeight,
-                overflow: 'scroll',
-              })}
-              {...dragDropStyles.selectedContainer}
+            <Flex>
+              {Boolean(label) && (
+                <FormLabel htmlFor={name} {...dragDropStyles.label}>
+                  {label}
+                  {Boolean(tooltip) && (
+                    <Tooltip label={tooltip}>
+                      <InfoIcon ml="1" />
+                    </Tooltip>
+                  )}
+                </FormLabel>
+              )}
+            </Flex>
+            <Flex
+              flexDirection="row"
+              columnGap={5}
+              alignItems="center"
+              alignContent="center"
             >
-              <Droppable droppableId="selectedDroppable">
-                {(provided) => (
-                  <Stack
-                    {...dragDropStyles.arrayContainer}
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                    margin={selectedFields.length === 0 ? 4 : 2}
-                    alignItems="center"
-                  >
-                    {selectedFields.length === 0 && (
-                      <>
-                        <DragDropIcon />
-                        <Text color="gray.400" textAlign="center">
-                          {dragText ?? 'Drag and drop here'}
-                        </Text>
-                      </>
-                    )}
-                    {selectedFields.map((item, i) => (
-                      <SelectedField
-                        optionField={optionField}
-                        name={name}
-                        i={i}
-                        item={item}
-                        dragDropStyles={dragDropStyles}
-                        isReadOnly={isReadOnly}
-                        disabled={disabled}
-                      />
-                    ))}
-                    <Box marginTop="0!important">{provided.placeholder}</Box>
-                  </Stack>
-                )}
-              </Droppable>
-            </Box>
-            <Box
-              borderColor="gray.300"
-              borderWidth="2px"
-              rounded="md"
-              shadow="sm"
-              role="group"
-              transition="all 150ms ease-in-out"
-              flexDirection="column"
-              {...(maxUnselectedContainerHeight && {
-                maxHeight: maxUnselectedContainerHeight,
-                overflow: 'scroll',
-              })}
-              {...dragDropStyles.unselectedContainer}
-            >
-              <Droppable droppableId="unselectedDroppable">
-                {(provided) => (
-                  <Stack
-                    {...dragDropStyles.arrayContainer}
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                    margin={unselectedFields.length === 0 ? 4 : 2}
-                    alignItems="center"
-                  >
-                    {unselectedFields.length === 0 && (
-                      <>
-                        <Text color="gray.400" textAlign="center">
-                          {noOptionsText ?? 'No options left'}
-                        </Text>
-                      </>
-                    )}
-                    {unselectedFields.map((option, i) => (
-                      <UnselectedField
-                        i={i}
-                        option={option}
-                        optionToString={optionToString}
-                        dragDropStyles={dragDropStyles}
-                        isReadOnly={isReadOnly}
-                        disabled={disabled}
-                      />
-                    ))}
-                    <Box marginTop="0!important">{provided.placeholder}</Box>
-                  </Stack>
-                )}
-              </Droppable>
-            </Box>
-          </Flex>
-          {Boolean(helperText) && (
-            <FormHelperText {...dragDropStyles.helperText}>
-              {helperText}
-            </FormHelperText>
-          )}
-          <FormErrorMessage {...dragDropStyles.errorMessage}>
-            {errorMessage}
-          </FormErrorMessage>
-        </FormControl>
-        {divideAfter && <Divider mt="8" />}
-      </>
-    </DragDropContext>
+              <Box
+                borderColor="gray.300"
+                borderStyle="dashed"
+                borderWidth="2px"
+                rounded="md"
+                shadow="sm"
+                role="group"
+                transition="all 150ms ease-in-out"
+                flexDirection="column"
+                {...(maxSelectedContainerHeight && {
+                  maxHeight: maxSelectedContainerHeight,
+                  overflow: 'scroll',
+                })}
+                {...dragDropStyles.selectedContainer}
+              >
+                <Droppable droppableId="selectedDroppable">
+                  {(provided) => (
+                    <Stack
+                      {...dragDropStyles.arrayContainer}
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      margin={selectedFields.length === 0 ? 4 : 2}
+                      alignItems="center"
+                    >
+                      {selectedFields.length === 0 && (
+                        <>
+                          <DragDropIcon />
+                          <Text color="gray.400" textAlign="center">
+                            {dragText ?? 'Drag and drop here'}
+                          </Text>
+                        </>
+                      )}
+                      {selectedFields.map((item, i) => (
+                        <SelectedField
+                          optionField={optionField}
+                          name={name}
+                          i={i}
+                          item={item}
+                          dragDropStyles={dragDropStyles}
+                          isReadOnly={isReadOnly}
+                          disabled={disabled}
+                        />
+                      ))}
+                      <Box marginTop="0!important">{provided.placeholder}</Box>
+                    </Stack>
+                  )}
+                </Droppable>
+              </Box>
+              <Box
+                borderColor="gray.300"
+                borderWidth="2px"
+                rounded="md"
+                shadow="sm"
+                role="group"
+                transition="all 150ms ease-in-out"
+                flexDirection="column"
+                {...(maxUnselectedContainerHeight && {
+                  maxHeight: maxUnselectedContainerHeight,
+                  overflow: 'scroll',
+                })}
+                {...dragDropStyles.unselectedContainer}
+              >
+                <Droppable droppableId="unselectedDroppable">
+                  {(provided) => (
+                    <Stack
+                      {...dragDropStyles.arrayContainer}
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      margin={unselectedFields.length === 0 ? 4 : 2}
+                      alignItems="center"
+                    >
+                      {unselectedFields.length === 0 && (
+                        <>
+                          <Text color="gray.400" textAlign="center">
+                            {noOptionsText ?? 'No options left'}
+                          </Text>
+                        </>
+                      )}
+                      {unselectedFields.map((option, i) => (
+                        <UnselectedField
+                          i={i}
+                          option={option}
+                          optionToString={optionToString}
+                          dragDropStyles={dragDropStyles}
+                          isReadOnly={isReadOnly}
+                          disabled={disabled}
+                        />
+                      ))}
+                      <Box marginTop="0!important">{provided.placeholder}</Box>
+                    </Stack>
+                  )}
+                </Droppable>
+              </Box>
+            </Flex>
+            {Boolean(helperText) && (
+              <FormHelperText {...dragDropStyles.helperText}>
+                {helperText}
+              </FormHelperText>
+            )}
+            <FormErrorMessage {...dragDropStyles.errorMessage}>
+              {errorMessage}
+            </FormErrorMessage>
+          </FormControl>
+          {divideAfter && <Divider mt="8" />}
+        </>
+      </DragDropContext>
+    </NoSSR>
   );
 };
