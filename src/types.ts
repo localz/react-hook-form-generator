@@ -48,7 +48,8 @@ export type Field =
   | JsonFieldSchema
   | DateFieldSchema
   | ColorFieldSchema
-  | FileFieldSchema;
+  | FileFieldSchema
+  | HeadingFieldSchema;
 
 export interface FieldProps<T extends FieldSchema> {
   id?: string;
@@ -73,6 +74,7 @@ interface FieldSchema {
     | 'date'
     | 'color'
     | 'file'
+    | 'heading'
     | 'custom';
   styles?:
     | FieldStyles
@@ -252,6 +254,16 @@ export interface FileFieldSchema
   fileToUrl?: (file: File) => string;
 }
 
+export interface HeadingFieldSchema
+  extends FieldSchema,
+    Pick<
+      FormController,
+      'helperText' | 'divideAfter' | 'placeholder' | 'tooltip'
+    > {
+  type: 'heading';
+  size?: string;
+}
+
 type SelectProps = Pick<
   ChakraReactSelectProps,
   | 'isClearable'
@@ -318,6 +330,7 @@ export interface FormStyles {
   switchField?: SwitchFieldStyles;
   checkboxField?: CheckboxFieldStyles;
   selectField?: SelectFieldStyles;
+  headingField?: FieldStyles;
 }
 
 export interface FieldStyles {

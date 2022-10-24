@@ -113,6 +113,12 @@ Sandbox.args = {
         width: '30%',
       },
     },
+    headingField: {
+      input: {
+        size: 'lg',
+        fontWeight: 'bold',
+      },
+    },
   },
 
   schema: {
@@ -125,8 +131,8 @@ Sandbox.args = {
         type: 'object',
         properties: {
           name: {
-            type: 'text',
-            disabled: true,
+            type: 'heading',
+            divideAfter: true,
           },
           input: {
             type: 'json',

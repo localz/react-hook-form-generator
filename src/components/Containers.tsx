@@ -52,6 +52,7 @@ import { ColorField } from './ColorField';
 import DateField from './DateField';
 import FileField from './FileField';
 import { DragDropField } from './DragDropField';
+import { HeadingField } from './HeadingField';
 
 export const renderField = (
   [name, field]: [string, Field],
@@ -112,6 +113,10 @@ export const renderField = (
 
     case 'file':
       Component = FileField;
+      break;
+
+    case 'heading':
+      Component = HeadingField;
       break;
 
     case 'custom':
@@ -212,6 +217,7 @@ const emptyFields = {
   color: '',
   file: {},
   dragDrop: [],
+  heading: '',
 };
 
 export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
