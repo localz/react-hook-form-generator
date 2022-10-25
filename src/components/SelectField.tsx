@@ -29,6 +29,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     divideAfter,
     placeholder,
     disabled,
+    readOnly,
     ...selectProps
   } = field;
 
@@ -93,7 +94,8 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
           onChange={onChange}
           onBlur={onBlur}
           value={value}
-          isDisabled={isReadOnly || isLoading || disabled}
+          isDisabled={isLoading || disabled}
+          isReadOnly={isReadOnly || readOnly}
           placeholder={placeholder}
           {...selectProps}
           {...fieldStyles.select}

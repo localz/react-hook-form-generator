@@ -67,22 +67,20 @@ const UnselectedField = ({
   optionToString,
   i,
   dragDropStyles,
-  isReadOnly,
-  disabled,
+  isDragDisabled,
 }: {
   option: { [x: string]: any };
   optionToString: (values: { [x: string]: any }) => string;
   i: number;
   dragDropStyles: DragDropFieldStyles;
-  isReadOnly: boolean;
-  disabled?: boolean;
+  isDragDisabled?: boolean;
 }) => {
   return (
     <Draggable
       key={`unselectedOptions[${i}]`}
       draggableId={`unselectedOptions[${i}]`}
       index={i}
-      isDragDisabled={isReadOnly || disabled}
+      isDragDisabled={isDragDisabled}
     >
       {(provided) => (
         <Box
@@ -111,23 +109,21 @@ const SelectedField = ({
   i,
   item,
   dragDropStyles,
-  isReadOnly,
-  disabled,
+  isDragDisabled,
 }: {
   optionField: Field;
   name: string;
   i: number;
   item: Record<'id', string>;
   dragDropStyles: DragDropFieldStyles;
-  isReadOnly: boolean;
-  disabled?: boolean;
+  isDragDisabled?: boolean;
 }) => {
   return (
     <Draggable
       key={`${name}[${i}]`}
       draggableId={`${name}[${i}]`}
       index={i}
-      isDragDisabled={isReadOnly || disabled}
+      isDragDisabled={isDragDisabled}
     >
       {(provided) => (
         <Box
@@ -166,6 +162,7 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
     divideAfter,
     tooltip,
     disabled,
+    readOnly,
     dragText,
     noOptionsText,
     maxSelectedContainerHeight,
@@ -306,8 +303,7 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
                         i={i}
                         item={item}
                         dragDropStyles={dragDropStyles}
-                        isReadOnly={isReadOnly}
-                        disabled={disabled}
+                        isDragDisabled={isReadOnly || disabled || readOnly}
                       />
                     ))}
                     <Box marginTop="0!important">{provided.placeholder}</Box>
@@ -351,8 +347,7 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
                         option={option}
                         optionToString={optionToString}
                         dragDropStyles={dragDropStyles}
-                        isReadOnly={isReadOnly}
-                        disabled={disabled}
+                        isDragDisabled={isReadOnly || disabled || readOnly}
                       />
                     ))}
                     <Box marginTop="0!important">{provided.placeholder}</Box>

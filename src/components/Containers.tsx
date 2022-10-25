@@ -52,6 +52,7 @@ import { ColorField } from './ColorField';
 import DateField from './DateField';
 import FileField from './FileField';
 import { DragDropField } from './DragDropField';
+import { HeadingField } from './HeadingField';
 
 export const renderField = (
   [name, field]: [string, Field],
@@ -112,6 +113,10 @@ export const renderField = (
 
     case 'file':
       Component = FileField;
+      break;
+
+    case 'heading':
+      Component = HeadingField;
       break;
 
     case 'custom':
@@ -212,6 +217,7 @@ const emptyFields = {
   color: '',
   file: {},
   dragDrop: [],
+  heading: '',
 };
 
 export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
@@ -233,6 +239,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     draggable,
     tooltip,
     disabled,
+    readOnly,
   } = field;
 
   const { control } = useFormContext();
@@ -294,14 +301,14 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                 icon={<AddIcon />}
                 aria-label="Add item"
                 onClick={addItem}
-                disabled={isReadOnly || disabled}
+                disabled={isReadOnly || disabled || readOnly}
                 {...arrayStyles.addButton}
               />
               <IconButton
                 icon={<DeleteIcon />}
                 aria-label="Clear items"
                 onClick={() => remove()}
-                disabled={isReadOnly || disabled}
+                disabled={isReadOnly || disabled || readOnly}
                 {...arrayStyles.clearButton}
               />
               {isCollapsable && (
@@ -309,7 +316,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                   icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
                   aria-label={isOpen ? 'Hide items' : 'Show items'}
                   onClick={onToggle}
-                  disabled={isReadOnly || disabled}
+                  disabled={isReadOnly || disabled || readOnly}
                   {...arrayStyles.collapseButton}
                 />
               )}
@@ -351,14 +358,14 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                               <IconButton
                                 icon={<DragHandleIcon />}
                                 aria-label="Drag item"
-                                disabled={isReadOnly || disabled}
+                                disabled={isReadOnly || disabled || readOnly}
                                 {...provided.dragHandleProps}
                                 {...arrayStyles.dragButton}
                               />
                               <IconButton
                                 icon={<DeleteIcon />}
                                 aria-label="Delete item"
-                                disabled={isReadOnly || disabled}
+                                disabled={isReadOnly || disabled || readOnly}
                                 onClick={() => remove(i)}
                                 {...arrayStyles.deleteButton}
                               />
@@ -454,6 +461,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
     divideAfter,
     tooltip,
     disabled,
+    readOnly,
   } = field;
 
   const { watch } = useFormContext();
@@ -500,7 +508,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
               icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
               aria-label={isOpen ? 'Hide items' : 'Show items'}
               onClick={onToggle}
-              disabled={isReadOnly || disabled}
+              disabled={isReadOnly || disabled || readOnly}
               {...objectStyles.collapseButton}
             />
           )}

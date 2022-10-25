@@ -38,6 +38,7 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
     placeholder,
     defaultValue,
     disabled,
+    readOnly,
   } = field;
 
   const { register, control, setValue } = useFormContext();
@@ -96,11 +97,12 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
                 placeholder={placeholder}
                 defaultValue={defaultValue || ''}
                 {...fieldStyles.input}
-                isDisabled={isReadOnly || disabled}
+                isDisabled={disabled}
+                isReadOnly={isReadOnly || readOnly}
               />
             </InputGroup>
           </PopoverTrigger>
-          {!isReadOnly && !disabled && (
+          {!isReadOnly && !disabled && !readOnly && (
             <PopoverContent width="fit-content">
               <PopoverArrow placeSelf="flex-start" />
               <HexColorPicker
