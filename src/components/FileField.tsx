@@ -290,6 +290,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
     enableUrlInput,
     fileToUrl,
     disabled,
+    readOnly,
   } = field;
   const { register, control, setValue } = useFormContext();
 
@@ -335,7 +336,8 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
             defaultValue={defaultValue || ''}
             value={values[name]}
             {...fieldStyles.input}
-            isDisabled={isReadOnly || disabled}
+            isDisabled={disabled}
+            isReadOnly={isReadOnly || readOnly}
             marginBottom={2}
           />
         )}
@@ -351,7 +353,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
           {...(enableUrlInput && { imageUrl: values[name] })}
           isLoading={isLoading}
           onDrop={onDrop}
-          disabled={isReadOnly || disabled}
+          disabled={isReadOnly || disabled || readOnly}
           fileToUrl={fileToUrl}
           fieldStyles={fieldStyles}
         />

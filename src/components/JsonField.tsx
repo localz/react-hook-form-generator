@@ -37,6 +37,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
     divideAfter,
     placeholder,
     disabled,
+    readOnly,
     stringify,
     tooltip,
     isCollapsable,
@@ -111,7 +112,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
                     icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
                     aria-label={isOpen ? 'Hide items' : 'Show items'}
                     onClick={onToggle}
-                    disabled={isReadOnly || disabled}
+                    disabled={isReadOnly || disabled || readOnly}
                     marginLeft="auto"
                     size="xs"
                     {...fieldStyles.button}
@@ -127,7 +128,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
                   placeholder={getPlaceholder()}
                   height="200px"
                   width="100%"
-                  viewOnly={isReadOnly || disabled}
+                  viewOnly={isReadOnly || disabled || readOnly}
                   onChange={(value: { jsObject: any }) => {
                     setValue(
                       name,

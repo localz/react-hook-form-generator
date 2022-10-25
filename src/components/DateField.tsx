@@ -31,9 +31,11 @@ const customDateInput = (
     onChange,
     placeholder,
     disabled,
+    readOnly,
     fieldStyles,
   }: Pick<InputProps, 'value' | 'onClick' | 'onChange' | 'placeholder'> & {
     disabled?: boolean;
+    readOnly?: boolean;
     fieldStyles: FieldStyles;
   },
   ref: any
@@ -46,7 +48,8 @@ const customDateInput = (
     onClick={onClick}
     onChange={onChange}
     placeholder={placeholder}
-    disabled={disabled}
+    isDisabled={disabled}
+    isReadOnly={readOnly}
     {...fieldStyles.input}
   />
 );
@@ -65,7 +68,8 @@ interface Props {
   showTime?: boolean;
   timeOnly?: boolean;
   timeInterval?: number;
-  disabled?: boolean;
+  isDisabled?: boolean;
+  isReadOnly?: boolean;
   pickerProps?: ReactDatePickerProps;
 }
 
@@ -78,7 +82,8 @@ const DatePicker = ({
   showTime,
   timeOnly,
   timeInterval = 30,
-  disabled = false,
+  isDisabled = false,
+  isReadOnly = false,
   fieldStyles,
   ...pickerProps
 }: Props) => {
@@ -97,10 +102,11 @@ const DatePicker = ({
           showTimeSelect={showTime}
           showTimeSelectOnly={timeOnly}
           timeIntervals={timeInterval}
-          disabled={disabled}
+          disabled={isDisabled}
+          readOnly={isReadOnly}
           {...pickerProps}
         />
-        {isClearable && !disabled ? (
+        {isClearable && !isDisabled && !isReadOnly ? (
           <InputRightElement
             color="gray.500"
             children={<CloseIcon fontSize="sm" cursor="pointer" />}
@@ -138,6 +144,7 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({
     pickerProps,
     defaultValue,
     disabled,
+    readOnly,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -183,7 +190,8 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({
           showTime={showTime}
           timeOnly={timeOnly}
           timeInterval={timeInterval}
-          disabled={isReadOnly || disabled}
+          isDisabled={disabled}
+          isReadOnly={isReadOnly || readOnly}
           pickerProps={pickerProps}
           fieldStyles={fieldStyles}
         />

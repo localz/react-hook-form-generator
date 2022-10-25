@@ -29,7 +29,6 @@ import {
   Draggable,
   DropResult,
 } from 'react-beautiful-dnd';
-import NoSSR from 'react-no-ssr';
 import { Ctx } from './Ctx';
 
 import {
@@ -240,6 +239,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     draggable,
     tooltip,
     disabled,
+    readOnly,
   } = field;
 
   const { control } = useFormContext();
@@ -277,150 +277,148 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   }
 
   return (
-    <NoSSR>
-      <DragDropContext onDragEnd={handleDrag}>
-        <>
-          <FormControl
-            isRequired={isRequired}
-            isInvalid={Boolean(errorMessage)}
-            {...arrayStyles.control}
-          >
-            <Flex {...arrayStyles.toolbar}>
-              {Boolean(label) && (
-                <FormLabel htmlFor={name} {...arrayStyles.label}>
-                  {label}
-                  {!hideCount && <Box marginLeft="5px">({fields.length})</Box>}
-                  {Boolean(tooltip) && (
-                    <Tooltip label={tooltip}>
-                      <InfoIcon ml="1" />
-                    </Tooltip>
-                  )}
-                </FormLabel>
-              )}
-              <ButtonGroup {...arrayStyles.buttonGroup}>
-                <IconButton
-                  icon={<AddIcon />}
-                  aria-label="Add item"
-                  onClick={addItem}
-                  disabled={isReadOnly || disabled}
-                  {...arrayStyles.addButton}
-                />
-                <IconButton
-                  icon={<DeleteIcon />}
-                  aria-label="Clear items"
-                  onClick={() => remove()}
-                  disabled={isReadOnly || disabled}
-                  {...arrayStyles.clearButton}
-                />
-                {isCollapsable && (
-                  <IconButton
-                    icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
-                    aria-label={isOpen ? 'Hide items' : 'Show items'}
-                    onClick={onToggle}
-                    disabled={isReadOnly || disabled}
-                    {...arrayStyles.collapseButton}
-                  />
+    <DragDropContext onDragEnd={handleDrag}>
+      <>
+        <FormControl
+          isRequired={isRequired}
+          isInvalid={Boolean(errorMessage)}
+          {...arrayStyles.control}
+        >
+          <Flex {...arrayStyles.toolbar}>
+            {Boolean(label) && (
+              <FormLabel htmlFor={name} {...arrayStyles.label}>
+                {label}
+                {!hideCount && <Box marginLeft="5px">({fields.length})</Box>}
+                {Boolean(tooltip) && (
+                  <Tooltip label={tooltip}>
+                    <InfoIcon ml="1" />
+                  </Tooltip>
                 )}
-              </ButtonGroup>
-            </Flex>
-            <Collapse in={isOpen} style={{ overflow: 'visible' }}>
-              {draggable && (
-                <Droppable droppableId="test-items">
-                  {(provided) => (
-                    <Stack
-                      {...arrayStyles.arrayContainer}
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {fields.map((item, i) => (
-                        <Draggable
-                          key={`${name}[${i}]`}
-                          draggableId={`${name}[${i}]`}
-                          index={i}
-                        >
-                          {(provided) => (
-                            <Box
-                              key={item?.id || `${name}[${i}]`}
-                              {...arrayStyles.itemContainer}
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              sx={{
-                                ...provided.draggableProps.style,
-                                gridTemplateColumns: '1fr 2.5rem 2rem',
-                              }}
-                            >
-                              {renderField(
-                                [`${name}[${i}]`, itemField],
-                                item.id,
-                                item,
-                                i
-                              )}
-                              <ButtonGroup {...arrayStyles.buttonGroup}>
-                                <IconButton
-                                  icon={<DragHandleIcon />}
-                                  aria-label="Drag item"
-                                  disabled={isReadOnly || disabled}
-                                  {...provided.dragHandleProps}
-                                  {...arrayStyles.dragButton}
-                                />
-                                <IconButton
-                                  icon={<DeleteIcon />}
-                                  aria-label="Delete item"
-                                  disabled={isReadOnly || disabled}
-                                  onClick={() => remove(i)}
-                                  {...arrayStyles.deleteButton}
-                                />
-                              </ButtonGroup>
-                            </Box>
-                          )}
-                        </Draggable>
-                      ))}
-                      <Box>{provided.placeholder}</Box>
-                    </Stack>
-                  )}
-                </Droppable>
-              )}
-              {!draggable && (
-                <Collapse in={isOpen} style={{ overflow: 'visible' }}>
-                  <Stack {...arrayStyles.arrayContainer}>
-                    {fields.map((item, i) => (
-                      <Box
-                        key={item?.id || `${name}[${i}]`}
-                        {...arrayStyles.itemContainer}
-                      >
-                        {renderField(
-                          [`${name}[${i}]`, itemField],
-                          item.id,
-                          item,
-                          i
-                        )}
-                        <Box {...arrayStyles.deleteItemContainer}>
-                          <IconButton
-                            icon={<DeleteIcon />}
-                            aria-label="Delete item"
-                            onClick={() => remove(i)}
-                            {...arrayStyles.deleteButton}
-                          />
-                        </Box>
-                      </Box>
-                    ))}
-                  </Stack>
-                </Collapse>
-              )}
-            </Collapse>
-            {Boolean(helperText) && (
-              <FormHelperText {...arrayStyles.helperText}>
-                {helperText}
-              </FormHelperText>
+              </FormLabel>
             )}
-            <FormErrorMessage {...arrayStyles.errorMessage}>
-              {errorMessage}
-            </FormErrorMessage>
-          </FormControl>
-          {divideAfter && <Divider mt="8" />}
-        </>
-      </DragDropContext>
-    </NoSSR>
+            <ButtonGroup {...arrayStyles.buttonGroup}>
+              <IconButton
+                icon={<AddIcon />}
+                aria-label="Add item"
+                onClick={addItem}
+                disabled={isReadOnly || disabled || readOnly}
+                {...arrayStyles.addButton}
+              />
+              <IconButton
+                icon={<DeleteIcon />}
+                aria-label="Clear items"
+                onClick={() => remove()}
+                disabled={isReadOnly || disabled || readOnly}
+                {...arrayStyles.clearButton}
+              />
+              {isCollapsable && (
+                <IconButton
+                  icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
+                  aria-label={isOpen ? 'Hide items' : 'Show items'}
+                  onClick={onToggle}
+                  disabled={isReadOnly || disabled || readOnly}
+                  {...arrayStyles.collapseButton}
+                />
+              )}
+            </ButtonGroup>
+          </Flex>
+          <Collapse in={isOpen} style={{ overflow: 'visible' }}>
+            {draggable && (
+              <Droppable droppableId="test-items">
+                {(provided) => (
+                  <Stack
+                    {...arrayStyles.arrayContainer}
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    {fields.map((item, i) => (
+                      <Draggable
+                        key={`${name}[${i}]`}
+                        draggableId={`${name}[${i}]`}
+                        index={i}
+                      >
+                        {(provided) => (
+                          <Box
+                            key={item?.id || `${name}[${i}]`}
+                            {...arrayStyles.itemContainer}
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            sx={{
+                              ...provided.draggableProps.style,
+                              gridTemplateColumns: '1fr 2.5rem 2rem',
+                            }}
+                          >
+                            {renderField(
+                              [`${name}[${i}]`, itemField],
+                              item.id,
+                              item,
+                              i
+                            )}
+                            <ButtonGroup {...arrayStyles.buttonGroup}>
+                              <IconButton
+                                icon={<DragHandleIcon />}
+                                aria-label="Drag item"
+                                disabled={isReadOnly || disabled || readOnly}
+                                {...provided.dragHandleProps}
+                                {...arrayStyles.dragButton}
+                              />
+                              <IconButton
+                                icon={<DeleteIcon />}
+                                aria-label="Delete item"
+                                disabled={isReadOnly || disabled || readOnly}
+                                onClick={() => remove(i)}
+                                {...arrayStyles.deleteButton}
+                              />
+                            </ButtonGroup>
+                          </Box>
+                        )}
+                      </Draggable>
+                    ))}
+                    <Box>{provided.placeholder}</Box>
+                  </Stack>
+                )}
+              </Droppable>
+            )}
+            {!draggable && (
+              <Collapse in={isOpen} style={{ overflow: 'visible' }}>
+                <Stack {...arrayStyles.arrayContainer}>
+                  {fields.map((item, i) => (
+                    <Box
+                      key={item?.id || `${name}[${i}]`}
+                      {...arrayStyles.itemContainer}
+                    >
+                      {renderField(
+                        [`${name}[${i}]`, itemField],
+                        item.id,
+                        item,
+                        i
+                      )}
+                      <Box {...arrayStyles.deleteItemContainer}>
+                        <IconButton
+                          icon={<DeleteIcon />}
+                          aria-label="Delete item"
+                          onClick={() => remove(i)}
+                          {...arrayStyles.deleteButton}
+                        />
+                      </Box>
+                    </Box>
+                  ))}
+                </Stack>
+              </Collapse>
+            )}
+          </Collapse>
+          {Boolean(helperText) && (
+            <FormHelperText {...arrayStyles.helperText}>
+              {helperText}
+            </FormHelperText>
+          )}
+          <FormErrorMessage {...arrayStyles.errorMessage}>
+            {errorMessage}
+          </FormErrorMessage>
+        </FormControl>
+        {divideAfter && <Divider mt="8" />}
+      </>
+    </DragDropContext>
   );
 };
 
@@ -463,6 +461,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
     divideAfter,
     tooltip,
     disabled,
+    readOnly,
   } = field;
 
   const { watch } = useFormContext();
@@ -509,7 +508,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
               icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
               aria-label={isOpen ? 'Hide items' : 'Show items'}
               onClick={onToggle}
-              disabled={isReadOnly || disabled}
+              disabled={isReadOnly || disabled || readOnly}
               {...objectStyles.collapseButton}
             />
           )}

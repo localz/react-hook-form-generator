@@ -59,7 +59,7 @@ export const HeadingField: FC<FieldProps<HeadingFieldSchema>> = ({
             placeholder={placeholder}
             defaultValue=""
             variant="unstyled"
-            disabled
+            isReadOnly
             {...fieldStyles.input}
           />
           {Boolean(tooltip) && (
