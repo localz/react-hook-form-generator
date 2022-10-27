@@ -138,6 +138,7 @@ Sandbox.args = {
             type: 'json',
             label: 'Action input',
             isCollapsable: true,
+            height: '400px',
           },
         },
       },

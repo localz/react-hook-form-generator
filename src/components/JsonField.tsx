@@ -42,6 +42,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
     tooltip,
     isCollapsable,
     defaultIsOpen,
+    height,
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('jsonField', styles);
@@ -126,7 +127,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
                   locale={locale}
                   reset={false}
                   placeholder={getPlaceholder()}
-                  height="200px"
+                  height={height ?? '200px'}
                   width="100%"
                   viewOnly={isReadOnly || disabled || readOnly}
                   onChange={(value: { jsObject: any }) => {

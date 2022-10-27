@@ -119,6 +119,7 @@ export interface JsonFieldSchema extends FieldSchema, FormController {
   stringify?: boolean;
   isCollapsable?: boolean;
   defaultIsOpen?: boolean;
+  height?: string;
 }
 
 export interface NumberFieldSchema extends FieldSchema, FormController {
