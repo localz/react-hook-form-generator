@@ -1,5 +1,12 @@
 
 
+### [0.12.9](https://github.com/localz/react-hook-form-generator/compare/v0.12.8...v0.12.9) (2022-11-02)
+
+
+### Bug Fixes
+
+* validation for sub props ([0f168ba](https://github.com/localz/react-hook-form-generator/commit/0f168ba01ca8f66c5144027434c459ccc96f1c1c))
+
 ### [0.12.1](https://github.com/localz/react-hook-form-generator/compare/v0.12.0...v0.12.1) (2022-10-13)
 
 
