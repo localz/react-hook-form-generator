@@ -56,7 +56,7 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
     <>
       <FormControl
         isRequired={isRequired}
-        isInvalid={!!errorMessage}
+        isInvalid={Boolean(errorMessage)}
         {...fieldStyles.control}
         isReadOnly={isReadOnly}
       >

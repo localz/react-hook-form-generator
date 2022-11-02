@@ -247,7 +247,7 @@ export const schema: FormProps['schema'] = {
     properties: {
       comments: {
         type: 'textArea',
-        label: 'Comments',
+        label: 'Comments - input.comments',
         placeholder: 'A textarea placeholder',
       },
       payloads: {

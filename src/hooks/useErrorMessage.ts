@@ -1,3 +1,4 @@
+import get from 'lodash.get';
 import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -11,7 +12,7 @@ export const useErrorMessage = (name: string, label?: string) => {
   >;
 
   return useMemo(() => {
-    const error = errors[name];
+    const error = get(errors, name);
 
     if (!error) {
       return undefined;
