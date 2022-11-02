@@ -110,8 +110,11 @@ export interface TextFieldSchema extends FieldSchema, FormController {
   rightInputAddon?: InputAddonProps;
   renderAfter?: (values: any) => ReactNode;
   copyToClipboard?: boolean;
-  validateOnChange?: (value: string) => Promise<boolean>;
-  loadingValidate?: boolean;
+  inputValidation?: {
+    validator: (value: string) => Promise<boolean>;
+    loading: boolean;
+    timeout?: number;
+  };
 }
 
 export interface TextAreaFieldSchema extends FieldSchema, FormController {

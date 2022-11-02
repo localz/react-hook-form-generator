@@ -155,8 +155,11 @@ Sandbox.args = {
       defaultValue: 'compare',
       divideAfter: true,
       copyToClipboard: true,
-      validateOnChange: async (value) => {
-        return value.length < 10;
+      inputValidation: {
+        validator: async (value) => {
+          return value.length < 10;
+        },
+        loading: false,
       },
       renderAfter: (values) => {
         return (

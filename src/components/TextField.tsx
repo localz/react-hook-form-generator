@@ -14,7 +14,6 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 import { CopyIcon, CheckIcon, WarningIcon } from '@chakra-ui/icons';
-import CopyToClipboard from 'react-copy-to-clipboard';
 
 import { FieldProps, FieldStyles, TextFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
@@ -46,35 +45,34 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     disabled,
     readOnly,
     copyToClipboard,
-    validateOnChange,
-    loadingValidate,
+    inputValidation,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
 
   const fieldStyles = useStyles<FieldStyles>('textField', styles);
 
-  const { register, control, watch } = useFormContext();
+  const { register, control } = useFormContext();
 
   const errorMessage = useErrorMessage(name, label);
 
   const values = useWatch({
     control,
   });
-  const value = watch(name);
-  const debouncedValue = useDebounce(value, 500);
+  const debouncedValue = useDebounce(values[name], 500);
 
   const [valid, setValid] = useState(true);
 
   useEffect(() => {
-    const validate = async () => {
-      if (validateOnChange) {
-        const passed = await validateOnChange(debouncedValue);
+    if (inputValidation) {
+      const { validator } = inputValidation;
+      const validate = async () => {
+        const passed = await validator(debouncedValue);
         setValid(passed);
+      };
+      if (debouncedValue) {
+        validate();
       }
-    };
-    if (debouncedValue) {
-      validate();
     }
   }, [debouncedValue]);
 
@@ -103,12 +101,12 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
         {leftInputAddon ||
         rightInputAddon ||
         copyToClipboard ||
-        validateOnChange ? (
+        inputValidation ? (
           <InputGroup {...fieldStyles.inputGroup}>
-            {validateOnChange && (
+            {inputValidation && (
               <InputLeftElement
                 children={
-                  loadingValidate ? (
+                  inputValidation.loading ? (
                     <Spinner size="sm" color="orange" />
                   ) : valid ? (
                     <CheckIcon color="green.500" />
@@ -136,15 +134,14 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
             {copyToClipboard && (
               <InputRightAddon
                 children={
-                  <CopyToClipboard text={value}>
-                    <IconButton
-                      icon={<CopyIcon />}
-                      aria-label="copy-value"
-                      disabled={isReadOnly || disabled || readOnly}
-                      size="xs"
-                      {...fieldStyles.button}
-                    />
-                  </CopyToClipboard>
+                  <IconButton
+                    icon={<CopyIcon />}
+                    aria-label="copy-value"
+                    disabled={isReadOnly || disabled || readOnly}
+                    size="xs"
+                    onClick={() => navigator.clipboard.writeText(values[name])}
+                    {...fieldStyles.button}
+                  />
                 }
               />
             )}
