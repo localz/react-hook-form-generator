@@ -46,7 +46,12 @@ Workflows.args = {
     resolver: zodResolver(
       object({
         name: string(),
-        description: string().min(1),
+        description: string().optional(),
+        input: object({
+          comments: string({
+            required_error: 'Comments is required',
+          }).min(1, 'Comments is required'),
+        }),
       })
     ),
   },
