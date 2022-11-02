@@ -1,5 +1,5 @@
 {
-  "version": "0.12.8",
+  "version": "0.12.9",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -82,6 +82,7 @@
     "@emotion/styled": "^11.9.3",
     "@hookform/resolvers": "^2.9.0",
     "@types/react-beautiful-dnd": "^13.1.2",
+    "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/react-datepicker": "^4.4.2",
     "@types/react-dropzone": "^5.1.0",
     "chakra-react-select": "^3.3.8",
@@ -92,6 +93,7 @@
     "postcss": "^8.4.16",
     "react-beautiful-dnd": "^13.1.1",
     "react-colorful": "^5.6.1",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-datepicker": "^4.8.0",
     "react-dropzone": "^14.2.2",
     "react-hook-form": "^7.12.2",

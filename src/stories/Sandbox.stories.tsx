@@ -154,6 +154,10 @@ Sandbox.args = {
       isRequired: true,
       defaultValue: 'compare',
       divideAfter: true,
+      copyToClipboard: true,
+      validateOnChange: async (value) => {
+        return value.length < 10;
+      },
       renderAfter: (values) => {
         return (
           <Box bg="gray.400" p="2">
