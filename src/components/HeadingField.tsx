@@ -7,7 +7,9 @@ import {
   Divider,
   Tooltip,
   Flex,
+  IconButton,
 } from '@chakra-ui/react';
+import { CopyIcon } from '@chakra-ui/icons';
 import { InfoIcon } from '@chakra-ui/icons';
 
 import { FieldProps, FieldStyles, HeadingFieldSchema } from '../types';
@@ -27,6 +29,8 @@ export const HeadingField: FC<FieldProps<HeadingFieldSchema>> = ({
     styles = {},
     tooltip,
     divideAfter,
+    copyToClipboard,
+    onCopy,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -64,8 +68,21 @@ export const HeadingField: FC<FieldProps<HeadingFieldSchema>> = ({
           />
           {Boolean(tooltip) && (
             <Tooltip label={tooltip}>
-              <InfoIcon ml="1" />
+              <InfoIcon mx={2} />
             </Tooltip>
+          )}
+          {copyToClipboard && (
+            <IconButton
+              icon={<CopyIcon />}
+              aria-label="copy-value"
+              size="xs"
+              marginLeft={0}
+              onClick={() => {
+                navigator.clipboard.writeText(values[name]);
+                onCopy && onCopy();
+              }}
+              {...fieldStyles.button}
+            />
           )}
         </Flex>
         {Boolean(helperText) && (

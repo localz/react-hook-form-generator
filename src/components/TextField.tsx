@@ -46,7 +46,9 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     disabled,
     readOnly,
     copyToClipboard,
+    onCopy,
     inputValidation,
+    variant,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -136,6 +138,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
               {...fieldStyles.input}
               isDisabled={disabled}
               isReadOnly={isReadOnly || readOnly}
+              variant={variant}
             />
             {Boolean(rightInputAddon) && (
               <InputRightAddon {...rightInputAddon} />
@@ -146,9 +149,11 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
                   <IconButton
                     icon={<CopyIcon />}
                     aria-label="copy-value"
-                    disabled={isReadOnly || disabled || readOnly}
                     size="xs"
-                    onClick={() => navigator.clipboard.writeText(values[name])}
+                    onClick={() => {
+                      navigator.clipboard.writeText(values[name]);
+                      onCopy && onCopy();
+                    }}
                     {...fieldStyles.button}
                   />
                 }
@@ -165,6 +170,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
             defaultValue={defaultValue || ''}
             {...fieldStyles.input}
             isDisabled={isReadOnly || disabled}
+            variant={variant}
           />
         )}
         {Boolean(helperText) && (

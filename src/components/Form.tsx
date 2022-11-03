@@ -42,6 +42,7 @@ import { Ctx } from './Ctx';
 import DateField from './DateField';
 import { ColorField } from './ColorField';
 import FileField from './FileField';
+import { HeadingField } from './HeadingField';
 import { formatSelectInput, formatSelectOutput } from '../utils';
 
 type CustomButton = {
@@ -91,6 +92,13 @@ const defaultStyles: FormStyles = {
     },
     resetButton: {
       size: 'sm',
+    },
+    button: {
+      size: 'lg',
+      backgroundColor: 'transparent',
+      _hover: {
+        backgroundColor: 'transparent',
+      },
     },
   },
   arrayField: arrayFieldStyles,
@@ -153,6 +161,10 @@ const renderField = ([name, field]: [string, Field]) => {
 
     case 'file':
       Component = FileField;
+      break;
+
+    case 'heading':
+      Component = HeadingField;
       break;
 
     case 'custom':
@@ -251,20 +263,11 @@ export function Form({
                     <Heading flex="1" {...baseStyles.form?.title}>
                       {title}
                     </Heading>
-                    <AccordionButton
-                      flex="0"
-                      backgroundColor="transparent"
-                      _hover={{
-                        backgroundColor: 'transparent',
-                      }}
-                    >
+                    <AccordionButton flex="0" {...baseStyles.form?.button}>
                       <IconButton
-                        backgroundColor="transparent"
-                        _hover={{
-                          backgroundColor: 'transparent',
-                        }}
                         aria-label="show helper text"
                         icon={<QuestionIcon />}
+                        {...baseStyles.form?.button}
                       />
                     </AccordionButton>
                   </Flex>
