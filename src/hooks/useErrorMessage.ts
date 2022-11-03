@@ -25,5 +25,5 @@ export const useErrorMessage = (name: string, label?: string) => {
     }
 
     return 'Field validation failed';
-  }, [errors, name, label]);
+  }, [formState, errors, name, label]);
 };

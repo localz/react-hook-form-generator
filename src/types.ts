@@ -109,6 +109,15 @@ export interface TextFieldSchema extends FieldSchema, FormController {
   leftInputAddon?: InputAddonProps;
   rightInputAddon?: InputAddonProps;
   renderAfter?: (values: any) => ReactNode;
+  copyToClipboard?: boolean;
+  onCopy?: () => void;
+  inputValidation?: {
+    validator: (value: string) => Promise<boolean>;
+    loading: boolean;
+    timeout?: number;
+    validationError?: string;
+  };
+  variant?: InputProps['variant'];
 }
 
 export interface TextAreaFieldSchema extends FieldSchema, FormController {
@@ -264,6 +273,8 @@ export interface HeadingFieldSchema
     > {
   type: 'heading';
   size?: string;
+  copyToClipboard?: boolean;
+  onCopy?: () => void;
 }
 
 type SelectProps = Pick<
@@ -318,6 +329,7 @@ export interface FormStyles {
     buttonGroup?: ButtonGroupProps;
     submitButton?: Omit<ButtonProps, 'children' | 'type'>;
     resetButton?: Omit<ButtonProps, 'children' | 'type'>;
+    button?: Omit<ButtonProps, 'children' | 'type'>;
   };
 
   textField?: FieldStyles;

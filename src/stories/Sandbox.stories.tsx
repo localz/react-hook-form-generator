@@ -90,11 +90,17 @@ Sandbox.args = {
           },
         },
       ],
+      toCopy: 'Copy this!',
       imageFile:
         'https://localz-public-assets-master-ap-southeast-2.s3.ap-southeast-2.amazonaws.com/media_api_green/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000-customerPortalLogo.png/vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000_vXD5hazjLrwcqf3V0FmP9CiqUCa4Cv7TCOOa6000-customerPortalLogo.png_1614580263540_0.png',
     },
   },
   styles: {
+    form: {
+      button: {
+        variant: 'ghost',
+      },
+    },
     fileField: {
       button: {
         variant: 'solid',
@@ -151,9 +157,18 @@ Sandbox.args = {
     name: {
       type: 'text',
       label: 'Name',
+      variant: 'unstyled',
       isRequired: true,
       defaultValue: 'compare',
       divideAfter: true,
+      copyToClipboard: true,
+      inputValidation: {
+        validator: async (value) => {
+          return value.length < 10;
+        },
+        loading: false,
+        validationError: 'Name can only be less than 10 characters long',
+      },
       renderAfter: (values) => {
         return (
           <Box bg="gray.400" p="2">
@@ -163,6 +178,11 @@ Sandbox.args = {
           </Box>
         );
       },
+    },
+    toCopy: {
+      type: 'heading',
+      copyToClipboard: true,
+      tooltip: 'You can copy this!',
     },
     color: {
       type: 'color',
