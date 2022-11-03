@@ -14,6 +14,7 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 import { CopyIcon, CheckIcon, WarningIcon } from '@chakra-ui/icons';
+import { isNil } from 'lodash';
 
 import { FieldProps, FieldStyles, TextFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
@@ -52,8 +53,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
 
   const fieldStyles = useStyles<FieldStyles>('textField', styles);
 
-  const { register, control } = useFormContext();
-
+  const { register, control, setError, clearErrors } = useFormContext();
   const errorMessage = useErrorMessage(name, label);
 
   const values = useWatch({
@@ -65,12 +65,17 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
 
   useEffect(() => {
     if (inputValidation) {
-      const { validator } = inputValidation;
+      const { validator, validationError } = inputValidation;
       const validate = async () => {
         const passed = await validator(debouncedValue);
         setValid(passed);
+        if (!passed && validationError) {
+          setError(name, { message: validationError });
+        } else {
+          clearErrors(name);
+        }
       };
-      if (debouncedValue) {
+      if (!isNil(debouncedValue)) {
         validate();
       }
     }
@@ -121,7 +126,11 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
               data-testid={id}
               type={htmlInputType || 'text'}
               aria-label={name}
-              {...register(name)}
+              {...register(name, {
+                ...(inputValidation && {
+                  validate: async (v) => inputValidation.validator(v),
+                }),
+              })}
               placeholder={placeholder}
               defaultValue={defaultValue || ''}
               {...fieldStyles.input}

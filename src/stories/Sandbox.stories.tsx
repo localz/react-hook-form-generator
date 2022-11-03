@@ -160,6 +160,7 @@ Sandbox.args = {
           return value.length < 10;
         },
         loading: false,
+        validationError: 'Name can only be less than 10 characters long',
       },
       renderAfter: (values) => {
         return (

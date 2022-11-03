@@ -114,6 +114,7 @@ export interface TextFieldSchema extends FieldSchema, FormController {
     validator: (value: string) => Promise<boolean>;
     loading: boolean;
     timeout?: number;
+    validationError?: string;
   };
 }
 
