@@ -10,6 +10,7 @@ import {
   Collapse,
   useDisclosure,
   useColorMode,
+  useTheme,
   Button,
 } from '@chakra-ui/react';
 import Editor, { OnMount } from '@monaco-editor/react';
@@ -51,6 +52,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
 
   const fieldStyles = useStyles<FieldStyles>('codeField', styles);
   const colorMode = useColorMode();
+  const theme = useTheme();
 
   const { isReadOnly } = useContext(Ctx);
 
@@ -157,12 +159,15 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                   height={height ?? '200px'}
                   defaultLanguage={language}
                   options={{
+                    contextmenu: false,
                     minimap: { enabled: false },
                     readOnly: isReadOnly || disabled || readOnly,
                     autoClosingBrackets: 'always',
                     autoClosingOvertype: 'always',
                     automaticLayout: true,
                     tabCompletion: 'on',
+                    fontSize: 16,
+                    fontFamily: theme.fonts.body,
                   }}
                   onChange={(value) => {
                     setValue(name, value);
