@@ -1,4 +1,4 @@
-import React, { FC, useContext, useMemo, useEffect } from 'react';
+import React, { FC, useContext, useMemo, useEffect, useRef } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import {
   FormControl,
@@ -9,21 +9,22 @@ import {
   IconButton,
   Collapse,
   useDisclosure,
+  useColorMode,
+  Button,
 } from '@chakra-ui/react';
+import Editor, { OnMount } from '@monaco-editor/react';
+
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import JSONInput from 'react-json-editor-ajrm';
-// @ts-ignore
-import locale from 'react-json-editor-ajrm/locale/en';
 import get from 'lodash.get';
 import { isString } from 'lodash';
 
 import LabelElement from './elements/Label';
-import { FieldProps, FieldStyles, JsonFieldSchema } from '../types';
+import { FieldProps, FieldStyles, CodeFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
 
-export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
+export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
   name,
   field,
   index,
@@ -38,19 +39,23 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
     placeholder,
     disabled,
     readOnly,
-    stringify,
     tooltip,
-    isCollapsable,
+    isCollapsible,
     defaultIsOpen,
     height,
+    language,
+    beautifyButton = true,
+    beautifyButtonText = 'Beautify',
   } = field;
+  const editorRef = useRef<any>(null);
 
-  const fieldStyles = useStyles<FieldStyles>('jsonField', styles);
+  const fieldStyles = useStyles<FieldStyles>('codeField', styles);
+  const colorMode = useColorMode();
 
   const { isReadOnly } = useContext(Ctx);
 
   const { isOpen, onToggle } = useDisclosure({
-    defaultIsOpen: !isCollapsable || defaultIsOpen,
+    defaultIsOpen: !isCollapsible || defaultIsOpen,
   });
 
   const { control, setValue } = useFormContext();
@@ -68,7 +73,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
   useEffect(() => {
     const value = get(values, name);
     if (value && isString(value)) {
-      setValue(name, stringify ? value : JSON.parse(value));
+      setValue(name, value);
     }
   }, []);
 
@@ -76,19 +81,25 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
     return null;
   }
 
+  const handleEditorDidMount: OnMount = (editor, _) => {
+    editorRef.current = editor;
+    editorRef.current.getAction('editor.action.formatDocument').run();
+  };
+
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <Controller
         control={control}
         name={name}
         render={({ field: { value, name } }) => {
           const getPlaceholder = () => {
-            if (value) {
-              try {
-                return JSON.parse(value);
-              } catch (e) {
+            if (language === 'html' && value) {
+              return value;
+            } else if (language === 'json' && value) {
+              if (typeof value === 'string') {
                 return value;
               }
+              return JSON.stringify(value, null, 2);
             }
 
             return placeholder;
@@ -101,6 +112,24 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
               {...fieldStyles.control}
               isReadOnly={isReadOnly}
             >
+              {beautifyButton && (
+                <Button
+                  style={{
+                    position: 'absolute',
+                    top: 40,
+                    right: 20,
+                    zIndex: 1,
+                  }}
+                  onClick={() =>
+                    editorRef.current &&
+                    editorRef.current
+                      .getAction('editor.action.formatDocument')
+                      .run()
+                  }
+                >
+                  {beautifyButtonText}
+                </Button>
+              )}
               <Flex>
                 <LabelElement
                   label={label}
@@ -108,7 +137,7 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
                   fieldStyles={fieldStyles}
                   tooltip={tooltip}
                 />
-                {isCollapsable && (
+                {isCollapsible && (
                   <IconButton
                     icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
                     aria-label={isOpen ? 'Hide items' : 'Show items'}
@@ -121,37 +150,22 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
                 )}
               </Flex>
               <Collapse in={isOpen} style={{ overflow: 'visible' }}>
-                <JSONInput
-                  id={`json-input__${name}`}
-                  theme="light_mitsuketa_tribute"
-                  locale={locale}
-                  reset={false}
-                  placeholder={getPlaceholder()}
+                <Editor
+                  onMount={handleEditorDidMount}
+                  defaultValue={getPlaceholder()}
+                  theme={colorMode.colorMode === 'light' ? 'light' : 'vs-dark'}
                   height={height ?? '200px'}
-                  width="100%"
-                  viewOnly={isReadOnly || disabled || readOnly}
-                  onChange={(value: { jsObject: any }) => {
-                    setValue(
-                      name,
-                      stringify
-                        ? JSON.stringify(value.jsObject)
-                        : value.jsObject
-                    );
+                  defaultLanguage={language}
+                  options={{
+                    minimap: { enabled: false },
+                    readOnly: isReadOnly || disabled || readOnly,
+                    autoClosingBrackets: 'always',
+                    autoClosingOvertype: 'always',
+                    automaticLayout: true,
+                    tabCompletion: 'on',
                   }}
-                  style={{
-                    labelColumn: {
-                      fontSize: '1rem',
-                    },
-                    outerBox: {},
-                    contentBox: {
-                      fontSize: '1rem',
-                      color: 'rgb(26, 32, 44)',
-                      ...(isReadOnly && { cursor: 'not-allowed' }),
-                    },
-                    body: {
-                      borderRadius: '4px',
-                      border: 'solid 1px rgb(226, 232, 240)',
-                    },
+                  onChange={(value) => {
+                    setValue(name, value);
                   }}
                 />
               </Collapse>
@@ -169,6 +183,6 @@ export const JsonField: FC<FieldProps<JsonFieldSchema>> = ({
       />
 
       {divideAfter && <Divider mt="8" />}
-    </>
+    </div>
   );
 };

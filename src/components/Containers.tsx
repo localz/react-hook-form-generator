@@ -47,7 +47,7 @@ import { SwitchField } from './SwitchField';
 import { CheckboxField } from './CheckboxField';
 import { SelectField } from './SelectField';
 import { TextAreaField } from './TextAreaField';
-import { JsonField } from './JsonField';
+import { JsonField } from './CodeField';
 import { ColorField } from './ColorField';
 import DateField from './DateField';
 import FileField from './FileField';
@@ -228,7 +228,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   const {
     label,
     isRequired,
-    isCollapsable,
+    isCollapsible,
     defaultIsOpen,
     itemField,
     helperText,
@@ -250,7 +250,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   const { fields, append, remove, move } = useFieldArray({ name, control });
 
   const { isOpen, onOpen, onToggle } = useDisclosure({
-    defaultIsOpen: !isCollapsable || defaultIsOpen,
+    defaultIsOpen: !isCollapsible || defaultIsOpen,
   });
 
   const arrayStyles = useStyles<ArrayFieldStyles>('arrayField', styles);
@@ -311,7 +311,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                 disabled={isReadOnly || disabled || readOnly}
                 {...arrayStyles.clearButton}
               />
-              {isCollapsable && (
+              {isCollapsible && (
                 <IconButton
                   icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
                   aria-label={isOpen ? 'Hide items' : 'Show items'}
@@ -453,7 +453,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
 }) => {
   const {
     label,
-    isCollapsable,
+    isCollapsible,
     isRequired,
     helperText,
     shouldDisplay,
@@ -503,7 +503,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
               )}
             </FormLabel>
           )}
-          {isCollapsable && (
+          {isCollapsible && (
             <IconButton
               icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
               aria-label={isOpen ? 'Hide items' : 'Show items'}

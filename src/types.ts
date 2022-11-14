@@ -45,7 +45,7 @@ export type Field =
   | CheckboxFieldSchema
   | SelectFieldSchema
   | CustomFieldSchema
-  | JsonFieldSchema
+  | CodeFieldSchema
   | DateFieldSchema
   | ColorFieldSchema
   | FileFieldSchema
@@ -70,7 +70,7 @@ interface FieldSchema {
     | 'dragDrop'
     | 'checkbox'
     | 'select'
-    | 'json'
+    | 'code'
     | 'date'
     | 'color'
     | 'file'
@@ -101,6 +101,8 @@ interface FormController {
   defaultValue?: any;
   tooltip?: string;
   divideAfter?: boolean;
+  beautifyButton?: boolean;
+  beautifyButtonText?: string;
 }
 
 export interface TextFieldSchema extends FieldSchema, FormController {
@@ -123,10 +125,13 @@ export interface TextFieldSchema extends FieldSchema, FormController {
 export interface TextAreaFieldSchema extends FieldSchema, FormController {
   type: 'textArea';
 }
-export interface JsonFieldSchema extends FieldSchema, FormController {
-  type: 'json';
-  stringify?: boolean;
-  isCollapsable?: boolean;
+
+export type CodeLanguage = 'json' | 'html';
+
+export interface CodeFieldSchema extends FieldSchema, FormController {
+  type: 'code';
+  language: CodeLanguage;
+  isCollapsible?: boolean;
   defaultIsOpen?: boolean;
   height?: string;
 }
@@ -148,7 +153,7 @@ export interface ArrayFieldSchema
       'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'tooltip'
     > {
   type: 'array';
-  isCollapsable?: boolean;
+  isCollapsible?: boolean;
   defaultIsOpen?: boolean;
   hideCount?: boolean;
   draggable?: boolean;
@@ -162,7 +167,7 @@ export interface ObjectFieldSchema
       'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'tooltip'
     > {
   type: 'object';
-  isCollapsable?: boolean;
+  isCollapsible?: boolean;
   properties: Record<string, Field>;
 }
 
@@ -334,10 +339,10 @@ export interface FormStyles {
 
   textField?: FieldStyles;
   textAreaField?: FieldStyles;
-  json?: FieldStyles;
+  code?: FieldStyles;
   numberField?: FieldStyles;
   fileField?: FieldStyles;
-  jsonField?: FieldStyles;
+  codeField?: FieldStyles;
   arrayField?: ArrayFieldStyles;
   objectField?: ObjectFieldStyles;
   dragDropField?: DragDropFieldStyles;
