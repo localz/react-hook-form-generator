@@ -12,6 +12,7 @@ import {
   useColorMode,
   useTheme,
   Button,
+  Box,
 } from '@chakra-ui/react';
 import Editor, { OnMount } from '@monaco-editor/react';
 
@@ -48,10 +49,11 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
     beautifyButton = true,
     beautifyButtonText = 'Beautify',
   } = field;
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef<Parameters<OnMount>[0]>();
 
   const fieldStyles = useStyles<FieldStyles>('codeField', styles);
   const colorMode = useColorMode();
+
   const theme = useTheme();
 
   const { isReadOnly } = useContext(Ctx);
@@ -83,9 +85,13 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
     return null;
   }
 
-  const handleEditorDidMount: OnMount = (editor, _) => {
+  const handleEditorDidMount: OnMount = async (editor, _) => {
     editorRef.current = editor;
-    editorRef.current.getAction('editor.action.formatDocument').run();
+
+    // need to use the setTimeout because its possible that this finishes executing before the default value is set
+    setTimeout(function() {
+      editor.getAction('editor.action.formatDocument').run();
+    }, 300);
   };
 
   return (
@@ -118,7 +124,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                 <Button
                   style={{
                     position: 'absolute',
-                    top: 40,
+                    top: 50,
                     right: 20,
                     zIndex: 1,
                   }}
@@ -151,28 +157,37 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                   />
                 )}
               </Flex>
-              <Collapse in={isOpen} style={{ overflow: 'visible' }}>
-                <Editor
-                  onMount={handleEditorDidMount}
-                  defaultValue={getPlaceholder()}
-                  theme={colorMode.colorMode === 'light' ? 'light' : 'vs-dark'}
-                  height={height ?? '200px'}
-                  defaultLanguage={language}
-                  options={{
-                    contextmenu: false,
-                    minimap: { enabled: false },
-                    readOnly: isReadOnly || disabled || readOnly,
-                    autoClosingBrackets: 'always',
-                    autoClosingOvertype: 'always',
-                    automaticLayout: true,
-                    tabCompletion: 'on',
-                    fontSize: 16,
-                    fontFamily: theme.fonts.body,
-                  }}
-                  onChange={(value) => {
-                    setValue(name, value);
-                  }}
-                />
+              <Collapse
+                in={isOpen}
+                style={{
+                  overflow: 'visible',
+                }}
+              >
+                <Box borderWidth="1px" borderRadius="lg" padding={'5px'}>
+                  <Editor
+                    onMount={handleEditorDidMount}
+                    defaultValue={getPlaceholder()}
+                    theme={
+                      colorMode.colorMode === 'light' ? 'light' : 'vs-dark'
+                    }
+                    height={height ?? '200px'}
+                    defaultLanguage={language}
+                    options={{
+                      contextmenu: false,
+                      minimap: { enabled: false },
+                      readOnly: isReadOnly || disabled || readOnly,
+                      autoClosingBrackets: 'always',
+                      autoClosingOvertype: 'always',
+                      automaticLayout: true,
+                      tabCompletion: 'on',
+                      fontSize: 16,
+                      fontFamily: theme.fonts.body,
+                    }}
+                    onChange={(value) => {
+                      setValue(name, value);
+                    }}
+                  />
+                </Box>
               </Collapse>
               {Boolean(helperText) && (
                 <FormHelperText {...fieldStyles.helperText}>
