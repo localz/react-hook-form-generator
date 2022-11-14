@@ -1,5 +1,12 @@
 
 
+### [1.0.1](https://github.com/localz/react-hook-form-generator/compare/v1.0.0...v1.0.1) (2022-11-14)
+
+
+### Chores
+
+* make monaco-editor a peer dep ([7e9adb1](https://github.com/localz/react-hook-form-generator/commit/7e9adb1d7281cd7a4488617276ac00f5dd67dabe))
+
 ## [1.0.0](https://github.com/localz/react-hook-form-generator/compare/v0.12.10...v1.0.0) (2022-11-14)
 
 
