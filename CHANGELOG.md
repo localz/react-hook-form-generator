@@ -1,5 +1,25 @@
 
 
+## [1.0.0](https://github.com/localz/react-hook-form-generator/compare/v0.12.10...v1.0.0) (2022-11-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* CodeField replaces JsonField
+
+### Features
+
+* CodeField replaces JsonField ([1b8a577](https://github.com/localz/react-hook-form-generator/commit/1b8a57781ad247cd636eb1b18dc7297628ae62be))
+
+
+### Chores
+
+* add more typings and add border to CodeField ([a624520](https://github.com/localz/react-hook-form-generator/commit/a62452012db4fe521b4dfcd1252b6f57d61a0220))
+* add npmrc and pin deps ([41b6351](https://github.com/localz/react-hook-form-generator/commit/41b63516d858d3f2f06c8b1a677410ca5afe32c1))
+* CodeField fontSize is 16 and fontFamily should be what Chakra is using ([2b55250](https://github.com/localz/react-hook-form-generator/commit/2b552501516785249150ad2911bc6eddffbc0f31))
+* remove jest as it is unnecessary ([0407e1f](https://github.com/localz/react-hook-form-generator/commit/0407e1f624c6a4d90c12e3c6acd341fa71d2922e))
+* update test script ([a02b75b](https://github.com/localz/react-hook-form-generator/commit/a02b75b6b3c6f0f1c95feaa022762f2c144a9d85))
+
 ### [0.12.9](https://github.com/localz/react-hook-form-generator/compare/v0.12.8...v0.12.9) (2022-11-02)
 
 
