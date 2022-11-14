@@ -47,7 +47,7 @@ import { SwitchField } from './SwitchField';
 import { CheckboxField } from './CheckboxField';
 import { SelectField } from './SelectField';
 import { TextAreaField } from './TextAreaField';
-import { JsonField } from './CodeField';
+import { CodeField } from './CodeField';
 import { ColorField } from './ColorField';
 import DateField from './DateField';
 import FileField from './FileField';
@@ -71,8 +71,8 @@ export const renderField = (
       Component = TextAreaField;
       break;
 
-    case 'json':
-      Component = JsonField;
+    case 'code':
+      Component = CodeField;
       break;
 
     case 'number':
@@ -211,7 +211,7 @@ const emptyFields = {
   object: {},
   checkbox: [],
   select: {},
-  json: {},
+  code: '',
   date: '',
   custom: {},
   color: '',
