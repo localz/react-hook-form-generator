@@ -1,5 +1,21 @@
 
 
+### [1.0.4](https://github.com/localz/react-hook-form-generator/compare/v1.0.3...v1.0.4) (2022-11-15)
+
+### [0.12.12](https://github.com/localz/react-hook-form-generator/compare/v1.0.3...v1.0.4) (2022-11-15)
+
+
+### Bug Fixes
+
+* format default values ([91a3256](https://github.com/localz/react-hook-form-generator/commit/91a32563941ec06d7e34185474c3754749bcf449))
+* format default values ([90ad6da](https://github.com/localz/react-hook-form-generator/commit/90ad6da41af4d1d445b3501e047bdd8968c3f72e))
+* object and array field bugs ([2efbeb9](https://github.com/localz/react-hook-form-generator/commit/2efbeb9c55abecf6b5a9f65b225a196f3c8f8cc3))
+
+
+### Chores
+
+* **release:** release 0.12.12 ([838ac79](https://github.com/localz/react-hook-form-generator/commit/838ac7931445991894df9c5d55bfbffd4dbd24b4))
+
 ### [1.0.3](https://github.com/localz/react-hook-form-generator/compare/v1.0.2...v1.0.3) (2022-11-15)
 
 
