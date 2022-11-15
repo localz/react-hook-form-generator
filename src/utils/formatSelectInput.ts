@@ -65,10 +65,6 @@ export function formatSelectInput({
   schema: FormProps['schema'];
   selectOptions: SelectOptions;
 }) {
-  if (!defaultValues) {
-    return defaultValues;
-  }
-
   const entries = Object.entries(defaultValues);
 
   const res = entries.reduce((acc, curr) => {
@@ -123,9 +119,9 @@ export function formatSelectInput({
 
         return acc;
       }
-
+      console.log(prop, ' props ', value);
       acc[name] = formatSelectInput({
-        defaultValues: value,
+        defaultValues: value || {},
         schema: prop.itemField.properties,
         selectOptions,
       });
