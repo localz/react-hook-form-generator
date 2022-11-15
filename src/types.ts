@@ -59,7 +59,7 @@ export interface FieldProps<T extends FieldSchema> {
   index?: number;
 }
 
-interface FieldSchema {
+export interface FieldSchema {
   type:
     | 'text'
     | 'textArea'

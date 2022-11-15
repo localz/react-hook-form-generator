@@ -38,6 +38,7 @@ import {
   Field,
   ObjectFieldStyles,
   ObjectFieldSchema,
+  FieldSchema,
 } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
@@ -288,7 +289,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
             {Boolean(label) && (
               <FormLabel htmlFor={name} {...arrayStyles.label}>
                 {label}
-                {!hideCount && <Box marginLeft="5px">({fields.length})</Box>}
+                {!hideCount && <Box marginLeft="5px">({fields?.length})</Box>}
                 {Boolean(tooltip) && (
                   <Tooltip label={tooltip}>
                     <InfoIcon ml="1" />
@@ -464,10 +465,10 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
     readOnly,
   } = field;
 
-  const { watch } = useFormContext();
+  const { control } = useFormContext();
   const { isReadOnly } = useContext(Ctx);
 
-  const values = watch(name);
+  const values = useWatch({ control });
 
   const { isOpen, onToggle } = useDisclosure({
     isOpen: true,
@@ -517,6 +518,11 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
           <Stack {...objectStyles.objectContainer}>
             {Object.entries(field.properties).map(
               ([fieldName, objectField], i) => {
+                const { shouldDisplay } = objectField as FieldSchema;
+                if (shouldDisplay && !shouldDisplay(values, index)) {
+                  return null;
+                }
+
                 return (
                   <Box key={i} {...objectStyles.propertyContainer}>
                     {renderField(
