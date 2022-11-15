@@ -120,7 +120,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
               {...fieldStyles.control}
               isReadOnly={isReadOnly}
             >
-              {beautifyButton && (
+              {beautifyButton && isOpen && (
                 <Button
                   style={{
                     position: 'absolute',
