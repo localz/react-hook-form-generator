@@ -1,5 +1,12 @@
 
 
+### [1.0.2](https://github.com/localz/react-hook-form-generator/compare/v1.0.1...v1.0.2) (2022-11-15)
+
+
+### Chores
+
+* change peer deps ([c6b6983](https://github.com/localz/react-hook-form-generator/commit/c6b698382a76d5c41ee89ef31ae7f0cdadb95757))
+
 ### [1.0.1](https://github.com/localz/react-hook-form-generator/compare/v1.0.0...v1.0.1) (2022-11-14)
 
 
