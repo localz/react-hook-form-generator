@@ -13,6 +13,7 @@ import {
   useTheme,
   Button,
   Box,
+  Tooltip,
 } from '@chakra-ui/react';
 import Editor, { OnMount } from '@monaco-editor/react';
 
@@ -120,24 +121,6 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
               {...fieldStyles.control}
               isReadOnly={isReadOnly}
             >
-              {beautifyButton && isOpen && (
-                <Button
-                  style={{
-                    position: 'absolute',
-                    top: 50,
-                    right: 20,
-                    zIndex: 1,
-                  }}
-                  onClick={() =>
-                    editorRef.current &&
-                    editorRef.current
-                      .getAction('editor.action.formatDocument')
-                      .run()
-                  }
-                >
-                  {beautifyButtonText}
-                </Button>
-              )}
               <Flex>
                 <LabelElement
                   label={label}
@@ -145,17 +128,35 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                   fieldStyles={fieldStyles}
                   tooltip={tooltip}
                 />
-                {isCollapsible && (
-                  <IconButton
-                    icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
-                    aria-label={isOpen ? 'Hide items' : 'Show items'}
-                    onClick={onToggle}
-                    disabled={isReadOnly || disabled || readOnly}
-                    marginLeft="auto"
-                    size="xs"
-                    {...fieldStyles.button}
-                  />
-                )}
+                <Box marginLeft="auto">
+                  {beautifyButton && isOpen && (
+                    <Tooltip label="Make your input well structured">
+                      <Button
+                        size={'xs'}
+                        marginRight={isCollapsible ? '1' : undefined}
+                        marginLeft="auto"
+                        onClick={() =>
+                          editorRef.current &&
+                          editorRef.current
+                            .getAction('editor.action.formatDocument')
+                            .run()
+                        }
+                      >
+                        {beautifyButtonText}
+                      </Button>
+                    </Tooltip>
+                  )}
+                  {isCollapsible && (
+                    <IconButton
+                      icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
+                      aria-label={isOpen ? 'Hide items' : 'Show items'}
+                      onClick={onToggle}
+                      disabled={isReadOnly || disabled || readOnly}
+                      size="xs"
+                      {...fieldStyles.button}
+                    />
+                  )}
+                </Box>
               </Flex>
               <Collapse
                 in={isOpen}
