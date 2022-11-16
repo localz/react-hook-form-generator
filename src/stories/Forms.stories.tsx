@@ -87,6 +87,7 @@ Json.args = {
     },
     jaysonWithDefaultValue: {
       isCollapsible: true,
+      defaultIsOpen: true,
       type: 'code',
       language: 'json',
       label: 'Some JSON input with a default value',
