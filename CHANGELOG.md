@@ -1,5 +1,12 @@
 
 
+### [1.0.5](https://github.com/localz/react-hook-form-generator/compare/v1.0.4...v1.0.5) (2022-11-16)
+
+
+### Chores
+
+* beautify tooltip and ui tweaks in CodeField ([6b4ab1d](https://github.com/localz/react-hook-form-generator/commit/6b4ab1d4299831b40b6daa78747750dc4d8f03bc))
+
 ### [1.0.4](https://github.com/localz/react-hook-form-generator/compare/v1.0.3...v1.0.4) (2022-11-15)
 
 ### [0.12.12](https://github.com/localz/react-hook-form-generator/compare/v1.0.3...v1.0.4) (2022-11-15)
