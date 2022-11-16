@@ -74,7 +74,6 @@ Json.args = {
       }),
     },
   },
-
   buttons: {
     submit: {
       text: 'Submit',
@@ -82,15 +81,50 @@ Json.args = {
   },
   schema: {
     jayson: {
-      type: 'json',
+      type: 'code',
+      language: 'json',
       label: 'Some JSON input',
     },
     jaysonWithDefaultValue: {
-      type: 'json',
+      isCollapsible: true,
+      type: 'code',
+      language: 'json',
       label: 'Some JSON input with a default value',
     },
   },
 };
+
+export const Html = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Html.args = {
+  title: 'Html',
+  handleSubmit: (values) => {
+    alert(JSON.stringify(values));
+  },
+  formOptions: {
+    defaultValues: {
+      htmlWithDefaultValue: '<p>Hello world!</p>',
+    },
+  },
+  buttons: {
+    submit: {
+      text: 'Submit',
+    },
+  },
+  schema: {
+    html: {
+      type: 'code',
+      language: 'html',
+      label: 'Some HTML input',
+    },
+    htmlWithDefaultValue: {
+      type: 'code',
+      language: 'html',
+      label: 'Some HTML input with a default value',
+    },
+  },
+};
+
 export const ConditionalRendering = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 ConditionalRendering.args = {

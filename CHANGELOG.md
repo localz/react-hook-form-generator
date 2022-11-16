@@ -1,11 +1,61 @@
 
 
-### [0.12.12](https://github.com/localz/react-hook-form-generator/compare/v0.12.11...v0.12.12) (2022-11-15)
+### [1.0.4](https://github.com/localz/react-hook-form-generator/compare/v1.0.3...v1.0.4) (2022-11-15)
+
+### [0.12.12](https://github.com/localz/react-hook-form-generator/compare/v1.0.3...v1.0.4) (2022-11-15)
 
 
 ### Bug Fixes
 
 * format default values ([91a3256](https://github.com/localz/react-hook-form-generator/commit/91a32563941ec06d7e34185474c3754749bcf449))
+* format default values ([90ad6da](https://github.com/localz/react-hook-form-generator/commit/90ad6da41af4d1d445b3501e047bdd8968c3f72e))
+* object and array field bugs ([2efbeb9](https://github.com/localz/react-hook-form-generator/commit/2efbeb9c55abecf6b5a9f65b225a196f3c8f8cc3))
+
+
+### Chores
+
+* **release:** release 0.12.12 ([838ac79](https://github.com/localz/react-hook-form-generator/commit/838ac7931445991894df9c5d55bfbffd4dbd24b4))
+
+### [1.0.3](https://github.com/localz/react-hook-form-generator/compare/v1.0.2...v1.0.3) (2022-11-15)
+
+
+### Bug Fixes
+
+* beautify close when not open ([784127a](https://github.com/localz/react-hook-form-generator/commit/784127a52ffb219c395e5eb3140e3bfb4e039881))
+
+### [1.0.2](https://github.com/localz/react-hook-form-generator/compare/v1.0.1...v1.0.2) (2022-11-15)
+
+
+### Chores
+
+* change peer deps ([c6b6983](https://github.com/localz/react-hook-form-generator/commit/c6b698382a76d5c41ee89ef31ae7f0cdadb95757))
+
+### [1.0.1](https://github.com/localz/react-hook-form-generator/compare/v1.0.0...v1.0.1) (2022-11-14)
+
+
+### Chores
+
+* make monaco-editor a peer dep ([7e9adb1](https://github.com/localz/react-hook-form-generator/commit/7e9adb1d7281cd7a4488617276ac00f5dd67dabe))
+
+## [1.0.0](https://github.com/localz/react-hook-form-generator/compare/v0.12.10...v1.0.0) (2022-11-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* CodeField replaces JsonField
+
+### Features
+
+* CodeField replaces JsonField ([1b8a577](https://github.com/localz/react-hook-form-generator/commit/1b8a57781ad247cd636eb1b18dc7297628ae62be))
+
+
+### Chores
+
+* add more typings and add border to CodeField ([a624520](https://github.com/localz/react-hook-form-generator/commit/a62452012db4fe521b4dfcd1252b6f57d61a0220))
+* add npmrc and pin deps ([41b6351](https://github.com/localz/react-hook-form-generator/commit/41b63516d858d3f2f06c8b1a677410ca5afe32c1))
+* CodeField fontSize is 16 and fontFamily should be what Chakra is using ([2b55250](https://github.com/localz/react-hook-form-generator/commit/2b552501516785249150ad2911bc6eddffbc0f31))
+* remove jest as it is unnecessary ([0407e1f](https://github.com/localz/react-hook-form-generator/commit/0407e1f624c6a4d90c12e3c6acd341fa71d2922e))
+* update test script ([a02b75b](https://github.com/localz/react-hook-form-generator/commit/a02b75b6b3c6f0f1c95feaa022762f2c144a9d85))
 
 ### [0.12.9](https://github.com/localz/react-hook-form-generator/compare/v0.12.8...v0.12.9) (2022-11-02)
 

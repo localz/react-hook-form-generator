@@ -106,7 +106,7 @@ Sandbox.args = {
         variant: 'solid',
       },
     },
-    jsonField: {
+    codeField: {
       button: {
         variant: 'ghost',
       },
@@ -141,9 +141,10 @@ Sandbox.args = {
             divideAfter: true,
           },
           input: {
-            type: 'json',
+            type: 'code',
+            language: 'json',
             label: 'Action input',
-            isCollapsable: true,
+            isCollapsible: true,
             height: '400px',
           },
         },
@@ -218,7 +219,7 @@ Sandbox.args = {
     options: {
       type: 'array',
       label: 'Contents',
-      isCollapsable: true,
+      isCollapsible: true,
       defaultIsOpen: true,
       draggable: true,
       itemField: {
@@ -254,10 +255,11 @@ Sandbox.args = {
       properties: {
         payloads: {
           label: 'Payloads',
-          type: 'json',
+          type: 'code',
+          language: 'json',
           tooltip: 'JSON array string. You can also use templating',
           isRequired: true,
-          isCollapsable: true,
+          isCollapsible: true,
           defaultIsOpen: true,
         },
         file: {

@@ -26,7 +26,7 @@ import { FormStyles, Field, Schema, SelectOptions } from '../types';
 import { StyleCtx } from '../hooks/useStyles';
 import { TextField } from './TextField';
 import { TextAreaField } from './TextAreaField';
-import { JsonField } from './JsonField';
+import { CodeField } from './CodeField';
 import { NumberField } from './NumberField';
 import {
   ArrayField,
@@ -119,8 +119,8 @@ const renderField = ([name, field]: [string, Field]) => {
       Component = TextAreaField;
       break;
 
-    case 'json':
-      Component = JsonField;
+    case 'code':
+      Component = CodeField;
       break;
 
     case 'number':

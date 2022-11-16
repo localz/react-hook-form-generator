@@ -160,7 +160,7 @@ export const schema: FormProps['schema'] = {
   triggers: {
     type: 'array',
     label: 'Triggers',
-    isCollapsable: true,
+    isCollapsible: true,
     defaultIsOpen: true,
     draggable: true,
     itemField: {
@@ -172,7 +172,7 @@ export const schema: FormProps['schema'] = {
   triggersWithSelectKey: {
     type: 'array',
     label: 'Triggers',
-    isCollapsable: true,
+    isCollapsible: true,
     defaultIsOpen: true,
     draggable: true,
     itemField: {
@@ -308,7 +308,7 @@ export const schema: FormProps['schema'] = {
       headers: {
         label: 'Headers',
         type: 'array',
-        isCollapsable: true,
+        isCollapsible: true,
         itemField: {
           type: 'object',
           styles: {
