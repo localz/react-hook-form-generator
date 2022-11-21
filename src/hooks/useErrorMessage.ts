@@ -23,6 +23,10 @@ export const useErrorMessage = (name: string, label?: string) => {
     if (message && typeof message === 'string') {
       return message.replace(name, label || name);
     }
+
+    if (get(message, 'message')) {
+      return get(message, 'message');
+    }
     console.debug('Error message is not a string', message);
 
     return 'Field validation failed';
