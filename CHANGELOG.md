@@ -1,5 +1,12 @@
 
 
+### [1.0.6](https://github.com/localz/react-hook-form-generator/compare/v1.0.5...v1.0.6) (2022-11-21)
+
+
+### Bug Fixes
+
+* format error message ([1001152](https://github.com/localz/react-hook-form-generator/commit/1001152c435b7d415ba5be8f3fafa24b23c43be3))
+
 ### [1.0.5](https://github.com/localz/react-hook-form-generator/compare/v1.0.4...v1.0.5) (2022-11-16)
 
 
