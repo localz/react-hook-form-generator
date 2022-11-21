@@ -20,9 +20,10 @@ export const useErrorMessage = (name: string, label?: string) => {
 
     const message = error.message;
 
-    if (message) {
+    if (message && typeof message === 'string') {
       return message.replace(name, label || name);
     }
+    console.debug('Error message is not a string', message);
 
     return 'Field validation failed';
   }, [formState, errors, name, label]);
