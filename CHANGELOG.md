@@ -1,5 +1,12 @@
 
 
+### [1.0.8](https://github.com/localz/react-hook-form-generator/compare/v1.0.7...v1.0.8) (2022-11-28)
+
+
+### Chores
+
+* add disabeld ([769bd63](https://github.com/localz/react-hook-form-generator/commit/769bd635c017b451fda715d6a85ff02fd16e469d))
+
 ### [1.0.7](https://github.com/localz/react-hook-form-generator/compare/v1.0.6...v1.0.7) (2022-11-21)
 
 
