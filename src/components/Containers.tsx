@@ -398,6 +398,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                         <IconButton
                           icon={<DeleteIcon />}
                           aria-label="Delete item"
+                          disabled={isReadOnly || disabled || readOnly}
                           onClick={() => remove(i)}
                           {...arrayStyles.deleteButton}
                         />
