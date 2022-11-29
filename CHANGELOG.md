@@ -1,5 +1,12 @@
 
 
+### [1.0.11](https://github.com/localz/react-hook-form-generator/compare/v1.0.10...v1.0.11) (2022-11-29)
+
+
+### Bug Fixes
+
+* unset zindex ([2a26731](https://github.com/localz/react-hook-form-generator/commit/2a26731be4393e678d354c946221a1693096d935))
+
 ### [1.0.10](https://github.com/localz/react-hook-form-generator/compare/v1.0.9...v1.0.10) (2022-11-29)
 
 
