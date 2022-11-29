@@ -112,7 +112,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
           <InputGroup {...fieldStyles.inputGroup}>
             {inputValidation && (
               <InputLeftElement
-                zIndex="-1"
+                zIndex="unset"
                 children={
                   inputValidation.loading ? (
                     <Spinner size="sm" color="orange" />
