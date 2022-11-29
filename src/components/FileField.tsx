@@ -177,8 +177,8 @@ const FileUpload = ({
 
   const errors = fileRejections.map(({ file, errors }: FileRejection) => (
     <ListItem key={file.name}>
-      {errors.map((e) => (
-        <Flex flexDirection="row">
+      {errors.map((e, i) => (
+        <Flex flexDirection="row" key={i}>
           <ListIcon as={WarningIcon} color="red.500" />
           <ListItem color="red.500" fontSize="sm">
             {`Error uploading ${file.name}: ${e.message}`}
@@ -227,6 +227,7 @@ const FileUpload = ({
             {selectedFiles.map((file: File, index: number) => (
               <>
                 <SelectedFile
+                  key={`file__${index}`}
                   file={file}
                   url={fileToUrl ? fileToUrl(file) : URL.createObjectURL(file)}
                   isLoading={isLoading}
