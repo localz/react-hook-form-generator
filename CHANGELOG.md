@@ -1,5 +1,12 @@
 
 
+### [1.0.10](https://github.com/localz/react-hook-form-generator/compare/v1.0.9...v1.0.10) (2022-11-29)
+
+
+### Bug Fixes
+
+* use key in map ([c5e0edf](https://github.com/localz/react-hook-form-generator/commit/c5e0edf898afd7612f9f8e85190ac6089fbcdbeb))
+
 ### [1.0.9](https://github.com/localz/react-hook-form-generator/compare/v1.0.8...v1.0.9) (2022-11-29)
 
 
