@@ -155,6 +155,17 @@ Sandbox.args = {
         { name: 'check_attribute', input: null },
       ],
     },
+    selectSomething: {
+      type: 'select',
+      label: 'Select something',
+      options: [
+        { label: 'One', value: 1 },
+        { label: 'Two', value: 2 },
+        { label: 'Three', value: 3 },
+        { label: 'Four', value: 4 },
+        { label: 'Five', value: 5 },
+      ],
+    },
     name: {
       type: 'text',
       label: 'Name',
