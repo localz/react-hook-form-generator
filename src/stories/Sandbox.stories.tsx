@@ -57,7 +57,7 @@ Sandbox.args = {
   title: 'Sandbox',
   helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
-    alert(JSON.stringify(values, null, 2));
+    alert(JSON.stringify(values['nestedField'], null, 2));
   },
   buttons: {
     submit: {
@@ -195,6 +195,45 @@ Sandbox.args = {
       type: 'heading',
       copyToClipboard: true,
       tooltip: 'You can copy this!',
+    },
+    nestedField: {
+      type: 'array',
+      label: 'Nested arrays',
+      itemField: {
+        type: 'object',
+        label: 'Single array',
+        properties: {
+          singleField: {
+            type: 'array',
+            label: '',
+            itemField: {
+              type: 'object',
+              label: 'Object',
+              properties: {
+                label: {
+                  type: 'select',
+                  label: 'Label',
+                  options: options,
+                },
+                hidden: {
+                  type: 'text',
+                  label: 'Hidden field',
+                  shouldDisplay: (values, _, nestedIndex) => {
+                    const option = get(
+                      values,
+                      `nestedField[${get(nestedIndex, 0)}].singleField[${get(
+                        nestedIndex,
+                        1
+                      )}].label.value`
+                    );
+                    return nestedIndex ? option === 3 : true;
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     color: {
       type: 'color',

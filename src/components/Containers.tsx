@@ -59,7 +59,8 @@ export const renderField = (
   [name, field]: [string, Field],
   id?: string,
   defaultValue?: any,
-  index?: any
+  index?: any,
+  nestedIndex?: (number | undefined)[]
 ) => {
   let Component: any = null;
 
@@ -131,6 +132,7 @@ export const renderField = (
             field={field}
             defaultValue={defaultValue}
             index={index}
+            nestedIndex={nestedIndex}
             {...field.props}
           />
         </Fragment>
@@ -149,6 +151,7 @@ export const renderField = (
         field={field}
         defaultValue={defaultValue}
         index={index}
+        nestedIndex={nestedIndex}
       />
     </Fragment>
   );
@@ -225,6 +228,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   name,
   field,
   index,
+  nestedIndex,
 }) => {
   const {
     label,
@@ -353,7 +357,8 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                               [`${name}[${i}]`, itemField],
                               item.id,
                               item,
-                              i
+                              i,
+                              nestedIndex ? [...nestedIndex, i] : [i]
                             )}
                             <ButtonGroup {...arrayStyles.buttonGroup}>
                               <IconButton
@@ -392,7 +397,8 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                         [`${name}[${i}]`, itemField],
                         item.id,
                         item,
-                        i
+                        i,
+                        nestedIndex ? [...nestedIndex, i] : [i]
                       )}
                       <Box {...arrayStyles.deleteItemContainer}>
                         <IconButton
@@ -452,6 +458,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
   id,
   defaultValue,
   index,
+  nestedIndex,
 }) => {
   const {
     label,
@@ -530,7 +537,8 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
                       [`${name}.${fieldName}`, objectField],
                       id,
                       defaultValue?.[fieldName],
-                      index
+                      index,
+                      nestedIndex
                     )}
                   </Box>
                 );

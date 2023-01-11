@@ -57,6 +57,7 @@ export interface FieldProps<T extends FieldSchema> {
   field: T;
   defaultValue?: any;
   index?: number;
+  nestedIndex?: number[];
 }
 
 export interface FieldSchema {
@@ -82,7 +83,11 @@ export interface FieldSchema {
     | ObjectFieldStyles
     | CheckboxFieldStyles
     | SelectFieldStyles;
-  shouldDisplay?: (values?: any, index?: number | null) => boolean;
+  shouldDisplay?: (
+    values?: any,
+    index?: number | null,
+    nestedIndex?: number[]
+  ) => boolean | undefined;
   disabled?: boolean;
   readOnly?: boolean;
 }
