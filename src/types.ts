@@ -162,6 +162,7 @@ export interface ArrayFieldSchema
   defaultIsOpen?: boolean;
   hideCount?: boolean;
   draggable?: boolean;
+  disableButtons?: boolean;
   itemField: Field;
 }
 

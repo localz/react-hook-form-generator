@@ -245,6 +245,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     tooltip,
     disabled,
     readOnly,
+    disableButtons,
   } = field;
 
   const { control } = useFormContext();
@@ -306,14 +307,14 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                 icon={<AddIcon />}
                 aria-label="Add item"
                 onClick={addItem}
-                disabled={isReadOnly || disabled || readOnly}
+                disabled={isReadOnly || disabled || readOnly || disableButtons}
                 {...arrayStyles.addButton}
               />
               <IconButton
                 icon={<DeleteIcon />}
                 aria-label="Clear items"
                 onClick={() => remove()}
-                disabled={isReadOnly || disabled || readOnly}
+                disabled={isReadOnly || disabled || readOnly || disableButtons}
                 {...arrayStyles.clearButton}
               />
               {isCollapsible && (
@@ -321,7 +322,9 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                   icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
                   aria-label={isOpen ? 'Hide items' : 'Show items'}
                   onClick={onToggle}
-                  disabled={isReadOnly || disabled || readOnly}
+                  disabled={
+                    isReadOnly || disabled || readOnly || disableButtons
+                  }
                   {...arrayStyles.collapseButton}
                 />
               )}
@@ -373,14 +376,24 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                                 <IconButton
                                   icon={<DragHandleIcon />}
                                   aria-label="Drag item"
-                                  disabled={isReadOnly || disabled || readOnly}
+                                  disabled={
+                                    isReadOnly ||
+                                    disabled ||
+                                    readOnly ||
+                                    disableButtons
+                                  }
                                   {...provided.dragHandleProps}
                                   {...arrayStyles.dragButton}
                                 />
                                 <IconButton
                                   icon={<DeleteIcon />}
                                   aria-label="Delete item"
-                                  disabled={isReadOnly || disabled || readOnly}
+                                  disabled={
+                                    isReadOnly ||
+                                    disabled ||
+                                    readOnly ||
+                                    disableButtons
+                                  }
                                   onClick={() => remove(i)}
                                   {...arrayStyles.deleteButton}
                                 />
@@ -423,7 +436,12 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                           <IconButton
                             icon={<DeleteIcon />}
                             aria-label="Delete item"
-                            disabled={isReadOnly || disabled || readOnly}
+                            disabled={
+                              isReadOnly ||
+                              disabled ||
+                              readOnly ||
+                              disableButtons
+                            }
                             onClick={() => remove(i)}
                             {...arrayStyles.deleteButton}
                           />
