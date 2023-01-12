@@ -59,7 +59,8 @@ export const renderField = (
   [name, field]: [string, Field],
   id?: string,
   defaultValue?: any,
-  index?: any
+  index?: any,
+  nestedIndex?: (number | undefined)[]
 ) => {
   let Component: any = null;
 
@@ -131,6 +132,7 @@ export const renderField = (
             field={field}
             defaultValue={defaultValue}
             index={index}
+            nestedIndex={nestedIndex}
             {...field.props}
           />
         </Fragment>
@@ -149,6 +151,7 @@ export const renderField = (
         field={field}
         defaultValue={defaultValue}
         index={index}
+        nestedIndex={nestedIndex}
       />
     </Fragment>
   );
@@ -225,6 +228,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   name,
   field,
   index,
+  nestedIndex,
 }) => {
   const {
     label,
@@ -241,6 +245,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
     tooltip,
     disabled,
     readOnly,
+    disableButtons,
   } = field;
 
   const { control } = useFormContext();
@@ -270,7 +275,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   };
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values, index) : true;
+    return shouldDisplay ? shouldDisplay(values, index, nestedIndex) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {
@@ -302,14 +307,14 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                 icon={<AddIcon />}
                 aria-label="Add item"
                 onClick={addItem}
-                disabled={isReadOnly || disabled || readOnly}
+                disabled={isReadOnly || disabled || readOnly || disableButtons}
                 {...arrayStyles.addButton}
               />
               <IconButton
                 icon={<DeleteIcon />}
                 aria-label="Clear items"
                 onClick={() => remove()}
-                disabled={isReadOnly || disabled || readOnly}
+                disabled={isReadOnly || disabled || readOnly || disableButtons}
                 {...arrayStyles.clearButton}
               />
               {isCollapsible && (
@@ -317,7 +322,9 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                   icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}
                   aria-label={isOpen ? 'Hide items' : 'Show items'}
                   onClick={onToggle}
-                  disabled={isReadOnly || disabled || readOnly}
+                  disabled={
+                    isReadOnly || disabled || readOnly || disableButtons
+                  }
                   {...arrayStyles.collapseButton}
                 />
               )}
@@ -332,49 +339,70 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    {fields.map((item, i) => (
-                      <Draggable
-                        key={`${name}[${i}]`}
-                        draggableId={`${name}[${i}]`}
-                        index={i}
-                      >
-                        {(provided) => (
-                          <Box
-                            key={item?.id || `${name}[${i}]`}
-                            {...arrayStyles.itemContainer}
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            sx={{
-                              ...provided.draggableProps.style,
-                              gridTemplateColumns: '1fr 2.5rem 2rem',
-                            }}
-                          >
-                            {renderField(
-                              [`${name}[${i}]`, itemField],
-                              item.id,
-                              item,
-                              i
-                            )}
-                            <ButtonGroup {...arrayStyles.buttonGroup}>
-                              <IconButton
-                                icon={<DragHandleIcon />}
-                                aria-label="Drag item"
-                                disabled={isReadOnly || disabled || readOnly}
-                                {...provided.dragHandleProps}
-                                {...arrayStyles.dragButton}
-                              />
-                              <IconButton
-                                icon={<DeleteIcon />}
-                                aria-label="Delete item"
-                                disabled={isReadOnly || disabled || readOnly}
-                                onClick={() => remove(i)}
-                                {...arrayStyles.deleteButton}
-                              />
-                            </ButtonGroup>
-                          </Box>
-                        )}
-                      </Draggable>
-                    ))}
+                    {fields.map((item, i) => {
+                      const { shouldDisplay } = itemField as FieldSchema;
+                      if (
+                        shouldDisplay &&
+                        !shouldDisplay(values, index, nestedIndex)
+                      ) {
+                        return null;
+                      }
+
+                      return (
+                        <Draggable
+                          key={`${name}[${i}]`}
+                          draggableId={`${name}[${i}]`}
+                          index={i}
+                        >
+                          {(provided) => (
+                            <Box
+                              key={item?.id || `${name}[${i}]`}
+                              {...arrayStyles.itemContainer}
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              sx={{
+                                ...provided.draggableProps.style,
+                                gridTemplateColumns: '1fr 2.5rem 2rem',
+                              }}
+                            >
+                              {renderField(
+                                [`${name}[${i}]`, itemField],
+                                item.id,
+                                item,
+                                i,
+                                nestedIndex ? [...nestedIndex, i] : [i]
+                              )}
+                              <ButtonGroup {...arrayStyles.buttonGroup}>
+                                <IconButton
+                                  icon={<DragHandleIcon />}
+                                  aria-label="Drag item"
+                                  disabled={
+                                    isReadOnly ||
+                                    disabled ||
+                                    readOnly ||
+                                    disableButtons
+                                  }
+                                  {...provided.dragHandleProps}
+                                  {...arrayStyles.dragButton}
+                                />
+                                <IconButton
+                                  icon={<DeleteIcon />}
+                                  aria-label="Delete item"
+                                  disabled={
+                                    isReadOnly ||
+                                    disabled ||
+                                    readOnly ||
+                                    disableButtons
+                                  }
+                                  onClick={() => remove(i)}
+                                  {...arrayStyles.deleteButton}
+                                />
+                              </ButtonGroup>
+                            </Box>
+                          )}
+                        </Draggable>
+                      );
+                    })}
                     <Box>{provided.placeholder}</Box>
                   </Stack>
                 )}
@@ -383,28 +411,44 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
             {!draggable && (
               <Collapse in={isOpen} style={{ overflow: 'visible' }}>
                 <Stack {...arrayStyles.arrayContainer}>
-                  {fields.map((item, i) => (
-                    <Box
-                      key={item?.id || `${name}[${i}]`}
-                      {...arrayStyles.itemContainer}
-                    >
-                      {renderField(
-                        [`${name}[${i}]`, itemField],
-                        item.id,
-                        item,
-                        i
-                      )}
-                      <Box {...arrayStyles.deleteItemContainer}>
-                        <IconButton
-                          icon={<DeleteIcon />}
-                          aria-label="Delete item"
-                          disabled={isReadOnly || disabled || readOnly}
-                          onClick={() => remove(i)}
-                          {...arrayStyles.deleteButton}
-                        />
+                  {fields.map((item, i) => {
+                    const { shouldDisplay } = itemField as FieldSchema;
+                    if (
+                      shouldDisplay &&
+                      !shouldDisplay(values, index, nestedIndex)
+                    ) {
+                      return null;
+                    }
+
+                    return (
+                      <Box
+                        key={item?.id || `${name}[${i}]`}
+                        {...arrayStyles.itemContainer}
+                      >
+                        {renderField(
+                          [`${name}[${i}]`, itemField],
+                          item.id,
+                          item,
+                          i,
+                          nestedIndex ? [...nestedIndex, i] : [i]
+                        )}
+                        <Box {...arrayStyles.deleteItemContainer}>
+                          <IconButton
+                            icon={<DeleteIcon />}
+                            aria-label="Delete item"
+                            disabled={
+                              isReadOnly ||
+                              disabled ||
+                              readOnly ||
+                              disableButtons
+                            }
+                            onClick={() => remove(i)}
+                            {...arrayStyles.deleteButton}
+                          />
+                        </Box>
                       </Box>
-                    </Box>
-                  ))}
+                    );
+                  })}
                 </Stack>
               </Collapse>
             )}
@@ -452,6 +496,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
   id,
   defaultValue,
   index,
+  nestedIndex,
 }) => {
   const {
     label,
@@ -480,7 +525,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
   const errorMessage = useErrorMessage(name, field.label);
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values, index) : true;
+    return shouldDisplay ? shouldDisplay(values, index, nestedIndex) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {
@@ -520,7 +565,10 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
             {Object.entries(field.properties).map(
               ([fieldName, objectField], i) => {
                 const { shouldDisplay } = objectField as FieldSchema;
-                if (shouldDisplay && !shouldDisplay(values, index)) {
+                if (
+                  shouldDisplay &&
+                  !shouldDisplay(values, index, nestedIndex)
+                ) {
                   return null;
                 }
 
@@ -530,7 +578,8 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
                       [`${name}.${fieldName}`, objectField],
                       id,
                       defaultValue?.[fieldName],
-                      index
+                      index,
+                      nestedIndex
                     )}
                   </Box>
                 );
