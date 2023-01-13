@@ -119,7 +119,6 @@ export function formatSelectInput({
 
         return acc;
       }
-      console.log(prop, ' props ', value);
       acc[name] = formatSelectInput({
         defaultValues: value || {},
         schema: prop.itemField.properties,
