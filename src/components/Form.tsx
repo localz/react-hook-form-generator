@@ -20,7 +20,14 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { QuestionIcon } from '@chakra-ui/icons';
-import { useForm, useWatch, FormProvider, UseFormProps } from 'react-hook-form';
+import {
+  useForm,
+  useWatch,
+  FormProvider,
+  UseFormProps,
+  UseFormReturn,
+  FieldValues,
+} from 'react-hook-form';
 import merge from 'lodash.merge';
 import { FormStyles, Field, Schema, SelectOptions } from '../types';
 import { StyleCtx } from '../hooks/useStyles';
@@ -186,52 +193,31 @@ const renderField = ([name, field]: [string, Field]) => {
   );
 };
 
-export function Form({
-  title,
-  helperText,
-  schema,
-  handleSubmit,
-  formOptions,
-  overwriteDefaultStyles,
-  buttons,
-  styles = {},
+const renderForm = ({
   isReadOnly,
   selectOptions,
-  formatSelectResults = false,
-  formatSelectDefaultValues = false,
-  debug = false,
-}: FormProps) {
-  const getOptions = useCallback(() => {
-    if (!formOptions) {
-      return {};
-    }
-
-    if (formOptions.defaultValues && formatSelectDefaultValues) {
-      return {
-        ...formOptions,
-        defaultValues: formatSelectInput({
-          selectOptions: selectOptions || {},
-          defaultValues: formOptions.defaultValues,
-          schema,
-        }),
-      };
-    }
-
-    return formOptions;
-  }, [formOptions, formatSelectDefaultValues]);
-
-  const form = useForm(getOptions());
-
-  if (debug) {
-    console.table(form.formState.errors);
-  }
-
-  const values = useWatch({ control: form.control });
-
-  const baseStyles = useMemo(() => {
-    return overwriteDefaultStyles ? styles : merge(defaultStyles, styles);
-  }, [styles, overwriteDefaultStyles]);
-
+  baseStyles,
+  form,
+  formatSelectResults,
+  handleSubmit,
+  schema,
+  title,
+  helperText,
+  buttons,
+  values,
+}: {
+  isReadOnly?: boolean;
+  selectOptions?: SelectOptions;
+  baseStyles: FormStyles;
+  form: UseFormReturn<FieldValues>;
+  formatSelectResults?: boolean;
+  handleSubmit: FormProps['handleSubmit'];
+  schema: Schema;
+  title?: string;
+  helperText?: string;
+  buttons?: FormProps['buttons'];
+  values: any;
+}) => {
   return (
     <Ctx.Provider
       value={{
@@ -314,4 +300,129 @@ export function Form({
       </StyleCtx.Provider>
     </Ctx.Provider>
   );
+};
+
+export function Form({
+  title,
+  helperText,
+  schema,
+  handleSubmit,
+  formOptions,
+  overwriteDefaultStyles,
+  buttons,
+  styles = {},
+  isReadOnly,
+  selectOptions,
+  formatSelectResults = false,
+  formatSelectDefaultValues = false,
+  debug = false,
+}: FormProps) {
+  const getOptions = useCallback(() => {
+    if (!formOptions) {
+      return {};
+    }
+
+    if (formOptions.defaultValues && formatSelectDefaultValues) {
+      return {
+        ...formOptions,
+        defaultValues: formatSelectInput({
+          selectOptions: selectOptions || {},
+          defaultValues: formOptions.defaultValues,
+          schema,
+        }),
+      };
+    }
+
+    return formOptions;
+  }, [formOptions, formatSelectDefaultValues]);
+
+  const form = useForm(getOptions());
+
+  if (debug) {
+    console.table(form.formState.errors);
+  }
+
+  const values = useWatch({ control: form.control });
+
+  const baseStyles = useMemo(() => {
+    return overwriteDefaultStyles ? styles : merge(defaultStyles, styles);
+  }, [styles, overwriteDefaultStyles]);
+
+  return renderForm({
+    isReadOnly,
+    selectOptions,
+    baseStyles,
+    form,
+    formatSelectResults,
+    handleSubmit,
+    schema,
+    title,
+    helperText,
+    buttons,
+    values,
+  });
+}
+
+export function useFormMethods({
+  title,
+  helperText,
+  schema,
+  handleSubmit,
+  formOptions,
+  overwriteDefaultStyles,
+  buttons,
+  styles = {},
+  isReadOnly,
+  selectOptions,
+  formatSelectResults = false,
+  formatSelectDefaultValues = false,
+  debug = false,
+}: FormProps) {
+  const getOptions = useCallback(() => {
+    if (!formOptions) {
+      return {};
+    }
+
+    if (formOptions.defaultValues && formatSelectDefaultValues) {
+      return {
+        ...formOptions,
+        defaultValues: formatSelectInput({
+          selectOptions: selectOptions || {},
+          defaultValues: formOptions.defaultValues,
+          schema,
+        }),
+      };
+    }
+
+    return formOptions;
+  }, [formOptions, formatSelectDefaultValues]);
+
+  const form = useForm(getOptions());
+
+  if (debug) {
+    console.table(form.formState.errors);
+  }
+
+  const values = useWatch({ control: form.control });
+
+  const baseStyles = useMemo(() => {
+    return overwriteDefaultStyles ? styles : merge(defaultStyles, styles);
+  }, [styles, overwriteDefaultStyles]);
+
+  return {
+    formMethods: form,
+    renderForm: renderForm({
+      isReadOnly,
+      selectOptions,
+      baseStyles,
+      form,
+      formatSelectResults,
+      handleSubmit,
+      schema,
+      title,
+      helperText,
+      buttons,
+      values,
+    }),
+  };
 }
