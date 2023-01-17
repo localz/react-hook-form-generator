@@ -182,7 +182,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                       automaticLayout: true,
                       tabCompletion: 'on',
                       fontSize: 16,
-                      fontFamily: theme.fonts.body,
+                      fontFamily: theme?.fonts?.body,
                     }}
                     onChange={(value) => {
                       setValue(name, value);
