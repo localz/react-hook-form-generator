@@ -14,7 +14,7 @@ import { FieldProps, FieldStyles, SecretFieldSchema } from '../types';
 import { useStyles } from '../hooks/useStyles';
 import LabelElement from './elements/Label';
 import { Ctx } from './Ctx';
-import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
+import { CopyIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
 
 export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
   id,
@@ -35,6 +35,8 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
     disabled,
     readOnly,
     clearOriginalValue,
+    copyToClipboard,
+    onCopy,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -79,6 +81,22 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
             defaultValue={defaultValue}
             {...fieldStyles.input}
           />
+          {copyToClipboard && (
+            <InputRightAddon
+              children={
+                <IconButton
+                  icon={<CopyIcon />}
+                  aria-label="copy-value"
+                  size="xs"
+                  onClick={() => {
+                    navigator.clipboard.writeText(values[name]);
+                    onCopy && onCopy();
+                  }}
+                  {...fieldStyles.button}
+                />
+              }
+            />
+          )}
           <InputRightAddon
             children={
               <IconButton

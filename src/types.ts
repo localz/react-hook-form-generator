@@ -346,6 +346,8 @@ export interface SecretFieldSchema
     > {
   type: 'secret';
   clearOriginalValue?: boolean;
+  copyToClipboard?: boolean;
+  onCopy?: () => void;
 }
 
 export interface FormStyles {

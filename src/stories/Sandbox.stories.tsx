@@ -133,6 +133,7 @@ Sandbox.args = {
       type: 'secret',
       label: 'Password',
       clearOriginalValue: true,
+      copyToClipboard: true,
     },
     expectedActions: {
       type: 'dragDrop',
