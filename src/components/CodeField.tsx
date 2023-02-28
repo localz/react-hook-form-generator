@@ -22,7 +22,7 @@ import get from 'lodash.get';
 import { isString } from 'lodash';
 
 import LabelElement from './elements/Label';
-import { FieldProps, FieldStyles, CodeFieldSchema } from '../types';
+import { FieldProps, CodeFieldSchema, FieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
@@ -141,6 +141,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                             .getAction('editor.action.formatDocument')
                             .run()
                         }
+                        {...fieldStyles.button}
                       >
                         {beautifyButtonText}
                       </Button>

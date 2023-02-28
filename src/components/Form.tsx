@@ -28,7 +28,7 @@ import {
   UseFormReturn,
   FieldValues,
 } from 'react-hook-form';
-import merge from 'lodash.merge';
+import { isEmpty, merge, omit } from 'lodash';
 import { FormStyles, Field, Schema, SelectOptions } from '../types';
 import { StyleCtx } from '../hooks/useStyles';
 import { TextField } from './TextField';
@@ -51,6 +51,7 @@ import { ColorField } from './ColorField';
 import FileField from './FileField';
 import { HeadingField } from './HeadingField';
 import { formatSelectInput, formatSelectOutput } from '../utils';
+import { SecretField } from './SecretField';
 
 type CustomButton = {
   render: (values: { [x: string]: any }) => ReactNode;
@@ -174,6 +175,10 @@ const renderField = ([name, field]: [string, Field]) => {
       Component = HeadingField;
       break;
 
+    case 'secret':
+      Component = SecretField;
+      break;
+
     case 'custom':
       Component = field.component;
       return (
@@ -230,11 +235,20 @@ const renderForm = ({
           <Box
             as="form"
             onSubmit={form.handleSubmit((values) => {
+              const toOmit: string[] = [];
+              Object.entries(values).forEach(([key, value]) => {
+                if (schema[key]?.type === 'secret' && isEmpty(value)) {
+                  toOmit.push(key);
+                }
+              });
+
               if (formatSelectResults) {
-                return handleSubmit(formatSelectOutput({ values, schema }));
+                return handleSubmit(
+                  omit(formatSelectOutput({ values, schema }), toOmit)
+                );
               }
 
-              return handleSubmit(values);
+              return handleSubmit(omit(values, toOmit));
             })}
             {...baseStyles.form?.container}
           >

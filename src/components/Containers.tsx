@@ -54,6 +54,7 @@ import DateField from './DateField';
 import FileField from './FileField';
 import { DragDropField } from './DragDropField';
 import { HeadingField } from './HeadingField';
+import { SecretField } from './SecretField';
 
 export const renderField = (
   [name, field]: [string, Field],
@@ -119,6 +120,10 @@ export const renderField = (
 
     case 'heading':
       Component = HeadingField;
+      break;
+
+    case 'secret':
+      Component = SecretField;
       break;
 
     case 'custom':
@@ -222,6 +227,7 @@ const emptyFields = {
   file: {},
   dragDrop: [],
   heading: '',
+  secret: '',
 };
 
 export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
