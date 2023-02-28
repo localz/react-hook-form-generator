@@ -134,6 +134,7 @@ Sandbox.args = {
       label: 'Password',
       clearOriginalValue: true,
       copyToClipboard: true,
+      isRequired: true,
     },
     expectedActions: {
       type: 'dragDrop',

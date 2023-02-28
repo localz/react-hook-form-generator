@@ -340,6 +340,7 @@ export interface SecretFieldSchema
       | 'label'
       | 'helperText'
       | 'divideAfter'
+      | 'isRequired'
       | 'placeholder'
       | 'tooltip'
       | 'defaultValue'

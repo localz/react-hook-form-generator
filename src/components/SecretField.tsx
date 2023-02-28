@@ -25,6 +25,7 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
 }) => {
   const {
     label,
+    isRequired,
     placeholder,
     defaultValue,
     shouldDisplay,
@@ -62,7 +63,11 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
 
   return (
     <>
-      <FormControl {...fieldStyles.control} isReadOnly={isReadOnly}>
+      <FormControl
+        {...fieldStyles.control}
+        isRequired={isRequired}
+        isReadOnly={isReadOnly}
+      >
         <LabelElement
           label={label}
           name={name}
