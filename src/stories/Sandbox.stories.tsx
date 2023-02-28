@@ -57,7 +57,7 @@ Sandbox.args = {
   title: 'Sandbox',
   helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
-    alert(JSON.stringify(values['nestedField'], null, 2));
+    alert(JSON.stringify(values, null, 2));
   },
   buttons: {
     submit: {
@@ -128,6 +128,11 @@ Sandbox.args = {
   },
 
   schema: {
+    secret: {
+      type: 'secret',
+      label: 'Password',
+      maskedValue: '*****',
+    },
     expectedActions: {
       type: 'dragDrop',
       label: 'Expected actions',

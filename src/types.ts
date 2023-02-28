@@ -49,7 +49,8 @@ export type Field =
   | DateFieldSchema
   | ColorFieldSchema
   | FileFieldSchema
-  | HeadingFieldSchema;
+  | HeadingFieldSchema
+  | SecretFieldSchema;
 
 export interface FieldProps<T extends FieldSchema> {
   id?: string;
@@ -76,6 +77,7 @@ export interface FieldSchema {
     | 'color'
     | 'file'
     | 'heading'
+    | 'secret'
     | 'custom';
   styles?:
     | FieldStyles
@@ -330,6 +332,21 @@ export interface SelectFieldSchemaWithOptions
 }
 
 export type SelectFieldSchema = SelectFieldSchemaWithOptions;
+
+export interface SecretFieldSchema
+  extends FieldSchema,
+    Pick<
+      FormController,
+      | 'label'
+      | 'helperText'
+      | 'divideAfter'
+      | 'placeholder'
+      | 'tooltip'
+      | 'defaultValue'
+    > {
+  type: 'secret';
+  maskedValue: string | null;
+}
 
 export interface FormStyles {
   form?: {
