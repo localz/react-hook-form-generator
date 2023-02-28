@@ -345,7 +345,7 @@ export interface SecretFieldSchema
       | 'defaultValue'
     > {
   type: 'secret';
-  maskedValue: string | null;
+  clearOriginalValue?: boolean;
 }
 
 export interface FormStyles {

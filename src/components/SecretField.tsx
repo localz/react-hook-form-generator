@@ -26,7 +26,7 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
   const {
     label,
     placeholder,
-    maskedValue,
+    defaultValue,
     shouldDisplay,
     styles = {},
     tooltip,
@@ -34,6 +34,7 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
     helperText,
     disabled,
     readOnly,
+    clearOriginalValue,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -74,8 +75,8 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
             {...register(name)}
             placeholder={placeholder}
             disabled={disabled || !show}
-            readOnly={readOnly || !show}
-            defaultValue={maskedValue || ''}
+            readOnly={readOnly}
+            defaultValue={defaultValue}
             {...fieldStyles.input}
           />
           <InputRightAddon
@@ -85,8 +86,10 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
                 aria-label="unlock-field"
                 size="xs"
                 onClick={() => {
-                  !show && !modified && setValue(name, '');
-                  !modified && setModified(true);
+                  if (clearOriginalValue) {
+                    !show && !modified && setValue(name, '');
+                    !modified && setModified(true);
+                  }
                   setShow(!show);
                 }}
                 {...fieldStyles.button}

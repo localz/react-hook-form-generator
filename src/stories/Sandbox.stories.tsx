@@ -68,6 +68,7 @@ Sandbox.args = {
   isReadOnly: false,
   formOptions: {
     defaultValues: {
+      secret: 'secretPassword',
       color: '#000000',
       options: [
         {
@@ -131,7 +132,7 @@ Sandbox.args = {
     secret: {
       type: 'secret',
       label: 'Password',
-      maskedValue: '*****',
+      clearOriginalValue: true,
     },
     expectedActions: {
       type: 'dragDrop',
