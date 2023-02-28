@@ -227,6 +227,7 @@ const emptyFields = {
   file: {},
   dragDrop: [],
   heading: '',
+  secret: '',
 };
 
 export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
