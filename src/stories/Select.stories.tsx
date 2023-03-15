@@ -2,6 +2,8 @@ import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import { ChakraProvider, Circle, Flex, Text } from '@chakra-ui/react';
 import { Form } from '..';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 /*
  * NOTE: You can't bind args for this story because it passes react context as an arg
@@ -22,12 +24,23 @@ const Template: ComponentStory<typeof Form> = (args) => (
   </ChakraProvider>
 );
 
+const validationSchema = z.object({
+  withDefaultValue: z.object(
+    {
+      value: z.enum(['RS256', 'HS256']),
+      label: z.enum(['RS256', 'HS256']),
+    },
+    {
+      required_error: 'With default value is required',
+    }
+  ),
+});
+
 export const Select = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Select.args = {
   title: 'Select',
   helperText: 'Some text that explains some stuff',
-  formatResults: true,
   handleSubmit: (values) => {
     alert(JSON.stringify(values, null, 2));
   },
@@ -54,10 +67,12 @@ Select.args = {
     },
   },
   formOptions: {
+    resolver: zodResolver(validationSchema),
     defaultValues: {
       fromContext: 'action-2',
     },
   },
+
   schema: {
     input: {
       type: 'object',
@@ -71,7 +86,6 @@ Select.args = {
         },
       },
     },
-
     fromContext: {
       placeholder: 'Select option...',
       label: 'From context',
@@ -85,6 +99,17 @@ Select.args = {
       selectKey: 'actionOptions',
       isMulti: true,
     },
+    withDefaultValue: {
+      label: 'With a default value',
+      type: 'select',
+      options: [
+        { value: 'RS256', label: 'RS256' },
+        { value: 'HS256', label: 'HS256' },
+      ],
+      defaultValue: { value: 'HS256', label: 'HS256' },
+      isRequired: true,
+    },
+
     stickyHeader: {
       type: 'select',
       label: 'Sticky header',

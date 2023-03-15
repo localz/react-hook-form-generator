@@ -25,6 +25,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     helperText,
     isRequired,
     shouldDisplay,
+    defaultValue,
     styles = {},
     divideAfter,
     placeholder,
@@ -43,6 +44,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   } = useController({
     name,
     control,
+    ...(defaultValue && { defaultValue }),
   });
 
   const values = useWatch({
@@ -87,6 +89,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
             {label}
           </FormLabel>
         )}
+
         <Select
           data-testid={id}
           name={name}
@@ -97,6 +100,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
           isDisabled={isLoading || disabled}
           isReadOnly={isReadOnly || readOnly}
           placeholder={placeholder}
+          defaultValue={defaultValue}
           {...selectProps}
           {...fieldStyles.select}
           {...(isLoading && {
@@ -104,9 +108,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
           })}
           options={options}
         />
-
         <FormErrorMessage>{error && error.message}</FormErrorMessage>
-
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>
             {helperText}
