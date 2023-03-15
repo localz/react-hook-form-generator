@@ -1,5 +1,12 @@
 
 
+### [1.0.18](https://github.com/localz/react-hook-form-generator/compare/v1.0.17...v1.0.18) (2023-03-15)
+
+
+### Bug Fixes
+
+* select default value ([d902489](https://github.com/localz/react-hook-form-generator/commit/d902489e9e8a196eb4833fe0ad451047d9af0aee))
+
 ### [1.0.17](https://github.com/localz/react-hook-form-generator/compare/v1.0.16...v1.0.17) (2023-03-15)
 
 
