@@ -90,7 +90,17 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
               isReadOnly={isReadOnly || readOnly}
               defaultValue={defaultValue}
               value={format ? format(value) : value}
-              onChange={(val: string) => onChange(parse ? parse(val) : val)}
+              onChange={(val: string) => {
+                if (parse) {
+                  return onChange(parse(val));
+                }
+
+                if (typeof val === 'string') {
+                  return onChange(parseInt(val, 10));
+                }
+
+                return onChange(val);
+              }}
               min={min}
               max={max}
               precision={precision}
