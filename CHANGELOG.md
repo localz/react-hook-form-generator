@@ -1,5 +1,12 @@
 
 
+### [1.0.17](https://github.com/localz/react-hook-form-generator/compare/v1.0.16...v1.0.17) (2023-03-15)
+
+
+### Bug Fixes
+
+* number field return type ([b3385b4](https://github.com/localz/react-hook-form-generator/commit/b3385b4d39730757ae11e38a67f44b35a20a4779))
+
 ### [1.0.16](https://github.com/localz/react-hook-form-generator/compare/v1.0.15...v1.0.16) (2023-03-15)
 
 
