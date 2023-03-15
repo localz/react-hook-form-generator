@@ -1,7 +1,6 @@
 import React, { FC, useContext, useMemo } from 'react';
 import {
   FormControl,
-  FormLabel,
   FormHelperText,
   NumberInput,
   NumberInputField,
@@ -17,6 +16,7 @@ import { FieldProps, FieldStyles, NumberFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
+import LabelElement from './elements/Label';
 
 export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
   id,
@@ -34,6 +34,7 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
     defaultValue,
     min,
     max,
+    tooltip,
     format,
     parse,
     precision,
@@ -71,10 +72,18 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
         {...fieldStyles.control}
         isReadOnly={isReadOnly}
       >
-        {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+        {label && (
+          <LabelElement
+            tooltip={tooltip}
+            fieldStyles={fieldStyles}
+            name={name}
+            label={label}
+          />
+        )}
         <Controller
           name={name}
           control={control}
+          defaultValue={defaultValue}
           render={({ field: { onChange, value } }) => (
             <NumberInput
               isDisabled={disabled}

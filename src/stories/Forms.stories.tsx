@@ -156,13 +156,45 @@ ConditionalRendering.args = {
         return value.show;
       },
     },
-
     alwaysVisibleField: {
       type: 'text',
       htmlInputType: 'password',
       label: 'Password',
       isRequired: true,
       defaultValue: '123',
+    },
+  },
+};
+
+const numberValidation = Z.object({
+  etaWindowMinutes: Z.number({
+    required_error: 'etaWindowMinutes is required',
+  })
+    .min(1)
+    .max(60),
+});
+
+export const NumberField = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+NumberField.args = {
+  title: 'Number field',
+  handleSubmit: (values) => {
+    alert(JSON.stringify(values));
+  },
+  formOptions: {
+    resolver: zodResolver(numberValidation),
+  },
+  buttons: {
+    submit: {
+      text: 'Submit',
+    },
+  },
+  schema: {
+    etaWindowMinutes: {
+      type: 'number',
+      label: 'etaWindowMinutes',
+      defaultValue: 15,
+      tooltip: 'This is a tooltip',
     },
   },
 };
