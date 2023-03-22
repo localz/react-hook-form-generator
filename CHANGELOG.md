@@ -1,5 +1,12 @@
 
 
+## [1.1.0](https://github.com/localz/react-hook-form-generator/compare/v1.0.18...v1.1.0) (2023-03-22)
+
+
+### Features
+
+* allow go code ([c06ef14](https://github.com/localz/react-hook-form-generator/commit/c06ef141001fdb306d873e68c213fce4435a1fd6))
+
 ### [1.0.18](https://github.com/localz/react-hook-form-generator/compare/v1.0.17...v1.0.18) (2023-03-15)
 
 
