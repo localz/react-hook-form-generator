@@ -27,6 +27,34 @@ import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
 
+function getHeight({
+  height,
+  isCollapsible,
+  isOpen,
+  value,
+}: {
+  height?: string;
+  isCollapsible?: boolean;
+  isOpen?: boolean;
+  value: any;
+}) {
+  if (!value) {
+    return '200px';
+  }
+  if (height) {
+    return height;
+  }
+
+  const lines = value.split('\n').length;
+
+  const dynamicHeight = `${Math.max(lines * 22, 200)}px`;
+
+  if (isCollapsible) {
+    return isOpen ? dynamicHeight : 'auto';
+  }
+  return dynamicHeight;
+}
+
 export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
   name,
   field,
@@ -101,18 +129,24 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
         control={control}
         name={name}
         render={({ field: { value, name } }) => {
-          const getPlaceholder = () => {
+          function getPlaceholder() {
             if (language === 'html' && value) {
               return value;
-            } else if (language === 'json' && value) {
+            }
+
+            if (language === 'json' && value) {
               if (typeof value === 'string') {
                 return value;
               }
               return JSON.stringify(value, null, 2);
             }
 
+            if (language === 'go') {
+              return value;
+            }
+
             return placeholder;
-          };
+          }
 
           return (
             <FormControl
@@ -172,9 +206,15 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                     theme={
                       colorMode.colorMode === 'light' ? 'light' : 'vs-dark'
                     }
-                    height={height ?? '200px'}
+                    height={getHeight({
+                      height,
+                      isCollapsible,
+                      isOpen,
+                      value,
+                    })}
                     defaultLanguage={language}
                     options={{
+                      lineHeight: 22,
                       contextmenu: false,
                       minimap: { enabled: false },
                       readOnly: isReadOnly || disabled || readOnly,
@@ -182,6 +222,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                       autoClosingOvertype: 'always',
                       automaticLayout: true,
                       tabCompletion: 'on',
+                      fixedOverflowWidgets: false,
                       fontSize: 16,
                       fontFamily: theme?.fonts?.body,
                     }}

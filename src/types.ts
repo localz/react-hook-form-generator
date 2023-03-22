@@ -133,7 +133,7 @@ export interface TextAreaFieldSchema extends FieldSchema, FormController {
   type: 'textArea';
 }
 
-export type CodeLanguage = 'json' | 'html';
+export type CodeLanguage = 'json' | 'html' | 'go';
 
 export interface CodeFieldSchema extends FieldSchema, FormController {
   type: 'code';

@@ -95,6 +95,39 @@ Json.args = {
   },
 };
 
+export const Go = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Go.args = {
+  title: 'Go',
+  handleSubmit: (values) => {
+    alert(JSON.stringify(values));
+  },
+  formOptions: {
+    defaultValues: {
+      golang: `[
+        {
+          {
+            $first := true
+          }
+        }
+      ]
+      `,
+    },
+  },
+  buttons: {
+    submit: {
+      text: 'Submit',
+    },
+  },
+  schema: {
+    golang: {
+      type: 'code',
+      language: 'go',
+      label: 'Some JSON input',
+    },
+  },
+};
+
 export const Html = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Html.args = {
