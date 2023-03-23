@@ -38,6 +38,10 @@ function getHeight({
   isOpen?: boolean;
   value: any;
 }) {
+  if (!isCollapsible && !isOpen) {
+    return 'auto';
+  }
+
   if (!value) {
     return '200px';
   }
@@ -45,13 +49,26 @@ function getHeight({
     return height;
   }
 
-  const lines = value.split('\n').length;
+  let lines = 0;
+
+  if (isString(value)) {
+    lines = value.split('\n').length;
+  }
+
+  if (Array.isArray(value)) {
+    lines = value.length;
+  }
+
+  if (typeof value === 'object') {
+    lines = JSON.stringify(value).split('\n').length;
+  }
 
   const dynamicHeight = `${Math.max(lines * 22, 200)}px`;
 
   if (isCollapsible) {
     return isOpen ? dynamicHeight : 'auto';
   }
+
   return dynamicHeight;
 }
 

@@ -104,14 +104,8 @@ Go.args = {
   },
   formOptions: {
     defaultValues: {
-      golang: `[
-        {
-          {
-            $first := true
-          }
-        }
-      ]
-      `,
+      golang:
+        '[ {{ $first := true }} {{ range $idx, $elem := .context.actions.vars.json.images }} {{ if not $first }},{{ end }} { {{ if $first }} "note": "{{ replace (replace $.context.actions.vars.json.note "\n" `\n` -1) `"` `"` -1 }}", {{ end }} "imageUrl": "{{ $elem.value }}", "imageName": "{{ $elem.name }}", "fileName": "image_{{ index (split uuid "-") 0 }}.jpg", {{ with $x := $.context.actions.get_order.order.specific.dynamicsUserId }} "dynamicsUserId": "{{ $x }}", {{ end }} "serviceTaskId": "{{ $.context.actions.vars.json.serviceTaskId }}", {{ with $x := $.context.input.subProjectId }}"subProjectId":"{{ $x }}",{{ end }} "orderNumber": "{{ $.context.input.orderNumber }}" } {{ $first = false }} {{ end }} ]',
     },
   },
   buttons: {
@@ -124,6 +118,11 @@ Go.args = {
       type: 'code',
       language: 'go',
       label: 'Some JSON input',
+    },
+    payloads: {
+      type: 'code',
+      language: 'go',
+      label: 'Payloads',
     },
   },
 };
