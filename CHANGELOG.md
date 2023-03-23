@@ -1,5 +1,12 @@
 
 
+### [1.1.1](https://github.com/localz/react-hook-form-generator/compare/v1.1.0...v1.1.1) (2023-03-23)
+
+
+### Bug Fixes
+
+* value can be an object ([5f2bc09](https://github.com/localz/react-hook-form-generator/commit/5f2bc090f459e500c5e660b5dd46745d94d8c7db))
+
 ## [1.1.0](https://github.com/localz/react-hook-form-generator/compare/v1.0.18...v1.1.0) (2023-03-22)
 
 
