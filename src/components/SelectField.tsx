@@ -19,6 +19,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   name,
   field,
   index,
+  nestedIndex,
 }) => {
   const {
     label,
@@ -57,7 +58,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   const errorMessage = useErrorMessage(name, label);
 
   const isVisible = useMemo(() => {
-    return shouldDisplay ? shouldDisplay(values, index) : true;
+    return shouldDisplay ? shouldDisplay(values, index, nestedIndex) : true;
   }, [values, shouldDisplay]);
 
   if (!isVisible) {
@@ -71,7 +72,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   const options = field.selectKey
     ? selectOptions[field.selectKey].options
     : generateOptions
-    ? generateOptions(values)
+    ? generateOptions(values, index, nestedIndex)
     : field.options;
 
   if (!options || !Array.isArray(options)) {
