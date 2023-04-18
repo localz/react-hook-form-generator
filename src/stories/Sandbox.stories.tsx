@@ -166,6 +166,10 @@ Sandbox.args = {
     selectSomething: {
       type: 'select',
       label: 'Select something',
+      generateOptions: (values: any) =>
+        get(values, 'arrayField', []).map((val: any) => {
+          return { label: val, value: val };
+        }),
       options: [
         { label: 'One', value: 1 },
         { label: 'Two', value: 2 },
@@ -203,6 +207,14 @@ Sandbox.args = {
       type: 'heading',
       copyToClipboard: true,
       tooltip: 'You can copy this!',
+    },
+    arrayField: {
+      type: 'array',
+      label: 'Regular array',
+      itemField: {
+        type: 'text',
+        label: 'Text',
+      },
     },
     nestedField: {
       type: 'array',

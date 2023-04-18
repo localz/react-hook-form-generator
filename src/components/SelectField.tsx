@@ -31,6 +31,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     placeholder,
     disabled,
     readOnly,
+    generateOptions,
     ...selectProps
   } = field;
 
@@ -69,6 +70,8 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
 
   const options = field.selectKey
     ? selectOptions[field.selectKey].options
+    : generateOptions
+    ? generateOptions(values)
     : field.options;
 
   if (!options || !Array.isArray(options)) {
