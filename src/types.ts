@@ -314,7 +314,9 @@ export interface SelectFieldSchemaWithOptions
   type: 'select';
   options?: OptionsOrGroups<string | number, any> | undefined;
   generateOptions?: (
-    values: any
+    values: any,
+    index?: number | null,
+    nestedIndex?: number[]
   ) => OptionsOrGroups<string | number, any> | undefined;
 }
 export interface SelectFieldSchemaWithOptions
