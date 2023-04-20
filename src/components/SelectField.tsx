@@ -1,7 +1,6 @@
 import React, { FC, useContext, useMemo } from 'react';
 import {
   FormControl,
-  FormLabel,
   FormHelperText,
   FormErrorMessage,
   Divider,
@@ -13,6 +12,7 @@ import { FieldProps, SelectFieldSchema, SelectFieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
+import LabelElement from './elements/Label';
 
 export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
   id,
@@ -23,7 +23,9 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     helperText,
+    tooltip,
     isRequired,
     shouldDisplay,
     defaultValue,
@@ -88,11 +90,13 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
         {...fieldStyles.control}
         isReadOnly={isReadOnly}
       >
-        {Boolean(label) && (
-          <FormLabel htmlFor={name} {...fieldStyles.label}>
-            {label}
-          </FormLabel>
-        )}
+        <LabelElement
+          label={label}
+          labelAddon={labelAddon}
+          name={name}
+          fieldStyles={fieldStyles}
+          tooltip={tooltip}
+        />
 
         <Select
           data-testid={id}

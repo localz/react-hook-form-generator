@@ -102,6 +102,7 @@ export interface CustomFieldSchema extends Pick<FieldSchema, 'type'> {
 
 interface FormController {
   label?: string;
+  labelAddon?: ReactNode;
   placeholder?: string;
   helperText?: string;
   isRequired?: boolean;
@@ -120,6 +121,7 @@ export interface TextFieldSchema extends FieldSchema, FormController {
   renderAfter?: (values: any) => ReactNode;
   copyToClipboard?: boolean;
   onCopy?: () => void;
+  onCopyError?: () => void;
   inputValidation?: {
     validator: (value: string) => Promise<boolean>;
     loading: boolean;
@@ -157,7 +159,13 @@ export interface ArrayFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'tooltip'
+      | 'label'
+      | 'labelAddon'
+      | 'labelAddon'
+      | 'helperText'
+      | 'isRequired'
+      | 'divideAfter'
+      | 'tooltip'
     > {
   type: 'array';
   isCollapsible?: boolean;
@@ -172,7 +180,12 @@ export interface ObjectFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'tooltip'
+      | 'label'
+      | 'labelAddon'
+      | 'helperText'
+      | 'isRequired'
+      | 'divideAfter'
+      | 'tooltip'
     > {
   type: 'object';
   isCollapsible?: boolean;
@@ -183,7 +196,12 @@ export interface DragDropFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'tooltip'
+      | 'label'
+      | 'labelAddon'
+      | 'helperText'
+      | 'isRequired'
+      | 'divideAfter'
+      | 'tooltip'
     > {
   type: 'dragDrop';
   optionField: Field;
@@ -200,6 +218,7 @@ export interface SwitchFieldSchema
     Pick<
       FormController,
       | 'label'
+      | 'labelAddon'
       | 'helperText'
       | 'isRequired'
       | 'defaultValue'
@@ -213,7 +232,12 @@ export interface CheckboxFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'divideAfter'
+      | 'label'
+      | 'labelAddon'
+      | 'helperText'
+      | 'tooltip'
+      | 'isRequired'
+      | 'divideAfter'
     > {
   type: 'checkbox';
   checkboxes: {
@@ -226,7 +250,13 @@ export interface DateFieldSchema
   extends FieldSchema,
     Pick<
       FormController,
-      'label' | 'helperText' | 'isRequired' | 'divideAfter' | 'placeholder'
+      | 'label'
+      | 'labelAddon'
+      | 'helperText'
+      | 'tooltip'
+      | 'isRequired'
+      | 'divideAfter'
+      | 'placeholder'
     > {
   type: 'date';
   defaultValue?: Date;
@@ -243,6 +273,7 @@ export interface ColorFieldSchema
     Pick<
       FormController,
       | 'label'
+      | 'labelAddon'
       | 'helperText'
       | 'isRequired'
       | 'divideAfter'
@@ -258,6 +289,7 @@ export interface FileFieldSchema
     Pick<
       FormController,
       | 'label'
+      | 'labelAddon'
       | 'helperText'
       | 'isRequired'
       | 'divideAfter'
@@ -288,6 +320,7 @@ export interface HeadingFieldSchema
   size?: string;
   copyToClipboard?: boolean;
   onCopy?: () => void;
+  onCopyError?: () => void;
 }
 
 type SelectProps = Pick<
@@ -304,6 +337,7 @@ export interface SelectFieldSchemaWithOptions
     Pick<
       FormController,
       | 'label'
+      | 'labelAddon'
       | 'helperText'
       | 'isRequired'
       | 'defaultValue'
@@ -324,6 +358,7 @@ export interface SelectFieldSchemaWithOptions
     Pick<
       FormController,
       | 'label'
+      | 'labelAddon'
       | 'helperText'
       | 'isRequired'
       | 'defaultValue'
@@ -343,6 +378,7 @@ export interface SecretFieldSchema
     Pick<
       FormController,
       | 'label'
+      | 'labelAddon'
       | 'helperText'
       | 'divideAfter'
       | 'isRequired'
@@ -354,6 +390,8 @@ export interface SecretFieldSchema
   clearOriginalValue?: boolean;
   copyToClipboard?: boolean;
   onCopy?: () => void;
+  onCopyError?: () => void;
+  toggleIcon?: 'lock' | 'eye';
 }
 
 export interface FormStyles {

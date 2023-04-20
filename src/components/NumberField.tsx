@@ -26,6 +26,7 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     helperText,
     isRequired,
     shouldDisplay,
@@ -78,6 +79,7 @@ export const NumberField: FC<FieldProps<NumberFieldSchema>> = ({
             fieldStyles={fieldStyles}
             name={name}
             label={label}
+            labelAddon={labelAddon}
           />
         )}
         <Controller

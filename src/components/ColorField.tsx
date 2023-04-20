@@ -29,6 +29,7 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     helperText,
     isRequired,
     shouldDisplay,
@@ -70,6 +71,7 @@ export const ColorField: FC<FieldProps<ColorFieldSchema>> = ({
       >
         <LabelElement
           label={label}
+          labelAddon={labelAddon}
           name={name}
           fieldStyles={fieldStyles}
           tooltip={tooltip}

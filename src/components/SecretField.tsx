@@ -14,7 +14,13 @@ import { FieldProps, FieldStyles, SecretFieldSchema } from '../types';
 import { useStyles } from '../hooks/useStyles';
 import LabelElement from './elements/Label';
 import { Ctx } from './Ctx';
-import { CopyIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
+import {
+  CopyIcon,
+  LockIcon,
+  UnlockIcon,
+  ViewIcon,
+  ViewOffIcon,
+} from '@chakra-ui/icons';
 
 export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
   id,
@@ -25,6 +31,7 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     isRequired,
     placeholder,
     defaultValue,
@@ -38,6 +45,8 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
     clearOriginalValue,
     copyToClipboard,
     onCopy,
+    onCopyError,
+    toggleIcon,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -70,6 +79,7 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
       >
         <LabelElement
           label={label}
+          labelAddon={labelAddon}
           name={name}
           fieldStyles={fieldStyles}
           tooltip={tooltip}
@@ -93,9 +103,13 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
                   icon={<CopyIcon />}
                   aria-label="copy-value"
                   size="xs"
-                  onClick={() => {
-                    navigator.clipboard.writeText(values[name]);
-                    onCopy && onCopy();
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(values[name]);
+                      onCopy && onCopy();
+                    } catch (e) {
+                      onCopyError && onCopyError();
+                    }
                   }}
                   {...fieldStyles.button}
                 />
@@ -105,7 +119,19 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
           <InputRightAddon
             children={
               <IconButton
-                icon={show ? <UnlockIcon /> : <LockIcon />}
+                icon={
+                  show ? (
+                    toggleIcon === 'eye' ? (
+                      <ViewIcon />
+                    ) : (
+                      <UnlockIcon />
+                    )
+                  ) : toggleIcon === 'eye' ? (
+                    <ViewOffIcon />
+                  ) : (
+                    <LockIcon />
+                  )
+                }
                 aria-label="unlock-field"
                 size="xs"
                 onClick={() => {

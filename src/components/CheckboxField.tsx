@@ -1,7 +1,6 @@
 import React, { FC, useContext, useMemo } from 'react';
 import {
   FormControl,
-  FormLabel,
   FormHelperText,
   FormErrorMessage,
   Checkbox,
@@ -14,6 +13,7 @@ import { FieldProps, CheckboxFieldSchema, CheckboxFieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
+import LabelElement from './elements/Label';
 
 export const checkboxFieldStyles: CheckboxFieldStyles = {
   checkboxGroup: {
@@ -30,7 +30,9 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     helperText,
+    tooltip,
     isRequired,
     shouldDisplay,
     styles = {},
@@ -66,11 +68,13 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
         {...fieldStyles.control}
         isReadOnly={isReadOnly}
       >
-        {Boolean(label) && (
-          <FormLabel htmlFor={name} {...fieldStyles.label}>
-            {label}
-          </FormLabel>
-        )}
+        <LabelElement
+          label={label}
+          labelAddon={labelAddon}
+          name={name}
+          fieldStyles={fieldStyles}
+          tooltip={tooltip}
+        />
         <Stack {...fieldStyles.checkboxGroup}>
           {field.checkboxes.map((checkbox) => (
             <Checkbox

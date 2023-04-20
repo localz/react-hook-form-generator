@@ -21,6 +21,7 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     helperText,
     isRequired,
     shouldDisplay,
@@ -64,6 +65,7 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
       >
         <LabelElement
           label={label}
+          labelAddon={labelAddon}
           name={name}
           fieldStyles={fieldStyles}
           tooltip={tooltip}

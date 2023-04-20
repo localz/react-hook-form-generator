@@ -79,6 +79,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     helperText,
     isRequired,
     shouldDisplay,
@@ -175,6 +176,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
               <Flex>
                 <LabelElement
                   label={label}
+                  labelAddon={labelAddon}
                   name={name}
                   fieldStyles={fieldStyles}
                   tooltip={tooltip}

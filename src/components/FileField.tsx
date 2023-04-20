@@ -272,6 +272,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     helperText,
     isRequired,
     shouldDisplay,
@@ -323,6 +324,7 @@ const FileField: FC<FieldProps<FileFieldSchema>> = ({
       >
         <LabelElement
           label={label}
+          labelAddon={labelAddon}
           name={name}
           fieldStyles={fieldStyles}
           tooltip={tooltip}
