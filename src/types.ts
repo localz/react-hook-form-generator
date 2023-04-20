@@ -391,6 +391,7 @@ export interface SecretFieldSchema
   copyToClipboard?: boolean;
   onCopy?: () => void;
   onCopyError?: () => void;
+  toggleIcon?: 'lock' | 'eye';
 }
 
 export interface FormStyles {
