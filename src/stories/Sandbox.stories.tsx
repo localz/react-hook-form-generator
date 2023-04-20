@@ -131,6 +131,7 @@ Sandbox.args = {
   schema: {
     secret: {
       type: 'secret',
+      toggleIcon: 'eye',
       label: 'Password',
       clearOriginalValue: true,
       copyToClipboard: true,
