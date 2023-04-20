@@ -2,7 +2,6 @@ import React, { FC, useContext, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import {
   FormControl,
-  FormLabel,
   FormErrorMessage,
   Textarea,
   FormHelperText,
@@ -13,6 +12,7 @@ import { FieldProps, FieldStyles, TextAreaFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
+import LabelElement from './elements/Label';
 
 export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
   name,
@@ -22,8 +22,10 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     placeholder,
     helperText,
+    tooltip,
     isRequired,
     shouldDisplay,
     styles = {},
@@ -60,11 +62,13 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
         {...fieldStyles.control}
         isReadOnly={isReadOnly}
       >
-        {Boolean(label) && (
-          <FormLabel htmlFor={name} {...fieldStyles.label}>
-            {label}
-          </FormLabel>
-        )}
+        <LabelElement
+          label={label}
+          labelAddon={labelAddon}
+          name={name}
+          fieldStyles={fieldStyles}
+          tooltip={tooltip}
+        />
         <Textarea
           placeholder={placeholder}
           {...register(name)}

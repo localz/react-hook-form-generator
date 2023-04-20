@@ -31,6 +31,7 @@ export const HeadingField: FC<FieldProps<HeadingFieldSchema>> = ({
     divideAfter,
     copyToClipboard,
     onCopy,
+    onCopyError,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -77,9 +78,13 @@ export const HeadingField: FC<FieldProps<HeadingFieldSchema>> = ({
               aria-label="copy-value"
               size="xs"
               marginLeft={0}
-              onClick={() => {
-                navigator.clipboard.writeText(values[name]);
-                onCopy && onCopy();
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(values[name]);
+                  onCopy && onCopy();
+                } catch (e) {
+                  onCopyError && onCopyError();
+                }
               }}
               {...fieldStyles.button}
             />

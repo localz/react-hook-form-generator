@@ -32,6 +32,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     placeholder,
     htmlInputType,
     helperText,
@@ -48,6 +49,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     readOnly,
     copyToClipboard,
     onCopy,
+    onCopyError,
     inputValidation,
     variant,
   } = field;
@@ -102,6 +104,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
       >
         <LabelElement
           label={label}
+          labelAddon={labelAddon}
           name={name}
           fieldStyles={fieldStyles}
           tooltip={tooltip}
@@ -152,9 +155,13 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
                     icon={<CopyIcon />}
                     aria-label="copy-value"
                     size="xs"
-                    onClick={() => {
-                      navigator.clipboard.writeText(values[name]);
-                      onCopy && onCopy();
+                    onClick={async () => {
+                      try {
+                        await navigator.clipboard.writeText(values[name]);
+                        onCopy && onCopy();
+                      } catch (e) {
+                        onCopyError && onCopyError();
+                      }
                     }}
                     {...fieldStyles.button}
                   />

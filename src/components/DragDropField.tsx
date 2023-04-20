@@ -1,17 +1,14 @@
 import React, { FC, useMemo, useContext } from 'react';
 import {
   FormControl,
-  FormLabel,
   Flex,
   Box,
   Stack,
   FormHelperText,
   FormErrorMessage,
   Divider,
-  Tooltip,
   Text,
 } from '@chakra-ui/react';
-import { InfoIcon } from '@chakra-ui/icons';
 import {
   useFormContext,
   useFieldArray,
@@ -37,6 +34,7 @@ import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { renderField } from './Containers';
 import DragDropIcon from './elements/DragDropIcon';
+import LabelElement from './elements/Label';
 
 export const dragDropFieldStyles: DragDropFieldStyles = {
   arrayContainer: {
@@ -152,6 +150,7 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     isRequired,
     optionField,
     optionToString,
@@ -247,16 +246,13 @@ export const DragDropField: FC<FieldProps<DragDropFieldSchema>> = ({
           {...dragDropStyles.control}
         >
           <Flex>
-            {Boolean(label) && (
-              <FormLabel htmlFor={name} {...dragDropStyles.label}>
-                {label}
-                {Boolean(tooltip) && (
-                  <Tooltip label={tooltip}>
-                    <InfoIcon ml="1" />
-                  </Tooltip>
-                )}
-              </FormLabel>
-            )}
+            <LabelElement
+              label={label}
+              labelAddon={labelAddon}
+              name={name}
+              fieldStyles={dragDropFieldStyles}
+              tooltip={tooltip}
+            />
           </Flex>
           <Flex
             flexDirection="row"

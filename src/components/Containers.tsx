@@ -55,6 +55,7 @@ import FileField from './FileField';
 import { DragDropField } from './DragDropField';
 import { HeadingField } from './HeadingField';
 import { SecretField } from './SecretField';
+import LabelElement from './elements/Label';
 
 export const renderField = (
   [name, field]: [string, Field],
@@ -238,6 +239,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     isRequired,
     isCollapsible,
     defaultIsOpen,
@@ -299,6 +301,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
           <Flex {...arrayStyles.toolbar}>
             {Boolean(label) && (
               <FormLabel htmlFor={name} {...arrayStyles.label}>
+                {labelAddon}
                 {label}
                 {!hideCount && <Box marginLeft="5px">({fields?.length})</Box>}
                 {Boolean(tooltip) && (
@@ -506,6 +509,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     isCollapsible,
     isRequired,
     helperText,
@@ -546,16 +550,13 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
         {...objectStyles.control}
       >
         <Flex {...objectStyles.toolbar}>
-          {Boolean(label) && (
-            <FormLabel htmlFor={name} {...objectStyles.label}>
-              {label}
-              {Boolean(tooltip) && (
-                <Tooltip label={tooltip}>
-                  <InfoIcon ml="1" />
-                </Tooltip>
-              )}
-            </FormLabel>
-          )}
+          <LabelElement
+            label={label}
+            labelAddon={labelAddon}
+            name={name}
+            fieldStyles={objectFieldStyles}
+            tooltip={tooltip}
+          />
           {isCollapsible && (
             <IconButton
               icon={isOpen ? <ViewOffIcon /> : <ViewIcon />}

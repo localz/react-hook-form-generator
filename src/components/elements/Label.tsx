@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { InfoIcon } from '@chakra-ui/icons';
 import { Flex, FormLabel, Tooltip } from '@chakra-ui/react';
 import { FieldStyles, ArrayFieldStyles, ObjectFieldStyles } from '../../types';
@@ -8,11 +8,13 @@ function LabelElement({
   tooltip,
   fieldStyles,
   name,
+  labelAddon,
 }: {
   label?: string;
   tooltip?: string;
   fieldStyles: FieldStyles | ArrayFieldStyles | ObjectFieldStyles;
   name: string;
+  labelAddon?: ReactNode;
 }) {
   if (!label) {
     return null;
@@ -26,6 +28,7 @@ function LabelElement({
         htmlFor={name}
         {...fieldStyles.label}
       >
+        {labelAddon}
         {label}
         {Boolean(tooltip) && (
           <Tooltip label={tooltip}>

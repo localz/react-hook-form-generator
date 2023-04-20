@@ -10,7 +10,6 @@ import ReactDatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import { useColorMode } from '@chakra-ui/react';
 import {
   FormControl,
-  FormLabel,
   FormHelperText,
   FormErrorMessage,
   Divider,
@@ -23,6 +22,7 @@ import { Ctx } from './Ctx';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './styles/datepicker.css';
+import LabelElement from './elements/Label';
 
 const customDateInput = (
   {
@@ -130,7 +130,9 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     helperText,
+    tooltip,
     isRequired,
     shouldDisplay,
     styles = {},
@@ -174,11 +176,13 @@ export const DateField: FC<FieldProps<DateFieldSchema>> = ({
         {...fieldStyles.control}
         isReadOnly={isReadOnly}
       >
-        {Boolean(label) && (
-          <FormLabel htmlFor={name} {...fieldStyles.label}>
-            {label}
-          </FormLabel>
-        )}
+        <LabelElement
+          label={label}
+          labelAddon={labelAddon}
+          name={name}
+          fieldStyles={fieldStyles}
+          tooltip={tooltip}
+        />
         <DatePicker
           selectedDate={values[name] || defaultValue}
           onChange={(value: Date | null) => {

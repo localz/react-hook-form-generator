@@ -25,6 +25,7 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
 }) => {
   const {
     label,
+    labelAddon,
     isRequired,
     placeholder,
     defaultValue,
@@ -38,6 +39,7 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
     clearOriginalValue,
     copyToClipboard,
     onCopy,
+    onCopyError,
   } = field;
 
   const { isReadOnly } = useContext(Ctx);
@@ -70,6 +72,7 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
       >
         <LabelElement
           label={label}
+          labelAddon={labelAddon}
           name={name}
           fieldStyles={fieldStyles}
           tooltip={tooltip}
@@ -93,9 +96,13 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
                   icon={<CopyIcon />}
                   aria-label="copy-value"
                   size="xs"
-                  onClick={() => {
-                    navigator.clipboard.writeText(values[name]);
-                    onCopy && onCopy();
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(values[name]);
+                      onCopy && onCopy();
+                    } catch (e) {
+                      onCopyError && onCopyError();
+                    }
                   }}
                   {...fieldStyles.button}
                 />
