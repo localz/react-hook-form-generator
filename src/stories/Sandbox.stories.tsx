@@ -57,7 +57,7 @@ Sandbox.args = {
   title: 'Sandbox',
   helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
-    alert(JSON.stringify(values['nestedField'], null, 2));
+    alert(JSON.stringify(values, null, 2));
   },
   buttons: {
     submit: {
@@ -131,6 +131,7 @@ Sandbox.args = {
   schema: {
     secret: {
       type: 'secret',
+      toggleIcon: 'eye',
       label: 'Password',
       clearOriginalValue: true,
       copyToClipboard: true,

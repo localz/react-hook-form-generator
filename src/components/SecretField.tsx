@@ -122,12 +122,12 @@ export const SecretField: FC<FieldProps<SecretFieldSchema>> = ({
                 icon={
                   show ? (
                     toggleIcon === 'eye' ? (
-                      <ViewIcon />
+                      <ViewOffIcon />
                     ) : (
                       <UnlockIcon />
                     )
                   ) : toggleIcon === 'eye' ? (
-                    <ViewOffIcon />
+                    <ViewIcon />
                   ) : (
                     <LockIcon />
                   )
