@@ -368,6 +368,7 @@ export interface SelectFieldSchemaWithOptions
     > {
   type: 'select';
   selectKey?: keyof SelectOptions;
+  renderAfter?: (values: any) => ReactNode;
   isMulti?: boolean;
 }
 
