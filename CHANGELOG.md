@@ -1,5 +1,13 @@
 
 
+## [1.2.0](https://github.com/localz/react-hook-form-generator/compare/v1.1.5...v1.2.0) (2023-04-27)
+
+
+### Features
+
+* dont reset by default ([cc65a9c](https://github.com/localz/react-hook-form-generator/commit/cc65a9c044871ded76f5697048c5daafda164a48))
+* reset on submit ([a8430d3](https://github.com/localz/react-hook-form-generator/commit/a8430d368b02f69f904fa09b64cd8506f66f9c4d))
+
 ### [1.1.1](https://github.com/localz/react-hook-form-generator/compare/v1.1.0...v1.1.1) (2023-03-23)
 
 
