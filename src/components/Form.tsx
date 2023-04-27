@@ -392,7 +392,7 @@ export function useFormMethods<T = Record<string, any>>({
   formatSelectResults = false,
   formatSelectDefaultValues = false,
   debug = false,
-  resetOnSubmit = true,
+  resetOnSubmit = false,
 }: FormProps) {
   const getOptions = useCallback(() => {
     if (!formOptions) {
