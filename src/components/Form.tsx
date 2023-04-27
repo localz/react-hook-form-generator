@@ -80,6 +80,7 @@ export interface FormProps {
   formatSelectResults?: boolean;
   formatSelectDefaultValues?: boolean;
   debug?: boolean;
+  resetOnSubmit?: boolean;
 }
 
 const defaultStyles: FormStyles = {
@@ -377,7 +378,7 @@ export function Form({
   });
 }
 
-export function useFormMethods({
+export function useFormMethods<T = Record<string, any>>({
   title,
   helperText,
   schema,
@@ -391,6 +392,7 @@ export function useFormMethods({
   formatSelectResults = false,
   formatSelectDefaultValues = false,
   debug = false,
+  resetOnSubmit = true,
 }: FormProps) {
   const getOptions = useCallback(() => {
     if (!formOptions) {
@@ -413,15 +415,23 @@ export function useFormMethods({
 
   const form = useForm(getOptions());
 
+  const values = useWatch({ control: form.control }) as T;
+
   if (debug) {
+    console.table(values);
     console.table(form.formState.errors);
   }
-
-  const values = useWatch({ control: form.control });
 
   const baseStyles = useMemo(() => {
     return overwriteDefaultStyles ? styles : merge(defaultStyles, styles);
   }, [styles, overwriteDefaultStyles]);
+
+  const handleSubmitOverride = resetOnSubmit
+    ? (values: T) => {
+        form.reset();
+        return handleSubmit(values);
+      }
+    : handleSubmit;
 
   return {
     formMethods: form,
@@ -431,7 +441,7 @@ export function useFormMethods({
       baseStyles,
       form,
       formatSelectResults,
-      handleSubmit,
+      handleSubmit: handleSubmitOverride,
       schema,
       title,
       helperText,
