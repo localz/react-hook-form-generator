@@ -348,7 +348,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    {fields.map((item, i) => {
+                    {fields?.map((item, i) => {
                       const { shouldDisplay } = itemField as FieldSchema;
                       if (
                         shouldDisplay &&
@@ -420,7 +420,7 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
             {!draggable && (
               <Collapse in={isOpen} style={{ overflow: 'visible' }}>
                 <Stack {...arrayStyles.arrayContainer}>
-                  {fields.map((item, i) => {
+                  {fields?.map((item, i) => {
                     const { shouldDisplay } = itemField as FieldSchema;
                     if (
                       shouldDisplay &&
@@ -569,7 +569,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
         </Flex>
         <Collapse in={isOpen} style={{ overflow: 'visible' }}>
           <Stack {...objectStyles.objectContainer}>
-            {Object.entries(field.properties).map(
+            {Object.entries(field.properties)?.map(
               ([fieldName, objectField], i) => {
                 const { shouldDisplay } = objectField as FieldSchema;
                 if (

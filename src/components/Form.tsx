@@ -28,8 +28,15 @@ import {
   UseFormReturn,
   FieldValues,
 } from 'react-hook-form';
-import { isEmpty, merge, omit } from 'lodash';
-import { FormStyles, Field, Schema, SelectOptions } from '../types';
+import { isEmpty, merge, omit, cloneDeep } from 'lodash';
+import {
+  FormStyles,
+  Field,
+  Schema,
+  SelectOptions,
+  ArrayFieldSchema,
+  ObjectFieldSchema,
+} from '../types';
 import { StyleCtx } from '../hooks/useStyles';
 import { TextField } from './TextField';
 import { TextAreaField } from './TextAreaField';
@@ -317,6 +324,45 @@ const renderForm = ({
   );
 };
 
+function formatDefaultValues(defaultValues: any, schema: Schema) {
+  function replaceFalsyArrays(values: { [x: string]: any }, schema: Schema) {
+    if (values && typeof values === 'object') {
+      const toOmit: string[] = [];
+
+      Object.entries(values).forEach(([key, value]) => {
+        if (schema[key]?.type === 'array') {
+          const arrayItemField = (schema[key] as ArrayFieldSchema).itemField;
+          if (!value) {
+            // Omit the property with the falsy value
+            toOmit.push(key);
+          } else if (arrayItemField.type === 'object') {
+            // There may be more undefined arrays nested within this array of objects, recurse further
+            values[key] = value.map((currValue: any) =>
+              replaceFalsyArrays(currValue, arrayItemField.properties)
+            );
+          } else {
+            // There are no more nested arrays in this path
+            values[key] = value;
+          }
+        } else if (schema[key]?.type === 'object') {
+          values[key] = replaceFalsyArrays(
+            value,
+            (schema[key] as ObjectFieldSchema).properties
+          );
+        } else {
+          values[key] = value;
+        }
+      });
+
+      return omit(values, toOmit);
+    }
+    return values;
+  }
+  const initialClone = cloneDeep(defaultValues);
+  //return cloneDeepWith(initialClone, omitFn);
+  return replaceFalsyArrays(initialClone, schema);
+}
+
 export function Form({
   title,
   helperText,
@@ -337,15 +383,23 @@ export function Form({
       return {};
     }
 
-    if (formOptions.defaultValues && formatSelectDefaultValues) {
-      return {
-        ...formOptions,
-        defaultValues: formatSelectInput({
-          selectOptions: selectOptions || {},
-          defaultValues: formOptions.defaultValues,
-          schema,
-        }),
-      };
+    if (formOptions.defaultValues) {
+      const formattedDefaultValues = formatDefaultValues(
+        formOptions.defaultValues,
+        schema
+      );
+
+      if (formatSelectDefaultValues) {
+        return {
+          ...formOptions,
+          defaultValues: formatSelectInput({
+            selectOptions: selectOptions || {},
+            defaultValues: formattedDefaultValues,
+            schema,
+          }),
+        };
+      }
+      return { ...formOptions, defaultValues: formattedDefaultValues };
     }
 
     return formOptions;
