@@ -1,5 +1,12 @@
 
 
+## [1.3.0](https://github.com/localz/react-hook-form-generator/compare/v1.2.0...v1.3.0) (2023-04-27)
+
+
+### Features
+
+* render after select ([400321f](https://github.com/localz/react-hook-form-generator/commit/400321f3275a556e0e40c59e56fea1f6488a28a9))
+
 ## [1.2.0](https://github.com/localz/react-hook-form-generator/compare/v1.1.5...v1.2.0) (2023-04-27)
 
 
