@@ -35,6 +35,7 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
     disabled,
     readOnly,
     generateOptions,
+    renderAfter,
     ...selectProps
   } = field;
 
@@ -126,6 +127,9 @@ export const SelectField: FC<FieldProps<SelectFieldSchema>> = ({
           {errorMessage}
         </FormErrorMessage>
       </FormControl>
+
+      {renderAfter && renderAfter(values)}
+
       {divideAfter && <Divider mt="8" />}
     </>
   );

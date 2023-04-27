@@ -72,7 +72,6 @@ Select.args = {
       fromContext: 'action-2',
     },
   },
-
   schema: {
     input: {
       type: 'object',
@@ -83,6 +82,9 @@ Select.args = {
           label: 'Nested select',
           type: 'select',
           selectKey: 'actionOptions',
+          renderAfter: () => {
+            return <a>Some link</a>;
+          },
         },
       },
     },
@@ -91,6 +93,9 @@ Select.args = {
       label: 'From context',
       type: 'select',
       selectKey: 'actionOptions',
+      renderAfter: () => {
+        return <a>Some link</a>;
+      },
     },
     multiSelect: {
       placeholder: 'Select option...',
