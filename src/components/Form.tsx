@@ -327,12 +327,14 @@ const renderForm = ({
 function formatDefaultValues(defaultValues: any, schema: Schema) {
   function replaceFalsyArrays(values: { [x: string]: any }, schema: Schema) {
     if (values && typeof values === 'object') {
+      const toOmit: string[] = [];
+
       Object.entries(values).forEach(([key, value]) => {
         if (schema[key]?.type === 'array') {
           const arrayItemField = (schema[key] as ArrayFieldSchema).itemField;
           if (!value) {
-            // Replace the falsy value with an empty array to prevent errors
-            values[key] = [];
+            // Omit the property with the falsy value
+            toOmit.push(key);
           } else if (arrayItemField.type === 'object') {
             // There may be more undefined arrays nested within this array of objects, recurse further
             values[key] = value.map((currValue: any) =>
@@ -351,6 +353,8 @@ function formatDefaultValues(defaultValues: any, schema: Schema) {
           values[key] = value;
         }
       });
+
+      return omit(values, toOmit);
     }
     return values;
   }
