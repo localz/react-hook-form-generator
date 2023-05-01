@@ -26,6 +26,7 @@ import {
   FormProvider,
   UseFormProps,
   UseFormReturn,
+  UseFormReset,
   FieldValues,
 } from 'react-hook-form';
 import { isEmpty, merge, omit, cloneDeep } from 'lodash';
@@ -61,7 +62,10 @@ import { formatSelectInput, formatSelectOutput } from '../utils';
 import { SecretField } from './SecretField';
 
 type CustomButton = {
-  render: (values: { [x: string]: any }) => ReactNode;
+  render: (
+    values: { [x: string]: any },
+    reset: UseFormReset<FieldValues>
+  ) => ReactNode;
 };
 
 export interface FormProps {
@@ -298,7 +302,7 @@ const renderForm = ({
               {...baseStyles.form?.buttonGroup}
             >
               {buttons?.customButtons?.map(({ render }: CustomButton) =>
-                render(values)
+                render(values, form.reset)
               )}
               {buttons?.reset?.show && (
                 <Button type="reset" {...baseStyles.form?.resetButton}>
