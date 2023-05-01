@@ -1,5 +1,12 @@
 
 
+### [1.3.2](https://github.com/localz/react-hook-form-generator/compare/v1.3.1...v1.3.2) (2023-05-01)
+
+
+### Bug Fixes
+
+* move select css ([c26875a](https://github.com/localz/react-hook-form-generator/commit/c26875a1f5ac9b742fa398ec59a4edaa4824ee2b))
+
 ## [1.3.0](https://github.com/localz/react-hook-form-generator/compare/v1.2.0...v1.3.0) (2023-04-27)
 
 

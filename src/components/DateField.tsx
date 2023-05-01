@@ -19,8 +19,7 @@ import { FieldProps, FieldStyles, DateFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
-
-import 'react-datepicker/dist/react-datepicker.css';
+import './styles/react-datepicker.css';
 import './styles/datepicker.css';
 import LabelElement from './elements/Label';
 
