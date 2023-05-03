@@ -1,5 +1,12 @@
 
 
+### [1.3.4](https://github.com/localz/react-hook-form-generator/compare/v1.3.3...v1.3.4) (2023-05-03)
+
+
+### Bug Fixes
+
+* scrollBeyondLastLine false ([cf9b896](https://github.com/localz/react-hook-form-generator/commit/cf9b896e17602a59f624e316acedb9230a6026cd))
+
 ### [1.3.2](https://github.com/localz/react-hook-form-generator/compare/v1.3.1...v1.3.2) (2023-05-01)
 
 
