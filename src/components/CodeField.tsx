@@ -63,7 +63,7 @@ function getHeight({
     lines = JSON.stringify(value).split('\n').length;
   }
 
-  const dynamicHeight = `${Math.max(lines * 22, 200)}px`;
+  const dynamicHeight = `${Math.max(lines * 10, 200)}px`;
 
   if (isCollapsible) {
     return isOpen ? dynamicHeight : 'auto';
@@ -244,6 +244,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                       fixedOverflowWidgets: false,
                       fontSize: 16,
                       fontFamily: theme?.fonts?.body,
+                      scrollBeyondLastLine: false,
                     }}
                     onChange={(value) => {
                       setValue(name, value);
