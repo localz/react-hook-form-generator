@@ -4,5 +4,5 @@ services:
     build:
       dockerfile: alpine.Dockerfile
       args:
-        - IMAGE_TAG=node-14-alpine
+        - IMAGE_TAG=node-18-alpine
     command: yarn test

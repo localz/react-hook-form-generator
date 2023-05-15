@@ -1,8 +1,8 @@
 env:
-  NODE_VERSION: '14'
+  NODE_VERSION: '18'
 
 steps:
-  - label: ':hammer: Test - Node 14 Alpine'
+  - label: ':hammer: Test - Node 18 Alpine'
     plugins:
       - docker-login#v2.0.1:
           username: localzservice
@@ -11,9 +11,9 @@ steps:
           run: react-hook-form-generator
           config:
             - docker-compose.yml
-            - docker-compose.node-v14-alpine.yml
+            - docker-compose.node-v18-alpine.yml
           shell: false
-
+          
   - wait
 
   - label: ':cloud: Publish'
