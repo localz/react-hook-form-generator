@@ -43,6 +43,9 @@ Code.args = {
       label: 'SMS input',
       type: 'code',
       language: 'sms',
+      editorProps: {
+        wordWrap: 'on',
+      },
     },
   },
 };

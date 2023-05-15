@@ -94,6 +94,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
     language,
     beautifyButton = true,
     beautifyButtonText = 'Beautify',
+    editorProps = {},
   } = field;
   const editorRef = useRef<Parameters<OnMount>[0]>();
   const chakraTheme = useTheme();
@@ -249,7 +250,6 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                       contextmenu: false,
                       minimap: { enabled: false },
                       readOnly: isReadOnly || disabled || readOnly,
-                      autoClosingBrackets: 'never',
                       autoClosingOvertype: 'always',
                       automaticLayout: true,
                       tabCompletion: 'on',
@@ -257,6 +257,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                       fontSize: 16,
                       fontFamily: chakraTheme?.fonts?.body,
                       scrollBeyondLastLine: false,
+                      ...editorProps,
                     }}
                     onChange={(value) => {
                       setValue(name, value);

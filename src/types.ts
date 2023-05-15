@@ -23,6 +23,7 @@ import {
 } from 'chakra-react-select';
 import { ReactDatePickerProps } from 'react-datepicker';
 import { FileError, Accept } from 'react-dropzone';
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 
 export type SelectOptions = Record<
   string,
@@ -143,6 +144,7 @@ export interface CodeFieldSchema extends FieldSchema, FormController {
   isCollapsible?: boolean;
   defaultIsOpen?: boolean;
   height?: string;
+  editorProps?: editor.IStandaloneEditorConstructionOptions;
 }
 
 export interface NumberFieldSchema extends FieldSchema, FormController {
