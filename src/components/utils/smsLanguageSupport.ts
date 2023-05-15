@@ -210,7 +210,7 @@ export function registerSmsLanguageSupport({
       });
 
       return {
-        suggestions: suggestions,
+        suggestions,
       };
     },
   });
