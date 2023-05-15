@@ -1,9 +1,7 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
-import { ChakraProvider, Circle, Flex, Text } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { Form } from '..';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 
 /*
  * NOTE: You can't bind args for this story because it passes react context as an arg
@@ -24,22 +22,10 @@ const Template: ComponentStory<typeof Form> = (args) => (
   </ChakraProvider>
 );
 
-const validationSchema = z.object({
-  withDefaultValue: z.object(
-    {
-      value: z.enum(['RS256', 'HS256']),
-      label: z.enum(['RS256', 'HS256']),
-    },
-    {
-      required_error: 'With default value is required',
-    }
-  ),
-});
-
 export const Code = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Code.args = {
-  title: 'Select',
+  title: 'Code field',
   helperText: 'Some text that explains some stuff',
   handleSubmit: (values) => {
     alert(JSON.stringify(values, null, 2));
@@ -50,32 +36,11 @@ Code.args = {
     },
   },
   isReadOnly: false,
-  selectOptions: {
-    nextActions: {
-      isLoading: false,
-      options: [
-        { value: 'action-1', label: 'Action one' },
-        { value: 'action-2', label: 'Action two' },
-      ],
-    },
-    actionOptions: {
-      isLoading: false,
-      options: [
-        { value: 'action-1', label: 'Action one' },
-        { value: 'action-2', label: 'Action two' },
-      ],
-    },
-  },
-  formOptions: {
-    resolver: zodResolver(validationSchema),
-    defaultValues: {
-      fromContext: 'action-2',
-    },
-  },
+
   schema: {
-    codeOne: {
+    smsInput: {
       placeholder: '',
-      label: 'With autocomplete',
+      label: 'SMS input',
       type: 'code',
       language: 'sms',
     },
