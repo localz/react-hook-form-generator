@@ -1,5 +1,19 @@
 
 
+## [1.4.0](https://github.com/localz/react-hook-form-generator/compare/v1.3.4...v1.4.0) (2023-05-15)
+
+
+### Features
+
+* sms suggestions ([8305581](https://github.com/localz/react-hook-form-generator/commit/83055817e4bb0b6c729ddae4788b5404922dedca))
+
+
+### Bug Fixes
+
+* cleanup storybook ([828bf48](https://github.com/localz/react-hook-form-generator/commit/828bf487381403642683e786d54abf620c338101))
+* hook ([cfca478](https://github.com/localz/react-hook-form-generator/commit/cfca478bff3352a2d9a6d6a883308b7cba424e3a))
+* syntax ([4b4dcbd](https://github.com/localz/react-hook-form-generator/commit/4b4dcbde4b879689ea873bfd872311924c7e6a9e))
+
 ### [1.3.4](https://github.com/localz/react-hook-form-generator/compare/v1.3.3...v1.3.4) (2023-05-03)
 
 
