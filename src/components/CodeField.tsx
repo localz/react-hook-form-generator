@@ -15,17 +15,16 @@ import {
   Box,
   Tooltip,
 } from '@chakra-ui/react';
-import Editor, { OnMount } from '@monaco-editor/react';
-
+import Editor, { BeforeMount, OnMount } from '@monaco-editor/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import get from 'lodash.get';
 import { isString } from 'lodash';
-
 import LabelElement from './elements/Label';
 import { FieldProps, CodeFieldSchema, FieldStyles } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
+import { registerSmsLanguageSupport } from './utils/smsLanguageSupport';
 
 function getHeight({
   height,
@@ -99,9 +98,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
   const editorRef = useRef<Parameters<OnMount>[0]>();
 
   const fieldStyles = useStyles<FieldStyles>('codeField', styles);
-  const colorMode = useColorMode();
-
-  const theme = useTheme();
+  const { colorMode } = useColorMode();
 
   const { isReadOnly } = useContext(Ctx);
 
@@ -132,7 +129,13 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
     return null;
   }
 
-  const handleEditorDidMount: OnMount = async (editor, _) => {
+  const handleBeforeMount: BeforeMount = (monaco) => {
+    if (language === 'sms') {
+      registerSmsLanguageSupport({ monaco, colorMode });
+    }
+  };
+
+  const handleEditorDidMount: OnMount = async (editor) => {
     editorRef.current = editor;
 
     // need to use the setTimeout because its possible that this finishes executing before the default value is set
@@ -140,6 +143,18 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
       editor.getAction('editor.action.formatDocument').run();
     }, 300);
   };
+
+  const chakraTheme = useTheme();
+
+  function getEditorTheme() {
+    if (language === 'sms') {
+      return 'sms-theme';
+    }
+
+    return colorMode === 'light' ? 'light' : 'vs-dark';
+  }
+
+  const editorTheme = getEditorTheme();
 
   return (
     <div style={{ position: 'relative' }}>
@@ -221,10 +236,9 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                 <Box borderWidth="1px" borderRadius="lg" padding={'5px'}>
                   <Editor
                     onMount={handleEditorDidMount}
+                    beforeMount={handleBeforeMount}
                     defaultValue={getPlaceholder()}
-                    theme={
-                      colorMode.colorMode === 'light' ? 'light' : 'vs-dark'
-                    }
+                    theme={editorTheme}
                     height={getHeight({
                       height,
                       isCollapsible,
@@ -237,13 +251,13 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
                       contextmenu: false,
                       minimap: { enabled: false },
                       readOnly: isReadOnly || disabled || readOnly,
-                      autoClosingBrackets: 'always',
+                      autoClosingBrackets: 'never',
                       autoClosingOvertype: 'always',
                       automaticLayout: true,
                       tabCompletion: 'on',
                       fixedOverflowWidgets: false,
                       fontSize: 16,
-                      fontFamily: theme?.fonts?.body,
+                      fontFamily: chakraTheme?.fonts?.body,
                       scrollBeyondLastLine: false,
                     }}
                     onChange={(value) => {
