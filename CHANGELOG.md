@@ -1,5 +1,12 @@
 
 
+## [1.5.0](https://github.com/localz/react-hook-form-generator/compare/v1.4.0...v1.5.0) (2023-05-15)
+
+
+### Features
+
+* editor props ([c220850](https://github.com/localz/react-hook-form-generator/commit/c220850b75db207a97786e8a94e0ba1705e4d871))
+
 ## [1.4.0](https://github.com/localz/react-hook-form-generator/compare/v1.3.4...v1.4.0) (2023-05-15)
 
 
