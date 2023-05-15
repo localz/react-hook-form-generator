@@ -96,7 +96,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
     beautifyButtonText = 'Beautify',
   } = field;
   const editorRef = useRef<Parameters<OnMount>[0]>();
-
+  const chakraTheme = useTheme();
   const fieldStyles = useStyles<FieldStyles>('codeField', styles);
   const { colorMode } = useColorMode();
 
@@ -143,8 +143,6 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
       editor.getAction('editor.action.formatDocument').run();
     }, 300);
   };
-
-  const chakraTheme = useTheme();
 
   function getEditorTheme() {
     if (language === 'sms') {
