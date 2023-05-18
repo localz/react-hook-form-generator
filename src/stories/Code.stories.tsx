@@ -32,7 +32,7 @@ Code.args = {
   },
   formOptions: {
     defaultValues: {
-      smsInput: 'Wowie',
+      smsInput: 'This is an SMS',
     },
   },
   buttons: {
