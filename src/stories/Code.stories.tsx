@@ -30,6 +30,11 @@ Code.args = {
   handleSubmit: (values) => {
     alert(JSON.stringify(values, null, 2));
   },
+  formOptions: {
+    defaultValues: {
+      smsInput: 'Wowie',
+    },
+  },
   buttons: {
     submit: {
       text: 'Save',

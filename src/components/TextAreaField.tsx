@@ -7,6 +7,7 @@ import {
   FormHelperText,
   Divider,
 } from '@chakra-ui/react';
+import Autosize from 'react-textarea-autosize';
 
 import { FieldProps, FieldStyles, TextAreaFieldSchema } from '../types';
 import { useErrorMessage } from '../hooks/useErrorMessage';
@@ -32,6 +33,7 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
     divideAfter,
     disabled,
     readOnly,
+    autoResize,
   } = field;
 
   const fieldStyles = useStyles<FieldStyles>('textAreaField', styles);
@@ -75,6 +77,7 @@ export const TextAreaField: FC<FieldProps<TextAreaFieldSchema>> = ({
           defaultValue={defaultValue || ''}
           isDisabled={disabled}
           isReadOnly={isReadOnly || readOnly}
+          {...(autoResize && { as: Autosize })}
         />
         {Boolean(helperText) && (
           <FormHelperText {...fieldStyles.helperText}>

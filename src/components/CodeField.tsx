@@ -173,7 +173,7 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
               return JSON.stringify(value, null, 2);
             }
 
-            if (language === 'go') {
+            if (language === 'go' || language === 'sms') {
               return value;
             }
 
