@@ -134,6 +134,7 @@ export interface TextFieldSchema extends FieldSchema, FormController {
 
 export interface TextAreaFieldSchema extends FieldSchema, FormController {
   type: 'textArea';
+  autoResize?: boolean;
 }
 
 export type CodeLanguage = 'json' | 'html' | 'go' | 'sms';
