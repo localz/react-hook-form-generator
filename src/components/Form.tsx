@@ -18,6 +18,7 @@ import {
   AccordionButton,
   AccordionPanel,
   Flex,
+  useColorMode,
 } from '@chakra-ui/react';
 import { QuestionIcon } from '@chakra-ui/icons';
 import {
@@ -94,37 +95,41 @@ export interface FormProps {
   resetOnSubmit?: boolean;
 }
 
-const defaultStyles: FormStyles = {
-  form: {
-    container: {
-      padding: 4,
-    },
-    title: {
-      size: 'lg',
-      marginBottom: 4,
-    },
-    fieldSpacing: 6,
-    buttonGroup: {
-      marginTop: 4,
-    },
-    submitButton: {
-      size: 'sm',
-    },
-    resetButton: {
-      size: 'sm',
-    },
-    button: {
-      size: 'lg',
-      backgroundColor: 'transparent',
-      _hover: {
+const defaultStyles: (colorMode: string) => FormStyles = (
+  colorMode: string
+) => {
+  return {
+    form: {
+      container: {
+        padding: 4,
+      },
+      title: {
+        size: 'lg',
+        marginBottom: 4,
+      },
+      fieldSpacing: 6,
+      buttonGroup: {
+        marginTop: 4,
+      },
+      submitButton: {
+        size: 'sm',
+      },
+      resetButton: {
+        size: 'sm',
+      },
+      button: {
+        size: 'lg',
         backgroundColor: 'transparent',
+        _hover: {
+          backgroundColor: 'transparent',
+        },
       },
     },
-  },
-  arrayField: arrayFieldStyles,
-  objectField: objectFieldStyles,
-  checkboxField: checkboxFieldStyles,
-  dragDropField: dragDropFieldStyles,
+    arrayField: arrayFieldStyles(colorMode),
+    objectField: objectFieldStyles(colorMode),
+    checkboxField: checkboxFieldStyles,
+    dragDropField: dragDropFieldStyles,
+  };
 };
 
 const renderField = ([name, field]: [string, Field]) => {
@@ -382,6 +387,8 @@ export function Form({
   formatSelectDefaultValues = false,
   debug = false,
 }: FormProps) {
+  const { colorMode } = useColorMode();
+
   const getOptions = useCallback(() => {
     if (!formOptions) {
       return {};
@@ -418,7 +425,9 @@ export function Form({
   const values = useWatch({ control: form.control });
 
   const baseStyles = useMemo(() => {
-    return overwriteDefaultStyles ? styles : merge(defaultStyles, styles);
+    return overwriteDefaultStyles
+      ? styles
+      : merge(defaultStyles(colorMode), styles);
   }, [styles, overwriteDefaultStyles]);
 
   return renderForm({
@@ -452,6 +461,8 @@ export function useFormMethods<T = Record<string, any>>({
   debug = false,
   resetOnSubmit = false,
 }: FormProps) {
+  const { colorMode } = useColorMode();
+
   const getOptions = useCallback(() => {
     if (!formOptions) {
       return {};
@@ -481,7 +492,9 @@ export function useFormMethods<T = Record<string, any>>({
   }
 
   const baseStyles = useMemo(() => {
-    return overwriteDefaultStyles ? styles : merge(defaultStyles, styles);
+    return overwriteDefaultStyles
+      ? styles
+      : merge(defaultStyles(colorMode), styles);
   }, [styles, overwriteDefaultStyles]);
 
   const handleSubmitOverride = resetOnSubmit

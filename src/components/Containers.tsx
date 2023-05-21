@@ -13,6 +13,7 @@ import {
   FormErrorMessage,
   Divider,
   Tooltip,
+  useColorMode,
 } from '@chakra-ui/react';
 import {
   AddIcon,
@@ -163,53 +164,57 @@ export const renderField = (
   );
 };
 
-export const arrayFieldStyles: ArrayFieldStyles = {
-  arrayContainer: {
-    spacing: 4,
-    marginTop: 2,
-  },
-  label: {
-    padding: 0,
-    display: 'flex',
-  },
-  toolbar: {
-    alignItems: 'center',
-  },
-  buttonGroup: {
-    marginLeft: 'auto',
-  },
-  addButton: {
-    size: 'xs',
-  },
-  deleteButton: {
-    size: 'xs',
-    margin: 'auto',
-  },
-  clearButton: {
-    size: 'xs',
-  },
-  dragButton: {
-    size: 'xs',
-    margin: 'auto',
-    marginLeft: '0.5rem',
-  },
-  collapseButton: {
-    size: 'xs',
-  },
-  itemContainer: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 2.5rem',
-    paddingLeft: 2,
-    paddingBottom: 2,
-    paddingTop: 1,
-    border: '1px solid',
-    borderRadius: 4,
-    borderColor: 'gray.200',
-    backgroundColor: 'gray.50',
-  },
-  deleteItemContainer: {
-    display: 'flex',
-  },
+export const arrayFieldStyles: (colorMode: string) => ArrayFieldStyles = (
+  colorMode: string
+) => {
+  return {
+    arrayContainer: {
+      spacing: 4,
+      marginTop: 2,
+    },
+    label: {
+      padding: 0,
+      display: 'flex',
+    },
+    toolbar: {
+      alignItems: 'center',
+    },
+    buttonGroup: {
+      marginLeft: 'auto',
+    },
+    addButton: {
+      size: 'xs',
+    },
+    deleteButton: {
+      size: 'xs',
+      margin: 'auto',
+    },
+    clearButton: {
+      size: 'xs',
+    },
+    dragButton: {
+      size: 'xs',
+      margin: 'auto',
+      marginLeft: '0.5rem',
+    },
+    collapseButton: {
+      size: 'xs',
+    },
+    itemContainer: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 2.5rem',
+      paddingLeft: 2,
+      paddingBottom: 2,
+      paddingTop: 1,
+      border: '1px solid',
+      borderRadius: 4,
+      borderColor: 'gray.200',
+      backgroundColor: colorMode === 'light' ? 'gray.50' : 'blackAlpha.300',
+    },
+    deleteItemContainer: {
+      display: 'flex',
+    },
+  };
 };
 
 const emptyFields = {
@@ -477,26 +482,30 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   );
 };
 
-export const objectFieldStyles: ObjectFieldStyles = {
-  objectContainer: {
-    spacing: 4,
-    borderWidth: 1,
-    borderColor: 'gray.200',
-    padding: 2,
-    borderRadius: 4,
-    marginTop: 2,
-    backgroundColor: 'gray.50',
-  },
-  label: {
-    padding: 0,
-  },
-  toolbar: {
-    alignItems: 'center',
-  },
-  collapseButton: {
-    size: 'xs',
-    marginLeft: 'auto',
-  },
+export const objectFieldStyles: (colorMode: string) => ObjectFieldStyles = (
+  colorMode: string
+) => {
+  return {
+    objectContainer: {
+      spacing: 4,
+      borderWidth: 1,
+      borderColor: 'gray.200',
+      padding: 2,
+      borderRadius: 4,
+      marginTop: 2,
+      backgroundColor: colorMode === 'light' ? 'gray.50' : 'blackAlpha.300',
+    },
+    label: {
+      padding: 0,
+    },
+    toolbar: {
+      alignItems: 'center',
+    },
+    collapseButton: {
+      size: 'xs',
+      marginLeft: 'auto',
+    },
+  };
 };
 
 export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
@@ -521,6 +530,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
     readOnly,
   } = field;
 
+  const { colorMode } = useColorMode();
   const { control } = useFormContext();
   const { isReadOnly } = useContext(Ctx);
 
@@ -554,7 +564,7 @@ export const ObjectField: FC<FieldProps<ObjectFieldSchema>> = ({
             label={label}
             labelAddon={labelAddon}
             name={name}
-            fieldStyles={objectFieldStyles}
+            fieldStyles={objectFieldStyles(colorMode)}
             tooltip={tooltip}
           />
           {isCollapsible && (
