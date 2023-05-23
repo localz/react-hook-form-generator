@@ -277,7 +277,14 @@ export const ArrayField: FC<FieldProps<ArrayFieldSchema>> = ({
   const errorMessage = useErrorMessage(name, label);
 
   const addItem = () => {
-    append(emptyFields[itemField.type]);
+    const item = emptyFields[itemField.type];
+
+    if (!item) {
+      console.error(`Invalid item type ${itemField.type}`);
+      return;
+    }
+
+    append(item);
     onOpen();
   };
 

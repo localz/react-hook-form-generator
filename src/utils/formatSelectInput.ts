@@ -42,7 +42,7 @@ function formatSelect({
   }
 
   if (Array.isArray(value)) {
-    return value.map((v) => {
+    return (value || []).map((v) => {
       if (typeof v === 'string') {
         return options.find((o) => o.value === v);
       }
@@ -93,7 +93,7 @@ export function formatSelectInput({
     }
 
     if (prop.type === 'array' && prop.itemField.type === 'select') {
-      acc[name] = value.map((value: any) => {
+      acc[name] = (value || []).map((value: any) => {
         const options = getOptions({
           field: prop.itemField,
           selectOptions,
@@ -109,7 +109,7 @@ export function formatSelectInput({
 
     if (prop.type === 'array' && prop.itemField.type === 'object') {
       if (Array.isArray(value)) {
-        acc[name] = value.map((v) => {
+        acc[name] = (value || []).map((v) => {
           return formatSelectInput({
             defaultValues: v,
             schema: (prop.itemField as ObjectFieldSchema).properties,

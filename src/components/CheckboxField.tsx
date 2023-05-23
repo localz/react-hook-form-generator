@@ -76,7 +76,7 @@ export const CheckboxField: FC<FieldProps<CheckboxFieldSchema>> = ({
           tooltip={tooltip}
         />
         <Stack {...fieldStyles.checkboxGroup}>
-          {field.checkboxes.map((checkbox) => (
+          {(field.checkboxes || []).map((checkbox) => (
             <Checkbox
               isDisabled={disabled}
               isReadOnly={isReadOnly || readOnly}

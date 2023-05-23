@@ -52,7 +52,7 @@ export function formatSelectOutput({
 
     if (prop.type === 'array' && prop.itemField.type === 'object') {
       if (Array.isArray(value)) {
-        acc[name] = value.map((v) => {
+        acc[name] = (value || []).map((v) => {
           return formatSelectOutput({
             values: v,
             schema: (prop.itemField as ObjectFieldSchema).properties,
