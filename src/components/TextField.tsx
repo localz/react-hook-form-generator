@@ -161,7 +161,11 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
                     size="xs"
                     onClick={async () => {
                       try {
-                        await navigator.clipboard.writeText(values[name]);
+                        await navigator.clipboard.writeText(
+                          deriveValue
+                            ? deriveValue(values, index, nestedIndex)
+                            : values[name]
+                        );
                         onCopy && onCopy();
                       } catch (e) {
                         onCopyError && onCopyError();
