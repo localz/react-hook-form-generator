@@ -91,6 +91,11 @@ export interface FieldSchema {
     index?: number | null,
     nestedIndex?: number[]
   ) => boolean | undefined;
+  deriveValue?: (
+    values?: any,
+    index?: number | null,
+    nestedIndex?: number[]
+  ) => any;
   disabled?: boolean;
   readOnly?: boolean;
 }

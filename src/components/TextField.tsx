@@ -51,6 +51,7 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
     onCopy,
     onCopyError,
     inputValidation,
+    deriveValue,
     variant,
   } = field;
 
@@ -140,6 +141,9 @@ export const TextField: FC<FieldProps<TextFieldSchema>> = ({
               })}
               placeholder={placeholder}
               defaultValue={defaultValue || ''}
+              {...(deriveValue && {
+                value: deriveValue(values, index, nestedIndex),
+              })}
               {...fieldStyles.input}
               isDisabled={disabled}
               isReadOnly={isReadOnly || readOnly}

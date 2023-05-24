@@ -184,7 +184,6 @@ Sandbox.args = {
       label: 'Name',
       variant: 'unstyled',
       isRequired: true,
-      defaultValue: 'compare',
       divideAfter: true,
       copyToClipboard: true,
       inputValidation: {
@@ -193,6 +192,9 @@ Sandbox.args = {
         },
         loading: false,
         validationError: 'Name can only be less than 10 characters long',
+      },
+      deriveValue: (values) => {
+        return values.color;
       },
       renderAfter: (values) => {
         return (
