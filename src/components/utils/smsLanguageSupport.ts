@@ -193,7 +193,7 @@ export function registerSmsLanguageSupport({
     colors: {},
   });
 
-  monaco.languages.registerCompletionItemProvider('sms', {
+  return monaco.languages.registerCompletionItemProvider('sms', {
     provideCompletionItems: function(model, position) {
       const word = model.getWordUntilPosition(position);
 

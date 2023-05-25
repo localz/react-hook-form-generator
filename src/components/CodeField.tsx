@@ -1,4 +1,11 @@
-import React, { FC, useContext, useMemo, useEffect, useRef } from 'react';
+import React, {
+  FC,
+  useContext,
+  useMemo,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import {
   FormControl,
@@ -25,6 +32,7 @@ import { useErrorMessage } from '../hooks/useErrorMessage';
 import { useStyles } from '../hooks/useStyles';
 import { Ctx } from './Ctx';
 import { registerSmsLanguageSupport } from './utils/smsLanguageSupport';
+import { IDisposable } from 'monaco-editor';
 
 function getHeight({
   height,
@@ -101,6 +109,11 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
   const fieldStyles = useStyles<FieldStyles>('codeField', styles);
   const { colorMode } = useColorMode();
 
+  const [
+    disposeSmsSuggestions,
+    setDisposeSmsSuggestions,
+  ] = useState<IDisposable | null>(null);
+
   const { isReadOnly } = useContext(Ctx);
 
   const { isOpen, onToggle } = useDisclosure({
@@ -126,13 +139,24 @@ export const CodeField: FC<FieldProps<CodeFieldSchema>> = ({
     }
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (disposeSmsSuggestions) {
+        disposeSmsSuggestions.dispose();
+        editorRef.current && editorRef.current.dispose();
+      }
+    };
+  }, [disposeSmsSuggestions]);
+
   if (!isVisible) {
     return null;
   }
 
   const handleBeforeMount: BeforeMount = (monaco) => {
     if (language === 'sms') {
-      registerSmsLanguageSupport({ monaco, colorMode });
+      setDisposeSmsSuggestions(
+        registerSmsLanguageSupport({ monaco, colorMode })
+      );
     }
   };
 
