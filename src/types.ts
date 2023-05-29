@@ -24,6 +24,7 @@ import {
 import { ReactDatePickerProps } from 'react-datepicker';
 import { FileError, Accept } from 'react-dropzone';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
+import { FieldValues, UseFormReset, UseFormSetValue } from 'react-hook-form';
 
 export type SelectOptions = Record<
   string,
@@ -234,6 +235,16 @@ export interface SwitchFieldSchema
       | 'divideAfter'
     > {
   type: 'switch';
+  onEnable?: (
+    setValue: UseFormSetValue<FieldValues>,
+    reset: UseFormReset<FieldValues>,
+    values: any
+  ) => void;
+  onDisable?: (
+    setValue: UseFormSetValue<FieldValues>,
+    reset: UseFormReset<FieldValues>,
+    values: any
+  ) => void;
 }
 
 export interface CheckboxFieldSchema

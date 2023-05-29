@@ -1,4 +1,4 @@
-import React, { FC, useContext, useMemo } from 'react';
+import React, { FC, useContext, useEffect, useMemo } from 'react';
 import {
   FormControl,
   FormHelperText,
@@ -31,15 +31,18 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
     divideAfter,
     disabled,
     readOnly,
+    onEnable,
+    onDisable,
   } = field;
 
-  const { register, control } = useFormContext();
+  const { register, control, setValue, reset } = useFormContext();
 
   const { isReadOnly } = useContext(Ctx);
 
   const values = useWatch({
     control,
   });
+  const value = values[name];
 
   const fieldStyles = useStyles<SwitchFieldStyles>('switchField', styles);
 
@@ -52,6 +55,18 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
   if (!isVisible) {
     return null;
   }
+
+  useEffect(() => {
+    if (value) {
+      if (onDisable) {
+        onDisable(setValue, reset, values);
+      }
+    } else {
+      if (onEnable) {
+        onEnable(setValue, reset, values);
+      }
+    }
+  }, [value]);
 
   return (
     <>
