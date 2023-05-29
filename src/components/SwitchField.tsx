@@ -58,9 +58,13 @@ export const SwitchField: FC<FieldProps<SwitchFieldSchema>> = ({
 
   useEffect(() => {
     if (value) {
-      onDisable && onDisable(setValue, reset, values);
+      if (onDisable) {
+        onDisable(setValue, reset, values);
+      }
     } else {
-      onEnable && onEnable(setValue, reset, values);
+      if (onEnable) {
+        onEnable(setValue, reset, values);
+      }
     }
   }, [value]);
 
